@@ -4,7 +4,7 @@ info: Flutter Ankara — Auth, Database ve Realtime
 layout: cover
 aspectRatio: 16/9
 canvasWidth: 1280
-colorSchema: dark
+colorSchema: light
 fonts:
   sans: Geist
   mono: Geist Mono
@@ -16,17 +16,15 @@ drawings:
   persist: false
 ---
 
-<div class="kicker">Flutter Ankara</div>
-
 # Flutter ile Uçtan Uca Uygulama
 
-Auth, Database ve <span class="text-accent">Realtime</span>
+Auth, Database ve Realtime
 
 <template #meta>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <span class="pill"><span class="text-flutter">●</span> Flutter</span>
-      <span class="pill"><span class="text-accent">●</span> Supabase</span>
+      <span class="pill"><span class="dot dot--flutter"></span> Flutter</span>
+      <span class="pill"><span class="dot dot--accent"></span> Supabase</span>
     </div>
     <span class="text-muted font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
   </div>
@@ -34,7 +32,7 @@ Auth, Database ve <span class="text-accent">Realtime</span>
 
 ---
 layout: section
-number: '02'
+time: 02:00–05:00
 ---
 
 # Supabase ne sağlıyor?
@@ -42,7 +40,6 @@ number: '02'
 Soru panosunun arkasındaki beş parça.
 
 ---
-kicker: Supabase ne sağlıyor?
 ---
 
 ## Her parçanın panoda bir karşılığı var
@@ -83,7 +80,6 @@ kicker: Supabase ne sağlıyor?
 </style>
 
 ---
-kicker: Flutter nasıl bağlanıyor?
 ---
 
 ## Bağlantı tek yerde kurulur
@@ -122,7 +118,6 @@ final supabase = Supabase.instance.client;
 </div>
 
 ---
-kicker: Auth ve RLS
 ---
 
 ## Giriş yaptı, peki ne yapabilir?

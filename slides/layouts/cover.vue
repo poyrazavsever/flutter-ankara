@@ -1,6 +1,6 @@
 <template>
   <div class="slidev-layout layout-cover">
-    <Backdrop variant="cover" :image="$frontmatter.image" />
+    <Backdrop :image="$frontmatter.image" :position="$frontmatter.imagePosition" />
     <div class="cover-content">
       <slot />
     </div>
@@ -19,7 +19,7 @@
 }
 
 .cover-content {
-  max-width: 760px;
+  max-width: 720px;
 }
 
 .cover-content :deep(h1) {
@@ -31,7 +31,6 @@
 .cover-content :deep(h1 + p) {
   margin-top: 28px;
   font-size: 28px;
-  color: var(--text-muted);
 }
 
 .cover-meta {

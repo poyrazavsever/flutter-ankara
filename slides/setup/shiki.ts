@@ -2,7 +2,7 @@ import { defineShikiSetup } from '@slidev/types'
 
 export default defineShikiSetup(() => ({
   themes: {
-    dark: 'vitesse-dark',
-    light: 'vitesse-dark',
+    dark: 'vitesse-light',
+    light: 'vitesse-light',
   },
 }))

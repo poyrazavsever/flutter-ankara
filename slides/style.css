@@ -1,43 +1,46 @@
-/* Flutter Ankara — Liquid Glass tasarım sistemi */
+/* Flutter Ankara — açık, sade liquid glass tasarım sistemi.
+   Kural: gradyan yok, ışıma yok. Derinlik yalnızca cam, ince kenar ve gölgeden gelir. */
 
 :root {
   /* Zemin */
-  --bg-0: #050d0a;
-  --bg-1: #07120e;
-  --bg-2: #0c1d16;
+  --bg: #f3f6f4;
+  --bg-raised: #ffffff;
 
   /* Cam */
-  --glass: rgba(255, 255, 255, 0.06);
-  --glass-strong: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-highlight: rgba(255, 255, 255, 0.22);
-  --glass-blur: 24px;
-  --radius: 28px;
-  --radius-sm: 16px;
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-border: rgba(11, 31, 23, 0.08);
+  --glass-edge: rgba(255, 255, 255, 0.9);
+  --glass-blur: 20px;
+  --radius: 24px;
+  --radius-sm: 14px;
+  --shadow: 0 1px 2px rgba(11, 31, 23, 0.04), 0 12px 32px -12px rgba(11, 31, 23, 0.12);
 
   /* Metin */
-  --text: #e8f5ee;
-  --text-muted: #8fa89b;
-  --text-dim: #5d7568;
+  --text: #0b1f17;
+  --text-muted: #4f665a;
+  --text-dim: #8a9c92;
+  --line: rgba(11, 31, 23, 0.1);
 
-  /* Vurgu */
+  /* Vurgu: dolgu için açık ton, metin için koyu ton */
   --accent: #3ecf8e;
-  --accent-deep: #24b47e;
-  --accent-glow: rgba(62, 207, 142, 0.35);
+  --accent-ink: #13804c;
+  --accent-tint: #e3f6ec;
   --flutter: #54c5f8;
-  --flutter-glow: rgba(84, 197, 248, 0.3);
-  --deny: #f87171;
-  --deny-glow: rgba(248, 113, 113, 0.3);
+  --flutter-ink: #0175c2;
+  --flutter-tint: #e4f3fc;
+  --deny: #dc4a4a;
+  --deny-ink: #b42e2e;
+  --deny-tint: #fbe9e9;
 
   /* Tipografi */
   --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, monospace;
 
   --slidev-code-font-size: 15px;
-  --slidev-code-line-height: 1.6;
+  --slidev-code-line-height: 1.65;
   --slidev-code-radius: var(--radius-sm);
   --slidev-code-padding: 22px 26px;
-  --slidev-code-background: rgba(5, 13, 10, 0.55);
+  --slidev-code-background: rgba(255, 255, 255, 0.7);
 }
 
 /* ---------- Slayt tabanı ---------- */
@@ -46,8 +49,8 @@
   position: relative;
   color: var(--text);
   font-family: var(--font-sans);
-  background: var(--bg-1);
-  padding: 64px 80px;
+  background: var(--bg);
+  padding: 72px 80px;
   font-size: 22px;
   line-height: 1.5;
   letter-spacing: -0.005em;
@@ -77,7 +80,7 @@
 .slidev-layout h2 {
   font-size: 44px;
   line-height: 1.1;
-  margin-bottom: 36px;
+  margin-bottom: 40px;
 }
 
 .slidev-layout h3 {
@@ -99,9 +102,8 @@
 .slidev-layout code:not(pre code) {
   font-family: var(--font-mono);
   font-size: 0.86em;
-  color: var(--accent);
-  background: rgba(62, 207, 142, 0.1);
-  border: 1px solid rgba(62, 207, 142, 0.2);
+  color: var(--accent-ink);
+  background: var(--accent-tint);
   padding: 2px 8px;
   border-radius: 8px;
 }
@@ -110,75 +112,27 @@
 
 .glass {
   position: relative;
-  background: linear-gradient(160deg, var(--glass-strong), var(--glass) 45%, rgba(255, 255, 255, 0.03));
+  background: var(--glass);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
-  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-    0 24px 60px -24px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--shadow);
 }
 
-/* Üst kenardaki ışık kırılması */
-.glass::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), transparent 35%, transparent 70%, rgba(62, 207, 142, 0.25));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.glass--accent {
-  border-color: rgba(62, 207, 142, 0.35);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 0 0 1px rgba(62, 207, 142, 0.08),
-    0 24px 80px -20px var(--accent-glow);
-}
-
-.glass--flutter {
-  border-color: rgba(84, 197, 248, 0.35);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 24px 80px -20px var(--flutter-glow);
-}
-
-.glass--deny {
-  border-color: rgba(248, 113, 113, 0.45);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    0 24px 80px -20px var(--deny-glow);
-}
+.glass--accent { border-color: rgba(19, 128, 76, 0.28); }
+.glass--flutter { border-color: rgba(1, 117, 194, 0.28); }
+.glass--deny { border-color: rgba(180, 46, 46, 0.32); background: rgba(251, 233, 233, 0.7); }
 
 /* ---------- Küçük parçalar ---------- */
 
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+.label {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 20px;
-}
-
-.kicker::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
+  color: var(--text-dim);
 }
 
 .pill {
@@ -194,17 +148,27 @@
   border: 1px solid var(--glass-border);
 }
 
-.text-accent { color: var(--accent); }
-.text-flutter { color: var(--flutter); }
-.text-deny { color: var(--deny); }
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot--accent { background: var(--accent); }
+.dot--flutter { background: var(--flutter); }
+
+.text-accent { color: var(--accent-ink); }
+.text-flutter { color: var(--flutter-ink); }
+.text-deny { color: var(--deny-ink); }
 .text-muted { color: var(--text-muted); }
+.text-dim { color: var(--text-dim); }
 
 /* ---------- Kod blokları ---------- */
 
 .slidev-layout pre.shiki {
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(var(--glass-blur));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 var(--glass-edge), var(--shadow);
 }
 
 .slidev-layout pre.shiki code {
@@ -216,5 +180,5 @@
 }
 
 .slidev-code .dishonored {
-  opacity: 0.28;
+  opacity: 0.3;
 }
