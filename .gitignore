@@ -1,0 +1,17 @@
+# Secrets
+.env
+.env.local
+*.local.env
+supabase/.temp/
+supabase/.branches/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node
+node_modules/
+dist/
+.secrets/
