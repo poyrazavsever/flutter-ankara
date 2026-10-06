@@ -7,3 +7,9 @@ Model: `gpt_image_2_5` · quality `high` · resolution `2k`
 > Minimal studio still life photographed on a flat, matte, uniform off-white background with a barely perceptible green tint (hex #F3F6F4). The background is perfectly even: no gradient, no vignette, no spotlight falloff. Objects are made of translucent frosted glass in soft mint and emerald green tones, smooth rounded liquid forms with gentle refraction and crisp, delicate caustic light patterns cast onto the surface. Soft diffuse daylight from the upper left, very soft short contact shadows. Calm, precise, Swiss-minimal composition with generous negative space. Photoreal, high detail, editorial product photography. No text, no letters, no logos, no people, no neon, no glow, no bokeh, no sci-fi elements, no dark areas.
 
 ## Kapak konseptleri
+
+Seçilen kapak: **A** (üst üste üç cam panel). B ve C `assets/higgsfield/covers/` içinde arşivde.
+
+## İkon stili (şeffaf zemin, 1:1)
+
+> A single object, centered, isolated on a fully transparent background, occupying about 70% of the frame. Made of translucent frosted glass in soft mint and emerald green tones, smooth rounded edges, thick glass with gentle refraction and subtle internal light, soft diffuse daylight from the upper left. Clean, minimal, premium 3D icon in the style of a studio product photograph. No shadow, no surface, no background, no text, no letters, no logos, no glow.

@@ -47,27 +47,27 @@ Soru panosunun arkasındaki beş parça.
 
 <div class="grid grid-cols-5 gap-5 mt-4">
   <Glass tone="accent">
-    <div class="part-index">01</div>
+    <img class="part-icon" src="/img/icons/database.png" alt="">
     <h3>Database</h3>
     <p class="mt-3">Soruların saklanması</p>
   </Glass>
   <Glass tone="accent">
-    <div class="part-index">02</div>
+    <img class="part-icon" src="/img/icons/auth.png" alt="">
     <h3>Auth</h3>
     <p class="mt-3">Soruyu gönderen kullanıcının tanınması</p>
   </Glass>
   <Glass tone="accent">
-    <div class="part-index">03</div>
+    <img class="part-icon" src="/img/icons/realtime.png" alt="">
     <h3>Realtime</h3>
     <p class="mt-3">Yeni soruların açık ekranlara ulaşması</p>
   </Glass>
   <Glass>
-    <div class="part-index dim">04</div>
+    <img class="part-icon dim" src="/img/icons/storage.png" alt="">
     <h3 class="text-muted">Storage</h3>
     <p class="mt-3">İleride görsel ve dosya</p>
   </Glass>
   <Glass>
-    <div class="part-index dim">05</div>
+    <img class="part-icon dim" src="/img/icons/functions.png" alt="">
     <h3 class="text-muted">Edge Functions</h3>
     <p class="mt-3">İleride gizli anahtarlı işlemler</p>
   </Glass>
@@ -76,8 +76,8 @@ Soru panosunun arkasındaki beş parça.
 <p class="mt-10 text-lg">İlk üçünü <strong>canlı göstereceğiz</strong>, son ikisinin nerede devreye girdiğini sonra konumlandıracağız.</p>
 
 <style>
-.part-index { font-family: var(--font-mono); font-size: 14px; color: var(--accent); margin-bottom: 40px; }
-.part-index.dim { color: var(--text-dim); }
+.part-icon { width: 96px; height: 96px; margin: -8px 0 20px -10px; }
+.part-icon.dim { opacity: 0.55; filter: saturate(0.4); }
 </style>
 
 ---

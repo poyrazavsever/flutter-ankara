@@ -1,0 +1,7 @@
+database|Object: a database symbol made of three thick rounded glass discs stacked vertically with small gaps between them.
+auth|Object: a minimal person symbol made of glass: a smooth sphere for the head resting above a rounded half-capsule for the shoulders.
+realtime|Object: a small glass sphere with two concentric curved glass arcs radiating from it to one side, like a wireless signal.
+storage|Object: a rounded rectangular glass box with its lid lifted slightly open, like a storage container.
+functions|Object: a chunky lightning bolt made of glass with softly rounded edges.
+rls|Object: a smooth rounded glass shield standing upright.
+key|Object: a simple glass key with a round bow and short rounded teeth, lying at a slight angle.
