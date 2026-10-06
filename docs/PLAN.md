@@ -1,7 +1,8 @@
-# Flutter Ankara — Sunum ve Demo Planı
+# Flutter Ankara — Sunum ve Örnek Proje Planı
 
 **Başlık:** Flutter ile Uçtan Uca Uygulama: Auth, Database ve Realtime
-**Süre:** 30 dk (27 dk anlatım + demo, 3 dk soru-cevap)
+**Süre:** 30 dk (27 dk anlatım + kısa örnek proje turu, 3 dk soru-cevap)
+**Format:** 16:9, Slidev
 **Kitle:** Flutter temellerini bilen, Supabase'e yeni başlayanlar
 **Omurga:** "Flutter ile arayüzü geliştirdik; şimdi bu uygulamaya kullanıcı, veri ve gerçek zamanlı güncellemeler kazandıralım."
 
@@ -10,100 +11,131 @@ Katılımcı sunum sonunda şu soruları cevaplayabilmeli:
 2. Kullanıcıların erişimini nasıl kontrol ederim?
 3. Veriler değiştiğinde ekranı nasıl güncellerim?
 
+Ek kazanım: Supabase'i bir yapay zekâ asistanından (MCP) nasıl yönetebileceğini ve bunun sınırlarını bilir.
+
+## Yaklaşım
+
+- **Canlı demo yok.** Sunum "ne, nasıl yapılır" anlatımıyla ilerler: her adım bir kavram + kısa kod parçası + Soru Panosu'ndaki karşılığı.
+- **Tek hikâye:** Bütün örnekler aynı uygulamadan gelir: Flutter Ankara Soru Panosu.
+- **Örnek proje sonda:** QR ile repo paylaşılır, 2–4 dakikalık hızlı tur yapılır. İnternet sorununa karşı aynı turun ekran kaydı hazır tutulur.
+- **Supabase MCP:** Asistanla şema kurma, migration, güvenlik denetimi. Bu projenin kendisi de bu şekilde kuruldu; gerçek deneyim anlatılır.
+
 ---
 
 ## 1. Akış
 
-| Süre | Bölüm | Slayt |
-|---|---|---|
-| 00:00–02:00 | Açılış: önce sonucu göster | 1 Kapak, 2 Canlı pano |
-| 02:00–05:00 | Supabase ne sağlıyor? | 3 Problem, 4 Beş parça |
-| 05:00–08:00 | Flutter nasıl bağlanıyor? | 5 Mimari, 6 `Supabase.initialize()` |
-| 08:00–11:00 | Auth ve RLS | 7 Kimlik ≠ Yetki, 8 RLS politikası |
-| 11:00–21:00 | Uygulamalı demo (10 dk) | 9 Demo bölüm slaytı |
-| 21:00–24:00 | Uygulama büyüdüğünde (3 dk) | 10 Storage + Edge Functions, 11 Anahtarlar |
-| 24:00–27:00 | Gerçek projeye taşıma, kapanış | 12 Altı adım, 13 QR + teşekkür |
-| 27:00–30:00 | Soru-cevap | 13 açık kalır |
+| Süre | Bölüm | Slaytlar | Amaç |
+|---|---|---|---|
+| 00:00–02:00 | Açılış | Kapak, Soru Panosu ekran görüntüsü, problem | Varış noktasını göstermek |
+| 02:00–04:30 | Supabase ne sağlıyor? | Bölüm, beş parça | Parçaları panodaki karşılıklarıyla tanıtmak |
+| 04:30–07:00 | Flutter nasıl bağlanıyor? | Bölüm, mimari, `Supabase.initialize()` | İsteğin yolunu göstermek |
+| 07:00–09:00 | Veri: tablo ve sorgu | `questions` tablosu, insert/select | Flutter'dan veri yazma ve okuma |
+| 09:00–12:30 | Auth ve RLS | Bölüm, kimlik ≠ yetki, giriş kodu, politika, "0 satır" | Kimlik doğrulama ile yetkilendirmeyi ayırmak |
+| 12:30–14:30 | Realtime | `.stream()`, yayına ekleme | Ekranı yenilemeden güncellemek |
+| 14:30–18:30 | Supabase MCP ile geliştirme | Bölüm, MCP nedir, ne yapabilir, güvenli kullanım | Asistanla backend kurmanın yolu ve sınırları |
+| 18:30–20:30 | Uygulama büyüdüğünde | Bölüm, Storage + Edge Functions, anahtarlar | İleri parçaları konumlandırmak |
+| 20:30–22:00 | Kendi projene taşı | Altı adım | Uygulanabilir sıra vermek |
+| 22:00–26:00 | Örnek proje | QR, hızlı tur | Katılımcının eve götüreceği şey |
+| 26:00–27:00 | Kapanış | Teşekkür, bağlantılar | |
+| 27:00–30:00 | Soru-cevap | QR açık kalır | |
 
-Prova hedefi: anlatım + demo 25 dk, 2 dk geçiş payı.
+Prova hedefi: 26 dakika. Toplam yaklaşık 18 slayt.
 
-### Demo adımları (10 dk)
+### Slayt listesi
+
+1. **Kapak**
+2. **Soru Panosu:** iki ekran yan yana (ekran görüntüsü). "Bunun arkasındaki sistemi inceleyeceğiz."
+3. **Problem:** Ekranlar hazır; eksik olan kullanıcı, veri, kural ve güncelleme.
+4. **Bölüm:** Supabase ne sağlıyor?
+5. **Beş parça:** Database, Auth, Realtime, Storage, Edge Functions (ikonlu kartlar)
+6. **Bölüm:** Flutter nasıl bağlanıyor?
+7. **Mimari:** Flutter → `supabase_flutter` → Data API → Postgres + RLS
+8. **Bağlantı kodu:** `Supabase.initialize()`, url, publishable key, secret key uyarısı
+9. **Tablo:** `questions` kolonları ve SQL
+10. **Sorgu:** `insert` ve `select`, Flutter kodu
+11. **Bölüm:** Auth ve RLS
+12. **Kimlik ≠ yetki** ve giriş kodu (`signInWithPassword`)
+13. **RLS politikaları:** üç kural. "Butonu gizlemek arayüz davranışıdır; isteği reddetmek erişim kontrolüdür."
+14. **Tuzak:** Başkasının satırını silmek hata vermez, 0 satır döner. `.select()` ile kontrol.
+15. **Realtime:** `.stream(primaryKey: ['id'])` ve `supabase_realtime` yayını
+16. **Bölüm:** Supabase MCP
+17. **MCP nedir:** Asistan ↔ MCP sunucusu ↔ Supabase projesi
+18. **Asistan neler yapabilir:** proje açma, tablo listeleme, migration, SQL, güvenlik/performans denetimi, tip üretme, doküman arama
+19. **Güvenli kullanım:** geliştirme projesine bağla, `read_only`, `project_ref` ile tek projeye sınırla, her aracı onayla, verideki talimatlara dikkat (prompt injection). Gerçek not: bağlantı yetkisi yetmediğinde CLI ile devam edilebilir.
+20. **Bölüm:** Uygulama büyüdüğünde
+21. **Storage ve Edge Functions:** "Sorulara görsel ekleyelim", "Soruları yapay zekâyla özetleyelim"
+22. **Anahtarlar:** publishable key istemcide, secret/service-role key asla istemcide değil
+23. **Kendi projene taşı:** Veri modeli → giriş → erişim kuralları → okuma/yazma → Realtime → farklı kullanıcılarla dene
+24. **Örnek proje:** QR + repo + "5 dakikada çalıştır"
+25. **Teşekkürler / Soru-cevap**
+
+(Bölüm slaytları kısa geçilir; içerik slaytı sayısı ~18.)
+
+### Örnek proje turu (22:00–26:00)
+
 | Adım | Süre | Gösterilen |
 |---|---|---|
-| Tablo ve politikalar (Supabase Studio) | 1 dk | `questions` kolonları, RLS açık |
-| Flutter bağlantısı (IDE) | 1 dk | `Supabase.initialize()` |
-| Ayşe ile giriş | 1 dk | Oturum, `auth.uid()` |
-| Soru ekle ve listele | 2 dk | `insert` / `stream` |
-| Mehmet'in penceresi | 2.5 dk | Realtime ile sorunun düşmesi |
-| Erişim kontrolü | 2.5 dk | Kendi sorusunu sil ✓, Geliştirici modunda başkasınınkini sil → "0 satır silindi: RLS izin vermedi" |
+| QR ve repo | 30 sn | README, kurulum adımları |
+| İki pencere | 1.5 dk | Ayşe soru gönderir, Mehmet'in ekranına düşer |
+| Ret anı | 1 dk | Geliştirici modunda Mehmet, Ayşe'nin sorusunu silmeye çalışır → "0 satır silindi" |
+| Kodda nerede? | 1 dk | Üç dosya: bağlantı, sorgular, migration |
 
-İki güçlü an: **sorunun diğer ekrana düşmesi** ve **yetkisiz silmenin reddedilmesi**.
+Yedek: aynı turun 2 dakikalık ekran kaydı.
 
 ## 2. Teknik notlar
 
-- **RLS reddi hata fırlatmaz.** Başkasının satırına `delete` atınca 0 satır etkilenir. Bu yüzden `.delete().eq('id', id).select()` kullanılır, dönen liste boşsa ret mesajı gösterilir.
-- **Geliştirici modu:** Arayüzdeki bir anahtar, Sil butonunu herkesin sorusunda gösterir. Mesaj: *"Sil butonunu gizlemek arayüz davranışıdır; silme isteğini reddetmek erişim kontrolüdür."*
+- **RLS reddi hata fırlatmaz.** Başkasının satırına `delete` atınca 0 satır etkilenir. `.delete().eq('id', id).select()` ile dönen liste kontrol edilir. (Gerçek istekle doğrulandı.)
+- **Geliştirici modu:** Arayüzdeki bir anahtar, Sil butonunu herkesin sorusunda gösterir.
 - **Tablo:** `questions(id uuid pk, user_id uuid default auth.uid() → auth.users, author_name text, content text check 1–280, created_at timestamptz default now())`
-- **RLS:** select → `authenticated`; insert → `with check (auth.uid() = user_id)`; delete → `using (auth.uid() = user_id)`
-- **Realtime:** tablo `supabase_realtime` yayınına eklenir; Flutter'da `.stream(primaryKey: ['id'])`
-- **Auth:** e-posta + şifre, onaylı iki hazır hesap (Ayşe, Mehmet), şifreler `supabase/seed` / `.env.example`'da
-- **İstemci anahtarı:** sadece publishable key. Secret/service-role anahtarı istemciye asla konmaz.
+- **RLS:** select → `authenticated`; insert → `with check (auth.uid() = user_id)`; delete → `using (auth.uid() = user_id)`; update politikası yok
+- **Realtime:** tablo `supabase_realtime` yayınında; Flutter'da `.stream(primaryKey: ['id'])`
+- **Auth:** e-posta + şifre, onaylı iki demo hesabı (Ayşe, Mehmet), şifreler `.secrets/demo-users.env` (git dışı)
+- **İstemci anahtarı:** yalnızca publishable key
 - **State management:** bilinçli olarak minimal (StatefulWidget + StreamBuilder)
-- **Platform:** Flutter web, sahnede iki tarayıcı penceresi yan yana (sol: Ayşe, sağ: Mehmet)
+- **Platform:** Flutter web
 - **Dil:** arayüz ve slaytlar Türkçe; kod, tablo ve kolon adları İngilizce
 
 ## 3. Repo yapısı
 
 ```
-app/        Flutter demo: Soru Panosu
-supabase/   migrations (tablo, RLS, realtime), seed
+app/        Flutter örnek proje: Soru Panosu
+supabase/   migrations (tablo, RLS, realtime), config
 slides/     Slidev sunumu
-assets/     Higgsfield çıktıları + prompts.md (tekrar üretilebilirlik)
-docs/       plan, konuşmacı notları, yedek plan, prova kontrol listesi
+assets/     Higgsfield çıktıları + prompts.md
+docs/       plan, konuşmacı notları, prova kontrol listesi
 README.md   QR'ın açtığı sayfa: örneği 5 dakikada çalıştır
 ```
 
-## 4. Tasarım sistemi (taslak)
+## 4. Tasarım sistemi
 
-**Tarz:** Koyu zümrüt zemin üzerinde liquid glass. Sade, modern, bol boşluk. Her slaytta tek fikir.
+**Tarz:** Açık, sade liquid glass. Gradyan yok, ışıma yok. Derinlik yalnızca cam, ince kenar ve gölgeden gelir. Başlıkların üstünde etiket yok. Her slaytta tek fikir.
 
-### Renkler
 | Token | Değer | Kullanım |
 |---|---|---|
-| `--bg-0` | `#050D0A` | En derin zemin |
-| `--bg-1` | `#07120E` | Ana zemin |
-| `--glass` | `rgba(255,255,255,0.06)` | Cam panel dolgusu |
-| `--glass-border` | `rgba(255,255,255,0.12)` | Cam panel kenarı |
-| `--glass-blur` | `24px` | backdrop-filter |
-| `--text` | `#E8F5EE` | Ana metin |
-| `--text-muted` | `#8FA89B` | İkincil metin |
-| `--accent` | `#3ECF8E` | Supabase yeşili, ana vurgu |
-| `--accent-deep` | `#24B47E` | Hover, koyu vurgu |
-| `--accent-glow` | `rgba(62,207,142,0.35)` | Işıma |
-| `--flutter` | `#54C5F8` | Yalnızca Flutter tarafını işaret ederken |
-| `--deny` | `#F87171` | Yalnızca "RLS reddetti" anında |
+| `--bg` | `#F3F6F4` | Düz zemin |
+| `--glass` | `rgba(255,255,255,0.62)` | Cam panel |
+| `--glass-border` | `rgba(11,31,23,0.08)` | Cam kenarı |
+| `--text` | `#0B1F17` | Ana metin |
+| `--text-muted` | `#4F665A` | İkincil metin |
+| `--accent` / `--accent-ink` | `#3ECF8E` / `#13804C` | Supabase yeşili: dolgu / metin |
+| `--flutter` / `--flutter-ink` | `#54C5F8` / `#0175C2` | Yalnızca Flutter tarafı |
+| `--deny` / `--deny-ink` | `#DC4A4A` / `#B42E2E` | Yalnızca "RLS reddetti" anı |
 
-**Format:** 16:9 (1920×1080)
+**Tipografi:** Geist 600 (başlık), Geist 400 (metin), Geist Mono (kod)
 
-### Tipografi
-- Başlık: **Geist 600**
-- Metin: **Geist 400**
-- Kod: **Geist Mono**
-- Türkçe karakter kontrolü: ğ ş ı İ ç ö ü
-
-### Higgsfield ile üretilecekler
-Hepsi tek bir ortak stil anahtarıyla (koyu zümrüt, buzlu cam, yumuşak yeşil ışıma) üretilecek.
-- Kapak hero görseli
-- Bölüm geçiş görselleri (5–6 adet)
-- Kavram ikonları, 3D cam: Database, Auth, Realtime, Storage, Edge Functions, RLS/kalkan, publishable/secret anahtar
-- Slayt arka plan dokuları
-- Açılış loop videosu (5–10 sn, salon dolarken ve kapakta)
-- Demo uygulamanın arka planı ve logosu
+### Görseller (Higgsfield, `assets/prompts.md`)
+- ✅ Kapak (A: üst üste cam paneller)
+- ✅ Yedi cam ikon: database, auth, realtime, storage, functions, rls, key
+- ✅ Bölüm görselleri: supabase, connect, auth, demo, grow
+- ⬜ MCP bölüm görseli ve MCP ikonu
+- ⬜ (İsteğe bağlı) Kapak loop videosu
 
 ## 5. Çalışma sırası
 1. ✅ Plan
-2. Tasarım sistemi: tokenlar, cam bileşenleri, slayt şablonları
-3. Higgsfield: stil anahtarı → kapak → ikonlar → geçişler → loop video
-4. Supabase + Flutter demo (aynı tasarım dili)
-5. Slayt içeriği + konuşmacı notları
-6. Prova paketi: yedek demo kaydı, QR, README, kontrol listesi
+2. ✅ Supabase projesi, tablo, RLS, demo hesapları
+3. ✅ Tasarım sistemi ve Slidev iskeleti
+4. ✅ Kapak, ikonlar, bölüm görselleri
+5. ⬜ MCP görselleri
+6. ⬜ Bütün slaytların içeriği ve konuşmacı notları
+7. ⬜ Flutter örnek proje (Soru Panosu) + ekran görüntüleri
+8. ⬜ README, QR, yedek ekran kaydı, prova kontrol listesi
