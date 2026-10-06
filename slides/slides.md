@@ -2,6 +2,7 @@
 title: Flutter ile Uçtan Uca Uygulama
 info: Flutter Ankara — Auth, Database ve Realtime
 layout: cover
+image: /img/cover-a.png
 aspectRatio: 16/9
 canvasWidth: 1280
 colorSchema: light
