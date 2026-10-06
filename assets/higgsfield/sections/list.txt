@@ -1,0 +1,5 @@
+supabase|Five small frosted green glass objects in a neat horizontal row: a stack of discs, a rounded tile, a small sphere, a small open box and a rounded bar, evenly spaced, each a slightly different green tint.
+connect|Two thick rounded frosted glass slabs standing upright and parallel, a short distance apart, connected by a single smooth glass rod passing between them.
+auth|A single smooth rounded frosted green glass shield standing upright next to a small glass key lying flat on the surface.
+demo|Three rounded rectangular frosted glass tiles standing upright side by side like small screens, the middle one slightly more saturated green.
+grow|The same three stacked frosted glass panels as before, with a fourth new panel being added on top, slightly offset and lighter in tone.

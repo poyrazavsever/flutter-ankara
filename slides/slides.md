@@ -33,6 +33,7 @@ Auth, Database ve Realtime
 
 ---
 layout: section
+image: /img/sections/supabase.png
 time: 02:00–05:00
 ---
 
