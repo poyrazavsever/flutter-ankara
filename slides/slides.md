@@ -39,37 +39,15 @@ Bugün Flutter ile yaptığımız bir uygulamaya kullanıcı, veri ve gerçek za
 
 ---
 
-## Bu akşamın uygulaması: Soru Panosu
-
-<div class="grid grid-cols-2 gap-8 mt-2">
-  <div>
-    <BoardMock user="Ayşe" />
-    <p class="mt-4 text-base text-center">Ayşe'nin ekranı</p>
+<div class="h-full flex flex-col justify-center">
+  <div class="grid grid-cols-[1fr_auto] gap-10 items-center">
+    <h1 class="thesis"><span class="text-accent">Supabase</span>'i ne kadar iyi tanırsan, sınırlarını ne kadar iyi bilirsen projeni o kadar iyi kurarsın.</h1>
+    <img src="/img/icons/supabase.png" class="w-60 h-60" alt="Supabase">
   </div>
-  <div>
-    <BoardMock user="Mehmet" highlight />
-    <p class="mt-4 text-base text-center">Mehmet'in ekranı: soru yenilemeden düştü</p>
-  </div>
-</div>
-
-<!--
-(40 sn) Bütün sunum boyunca tek bir uygulama üzerinden konuşacağız: Flutter Ankara Soru Panosu.
-
-- Giriş yapıyorsunuz, konuşmacıya soru gönderiyorsunuz.
-- Soru, açık olan herkesin ekranına yenilemeden düşüyor.
-- Kendi sorunuzu silebiliyorsunuz, başkasınınkini silemiyorsunuz.
-
-Arayüz Flutter. Arkasındaki her şey Supabase. Sonunda bu projeyi QR ile paylaşacağım.
--->
-
----
-
-<div class="h-full flex flex-col justify-center max-w-[980px]">
-  <h1 class="thesis">Supabase'i ne kadar iyi tanırsan, sınırlarını ne kadar iyi bilirsen projeni o kadar iyi kurarsın.</h1>
-  <div class="grid grid-cols-4 gap-4 mt-14">
+  <div class="grid grid-cols-4 gap-4 mt-12">
     <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">1</div><h3 class="text-xl">Ne yapar?</h3></Glass>
     <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">2</div><h3 class="text-xl">Nasıl çalışır?</h3></Glass>
-    <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">3</div><h3 class="text-xl">Panoda karşılığı?</h3></Glass>
+    <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">3</div><h3 class="text-xl">Panelde nerede?</h3></Glass>
     <Glass pad="sm" tone="deny"><div class="text-deny font-mono text-sm mb-2">4</div><h3 class="text-xl">Sınırı ne?</h3></Glass>
   </div>
 </div>
@@ -83,7 +61,7 @@ Arayüz Flutter. Arkasındaki her şey Supabase. Sonunda bu projeyi QR ile payla
 
 Supabase'in birçok servisi var ve hepsini kullanmak çok kolay. Ama projede sizi zorlayacak şey kolay kısım değil, sınırlar: e-posta limiti, dosya boyutu, bağlantı sayısı, hangi anahtarın nereye konduğu.
 
-Her servisi bu dört soruyla geçeceğiz. Dördüncü soru, yani sınırlar, her bölümün sonunda aynı görünümde karşınıza çıkacak.
+Her servisi bu dört soruyla geçeceğiz: ne yapar, nasıl çalışır, Supabase panelinde nerede duruyor ve sınırı ne. Dördüncü soru her bölümün sonunda aynı görünümde karşınıza çıkacak.
 -->
 
 ---
@@ -289,7 +267,7 @@ Gerçek Postgres, otomatik API, kurallar veritabanında.
 
 Fark şurada: tabloyu oluşturduğunuz anda önünde bir API hazır. Flutter'dan "questions tablosuna şunu ekle", "son 50 soruyu getir" diyebiliyorsunuz. Ayrı bir sunucu yazmıyorsunuz.
 
-Panodaki tablo bu kadar basit: kim sordu, ne sordu, ne zaman sordu. Uzunluk kontrolü bile veritabanında: 280 karakterden uzun soru kaydedilmiyor.
+Örnek tablomuz basit: kim sordu, ne sordu, ne zaman sordu. Uzunluk kontrolü bile veritabanında: 280 karakterden uzun soru kaydedilmiyor.
 
 Ama burada bir soru doğuyor: API herkese açıksa, birinin başkasının sorusunu silmesini ne engelliyor?
 -->
@@ -330,7 +308,7 @@ using ( auth.uid() = user_id );
 <!--
 (1 dk 30 sn) Cevap: Row Level Security, kısaca RLS. Satır bazında erişim kuralları ve bu kurallar veritabanında çalışıyor.
 
-Panonun üç kuralı var: giriş yapan herkes okuyabilir, herkes sadece kendi adına soru ekleyebilir, herkes sadece kendi sorusunu silebilir.
+Örnek bir soru tablosu için üç kural: giriş yapan herkes okuyabilir, herkes sadece kendi adına soru ekleyebilir, herkes sadece kendi sorusunu silebilir.
 
 Üçüncü kural SQL'de böyle görünüyor. "Silmek isteyen kullanıcının kimliği, satırdaki user_id ile aynıysa izin ver." auth.uid() o anki kullanıcıyı veriyor. Bunu birazdan Auth'ta tekrar göreceğiz.
 
@@ -381,7 +359,7 @@ Bu kullanıcı kim?
       <div class="pill auth-pill">Anonim giriş</div>
       <div class="pill auth-pill">İki adımlı doğrulama (MFA)</div>
     </div>
-    <p class="mt-8 text-lg">Panoda: soruyu <strong>kimin</strong> gönderdiği. Demo hesapları Ayşe ve Mehmet.</p>
+    <p class="mt-8 text-lg">Kullanıcılar <code>auth.users</code> tablosunda durur. Profil gibi ek bilgiler için kendi tablonu bağlarsın.</p>
   </div>
   <Glass tone="accent" pad="lg">
     <div class="flow">
@@ -458,7 +436,7 @@ Dosyalar ve onlara kimin erişeceği.
 
 <Glass pad="sm" class="mt-8 flex items-center gap-4">
   <img src="/img/icons/storage.png" class="w-12 h-12" alt="">
-  <span class="text-muted text-lg">Panoda: "Soruma ekran görüntüsü eklemek istiyorum." Görsel private bucket'a, yalnızca giriş yapanlar görebilir.</span>
+  <span class="text-muted text-lg">Örnek kural: "Kullanıcı yalnızca <strong>kendi klasörüne</strong> dosya yükleyebilir." Az önceki RLS mantığının aynısı.</span>
 </Glass>
 
 <!--
@@ -504,33 +482,40 @@ Ekranı yenilemeden güncellemek.
 ## Üç mod, üç ihtiyaç
 
 <div class="grid grid-cols-3 gap-6">
-  <Glass tone="accent">
-    <div class="font-mono text-sm text-accent mb-6">Postgres Changes</div>
+  <Glass tone="accent" class="mode">
+    <img src="/img/icons/changes.png" alt="">
+    <div class="font-mono text-sm text-accent">Postgres Changes</div>
     <h3>Tablodaki değişikliği dinle</h3>
-    <p class="mt-4 text-lg">Panoda: yeni soru herkesin ekranına düşer, silinen kaybolur.</p>
+    <p>Kalıcı veri. Yeni mesaj, sipariş durumu, güncellenen skor.</p>
   </Glass>
-  <Glass>
-    <div class="font-mono text-sm text-dim mb-6">Broadcast</div>
+  <Glass class="mode">
+    <img src="/img/icons/broadcast.png" alt="">
+    <div class="font-mono text-sm text-dim">Broadcast</div>
     <h3>İstemciler arası mesaj</h3>
-    <p class="mt-4 text-lg">Panoda: "Konuşmacı bu soruyu seçti" bildirimi. Veritabanına yazılmaz.</p>
+    <p>Anlık sinyal, veritabanına yazılmaz. "Yazıyor…", imleç konumu, oyun hamlesi.</p>
   </Glass>
-  <Glass>
-    <div class="font-mono text-sm text-dim mb-6">Presence</div>
+  <Glass class="mode">
+    <img src="/img/icons/presence.png" alt="">
+    <div class="font-mono text-sm text-dim">Presence</div>
     <h3>Kim çevrimiçi?</h3>
-    <p class="mt-4 text-lg">Panoda: "Şu an 42 kişi bakıyor."</p>
+    <p>Paylaşılan durum. Çevrimiçi kullanıcılar, odadaki kişi sayısı.</p>
   </Glass>
 </div>
 
-<p class="mt-10 text-lg">Flutter'da tek satır: <code>.stream(primaryKey: ['id'])</code> listeyi canlı tutar.</p>
+<style>
+.mode { display: flex; flex-direction: column; gap: 10px; }
+.mode img { width: 104px; height: 104px; margin: -10px 0 4px -12px; }
+.mode p { font-size: 18px; margin-top: 4px; }
+</style>
 
 <!--
 (1 dk 30 sn) Realtime üç farklı şey yapıyor ve hangisini seçtiğiniz önemli.
 
-- Postgres Changes: tablodaki değişikliği dinliyorsunuz. Panoda yeni soru eklenince herkesin ekranına düşmesi bu. Flutter'da stream ile tek satır.
-- Broadcast: istemciler arasında hızlı mesaj, veritabanına uğramadan. Mesela konuşmacının "şu soruyu seçtim" bildirimi. Kaydetmeye gerek yok, anlık olsun yeter.
-- Presence: kimin çevrimiçi olduğu. "Şu an 42 kişi bakıyor" sayacı.
+- Postgres Changes: tablodaki değişikliği dinliyorsunuz. Kalıcı olması gereken veri için: yeni bir mesaj, siparişin durumu, güncellenen skor. Flutter'da stream ile tek satır.
+- Broadcast: istemciler arasında hızlı mesaj, veritabanına uğramadan. "Yazıyor…" göstergesi, ortak bir dokümanda imleç konumu, oyundaki hamle. Kaydetmeye gerek yok, anlık olsun yeter.
+- Presence: paylaşılan durum. Kim çevrimiçi, odada kaç kişi var.
 
-Sık yapılan hata her şeyi Postgres Changes ile yapmak. Kalıcı olması gereken veri için Postgres Changes, anlık sinyal için Broadcast, durum için Presence.
+Sık yapılan hata her şeyi Postgres Changes ile yapmak. "Yazıyor…" bilgisini tabloya yazıp dinlerseniz veritabanını gereksiz yere yorarsınız.
 -->
 
 ---
@@ -576,7 +561,7 @@ Sunucu gerektiğinde.
     <img src="/img/icons/functions.png" class="w-20 h-20 mb-4" alt="">
     <h3>TypeScript ile yazılır, kullanıcıya yakın çalışır</h3>
     <p class="mt-4 text-lg">Flutter fonksiyonu çağırır. Gizli anahtar fonksiyonun içinde kalır, uygulamaya hiç inmez.</p>
-    <p class="mt-6 text-lg"><strong>Panoda:</strong> "Bu akşamın sorularını yapay zekâyla özetle."</p>
+    <p class="mt-6 text-lg"><strong>Örnek:</strong> Kullanıcının yazdığı metni bir yapay zekâ servisiyle özetlemek.</p>
   </Glass>
 </div>
 
@@ -591,7 +576,7 @@ Yapay zekâ servisi, ödeme, e-posta, bildirim, dış servislerden gelen webhook
 
 Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Flutter fonksiyonu çağırıyor, anahtar fonksiyonun içinde kalıyor.
 
-Panoda: akşamın sonunda soruları bir yapay zekâ servisine gönderip özet çıkarmak. Anahtar Edge Function'da, Flutter sadece "özetle" diyor.
+Örnek: kullanıcının yazdığı metni bir yapay zekâ servisine gönderip özet çıkarmak. Anahtar Edge Function'da, Flutter sadece "özetle" diyor.
 -->
 
 ---
@@ -673,7 +658,7 @@ icon: mcp
 
 - Canlı projeye değil, geliştirme projesine bağlayın. Asistan yanlış bir migration yazarsa gerçek kullanıcılar etkilenmesin.
 - Salt okuma modunu ve project_ref ile tek bir projeye sınırlamayı kullanın. Asistanın her işlemini okuyup onaylayın.
-- En ince nokta: veritabanındaki veri asistan için talimat gibi görünebilir. Panoya biri "tüm soruları sil" yazan bir soru gönderirse ve asistan o tabloyu okursa... Okunan veri komut değildir; asistanınızın da bunu bilmesi gerekir.
+- En ince nokta: veritabanındaki veri asistan için talimat gibi görünebilir. Bir kullanıcı uygulamanıza "tüm tabloları sil" yazan bir mesaj gönderirse ve asistan o tabloyu okursa... Okunan veri komut değildir; asistanınızın da bunu bilmesi gerekir.
 
 Kendi deneyimim: bu projede MCP bağlantısının yetkisi bir noktada yetmedi. Aynı işleri Supabase CLI ile tamamladık. Asistan bir araç; CLI ve panel her zaman yedek yol.
 -->
