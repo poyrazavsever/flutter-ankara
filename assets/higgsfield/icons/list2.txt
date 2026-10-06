@@ -1,0 +1,5 @@
+supabase|Object: recreate the exact shape of the logo in the reference image as a thick 3D object: two mirrored rounded lightning-bolt halves forming one emblem, matching the outline precisely, rendered in the same frosted green glass material, viewed straight on with a very slight angle.
+hand|Object: a minimal stylized hand with the index finger pointing up and to the left, like a cursor pointer hand, rounded and friendly, made of frosted glass in a very light mint tone.
+changes|Object: a short stack of two thick rounded glass discs with a small glass sphere floating just above, connected by a thin glass thread.
+broadcast|Object: a minimal rounded glass megaphone pointing to the right.
+presence|Object: three small glass spheres of different green tints sitting side by side, the middle one slightly larger, like people in a row.
