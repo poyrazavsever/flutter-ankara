@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "slides",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["slides/node_modules/@slidev/cli/bin/slidev.mjs", "slides/slides.md", "--port", "3030"],
+      "port": 3030
+    }
+  ]
+}
