@@ -2,7 +2,7 @@
 title: Flutter ile Uçtan Uca Uygulama
 info: Flutter Ankara — Auth, Database ve Realtime
 layout: cover
-image: /img/cover-a.png
+image: /img/cover-a.jpg
 aspectRatio: 16/9
 canvasWidth: 1280
 colorSchema: light
@@ -27,117 +27,797 @@ Auth, Database ve Realtime
       <span class="pill"><span class="dot dot--flutter"></span> Flutter</span>
       <span class="pill"><span class="dot dot--accent"></span> Supabase</span>
     </div>
-    <span class="text-muted font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
+    <span class="text-dim font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
   </div>
 </template>
 
----
-layout: section
-image: /img/sections/supabase.png
-time: 02:00–05:00
----
+<!--
+(20 sn) Merhaba, ben Poyraz. Kısaca kendimi tanıtıyorum.
 
-# Supabase ne sağlıyor?
-
-Soru panosunun arkasındaki beş parça.
+Bugün Flutter ile yaptığımız bir uygulamaya kullanıcı, veri ve gerçek zamanlı güncelleme kazandırmayı konuşacağız. Bunu Supabase üzerinden yapacağız.
+-->
 
 ---
----
 
-## Her parçanın panoda bir karşılığı var
-
-<div class="grid grid-cols-5 gap-5 mt-4">
-  <Glass tone="accent">
-    <img class="part-icon" src="/img/icons/database.png" alt="">
-    <h3>Database</h3>
-    <p class="mt-3">Soruların saklanması</p>
-  </Glass>
-  <Glass tone="accent">
-    <img class="part-icon" src="/img/icons/auth.png" alt="">
-    <h3>Auth</h3>
-    <p class="mt-3">Soruyu gönderen kullanıcının tanınması</p>
-  </Glass>
-  <Glass tone="accent">
-    <img class="part-icon" src="/img/icons/realtime.png" alt="">
-    <h3>Realtime</h3>
-    <p class="mt-3">Yeni soruların açık ekranlara ulaşması</p>
-  </Glass>
-  <Glass>
-    <img class="part-icon dim" src="/img/icons/storage.png" alt="">
-    <h3 class="text-muted">Storage</h3>
-    <p class="mt-3">İleride görsel ve dosya</p>
-  </Glass>
-  <Glass>
-    <img class="part-icon dim" src="/img/icons/functions.png" alt="">
-    <h3 class="text-muted">Edge Functions</h3>
-    <p class="mt-3">İleride gizli anahtarlı işlemler</p>
-  </Glass>
-</div>
-
-<p class="mt-10 text-lg">İlk üçünü <strong>canlı göstereceğiz</strong>, son ikisinin nerede devreye girdiğini sonra konumlandıracağız.</p>
-
-<style>
-.part-icon { width: 96px; height: 96px; margin: -8px 0 20px -10px; }
-.part-icon.dim { opacity: 0.55; filter: saturate(0.4); }
-</style>
-
----
----
-
-## Bağlantı tek yerde kurulur
-
-<div class="grid grid-cols-[1.4fr_1fr] gap-10 items-start">
-
-```dart {all|4-7|10}
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-Future<void> main() async {
-  await Supabase.initialize(
-    url: 'https://<project-ref>.supabase.co',
-    anonKey: 'sb_publishable_...',
-  );
-  runApp(const SoruPanosu());
-}
-
-final supabase = Supabase.instance.client;
-```
-
-<div class="flex flex-col gap-4">
-  <Glass pad="sm">
-    <div class="text-accent font-mono text-sm mb-1">url</div>
-    <p class="text-base">Projenin adresi</p>
-  </Glass>
-  <Glass pad="sm">
-    <div class="text-accent font-mono text-sm mb-1">publishable key</div>
-    <p class="text-base">İstemcide kullanılabilir, erişimi <strong>RLS</strong> sınırlar</p>
-  </Glass>
-  <Glass pad="sm" tone="deny">
-    <div class="text-deny font-mono text-sm mb-1">secret key</div>
-    <p class="text-base">Flutter uygulamasına asla konmaz</p>
-  </Glass>
-</div>
-
-</div>
-
----
----
-
-## Giriş yaptı, peki ne yapabilir?
+## Bu akşamın uygulaması: Soru Panosu
 
 <div class="grid grid-cols-2 gap-8 mt-2">
-  <Glass tone="flutter" pad="lg">
-    <div class="font-mono text-sm text-flutter mb-6">ARAYÜZ</div>
-    <h3>Sil butonunu gizlemek</h3>
-    <p class="mt-4">Kullanıcıya ne göstereceğimize karar verir. İstek yine de gönderilebilir.</p>
+  <div>
+    <BoardMock user="Ayşe" />
+    <p class="mt-4 text-base text-center">Ayşe'nin ekranı</p>
+  </div>
+  <div>
+    <BoardMock user="Mehmet" highlight />
+    <p class="mt-4 text-base text-center">Mehmet'in ekranı: soru yenilemeden düştü</p>
+  </div>
+</div>
+
+<!--
+(40 sn) Bütün sunum boyunca tek bir uygulama üzerinden konuşacağız: Flutter Ankara Soru Panosu.
+
+- Giriş yapıyorsunuz, konuşmacıya soru gönderiyorsunuz.
+- Soru, açık olan herkesin ekranına yenilemeden düşüyor.
+- Kendi sorunuzu silebiliyorsunuz, başkasınınkini silemiyorsunuz.
+
+Arayüz Flutter. Arkasındaki her şey Supabase. Sonunda bu projeyi QR ile paylaşacağım.
+-->
+
+---
+
+<div class="h-full flex flex-col justify-center max-w-[980px]">
+  <h1 class="thesis">Supabase'i ne kadar iyi tanırsan, sınırlarını ne kadar iyi bilirsen projeni o kadar iyi kurarsın.</h1>
+  <div class="grid grid-cols-4 gap-4 mt-14">
+    <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">1</div><h3 class="text-xl">Ne yapar?</h3></Glass>
+    <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">2</div><h3 class="text-xl">Nasıl çalışır?</h3></Glass>
+    <Glass pad="sm"><div class="text-dim font-mono text-sm mb-2">3</div><h3 class="text-xl">Panoda karşılığı?</h3></Glass>
+    <Glass pad="sm" tone="deny"><div class="text-deny font-mono text-sm mb-2">4</div><h3 class="text-xl">Sınırı ne?</h3></Glass>
+  </div>
+</div>
+
+<style>
+.thesis { font-size: 52px !important; line-height: 1.12 !important; letter-spacing: -0.035em !important; }
+</style>
+
+<!--
+(40 sn) Bugünün tezi bu.
+
+Supabase'in birçok servisi var ve hepsini kullanmak çok kolay. Ama projede sizi zorlayacak şey kolay kısım değil, sınırlar: e-posta limiti, dosya boyutu, bağlantı sayısı, hangi anahtarın nereye konduğu.
+
+Her servisi bu dört soruyla geçeceğiz. Dördüncü soru, yani sınırlar, her bölümün sonunda aynı görünümde karşınıza çıkacak.
+-->
+
+---
+layout: section
+image: /img/sections/supabase.jpg
+time: 02:00
+---
+
+# Supabase nedir?
+
+Bir veritabanı ve etrafındaki servisler.
+
+<!--
+(5 sn) Önce büyük resme bakalım.
+-->
+
+---
+
+## Merkezde Postgres var
+
+<div class="map">
+  <Glass class="map__api" pad="sm">
+    <span class="font-mono text-sm text-accent">Data API</span>
+    <span class="text-muted text-base">Tablo açtığın an Flutter'dan erişilebilir</span>
   </Glass>
+  <div class="map__col">
+    <Glass pad="sm" class="map__svc"><img src="/img/icons/auth.png" alt=""><div><h3>Auth</h3><p>Kullanıcılar ve oturum</p></div></Glass>
+    <Glass pad="sm" class="map__svc"><img src="/img/icons/storage.png" alt=""><div><h3>Storage</h3><p>Dosyalar</p></div></Glass>
+  </div>
+  <Glass tone="accent" pad="lg" class="map__core">
+    <img src="/img/icons/database.png" alt="">
+    <h3>Postgres</h3>
+    <p>Gerçek, tam bir veritabanı. Her projenin kendi örneği.</p>
+  </Glass>
+  <div class="map__col">
+    <Glass pad="sm" class="map__svc"><img src="/img/icons/realtime.png" alt=""><div><h3>Realtime</h3><p>Anlık güncellemeler</p></div></Glass>
+    <Glass pad="sm" class="map__svc"><img src="/img/icons/functions.png" alt=""><div><h3>Edge Functions</h3><p>Sunucu tarafı kod</p></div></Glass>
+  </div>
+</div>
+
+<p class="mt-6 text-base">Açık kaynak. İstersen kendi sunucunda da çalıştırabilirsin.</p>
+
+<style>
+.map { display: grid; grid-template-columns: 1fr 1.1fr 1fr; grid-template-rows: auto 1fr; gap: 18px; }
+.map__api { grid-column: 1 / -1; display: flex; gap: 18px; align-items: center; justify-content: center; }
+.map__col { display: flex; flex-direction: column; gap: 18px; }
+.map__svc { display: flex; align-items: center; gap: 14px; }
+.map__svc img { width: 64px; height: 64px; }
+.map__svc h3 { font-size: 22px; }
+.map__svc p { font-size: 16px; }
+.map__core { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.map__core img { width: 110px; height: 110px; margin-bottom: 8px; }
+.map__core p { font-size: 17px; margin-top: 8px; }
+</style>
+
+<!--
+(1 dk 30 sn) Supabase'i "Firebase alternatifi" diye duymuş olabilirsiniz ama mimarisi farklı.
+
+- Merkezde gerçek bir Postgres veritabanı var. Her projenin kendine ait.
+- Tablo oluşturduğunuz an önünde otomatik bir API hazır oluyor. Flutter bu API ile konuşuyor, ayrı bir backend yazmıyorsunuz.
+- Etrafında dört servis var: kullanıcılar için Auth, dosyalar için Storage, anlık güncellemeler için Realtime, sunucu tarafı kod için Edge Functions.
+
+Önemli nokta: bu servislerin çoğu yine Postgres'e dayanıyor. Kullanıcılar da, dosya kayıtları da, erişim kuralları da veritabanında. O yüzden Postgres'i ve RLS'yi anlamak her şeyi anlamanın anahtarı.
+
+Açık kaynak olduğu için istenirse kendi sunucunuzda da çalıştırılabiliyor.
+-->
+
+---
+layout: section
+image: /img/sections/connect.jpg
+time: 04:00
+---
+
+# Flutter'a bağlanmak
+
+Üç adım ve iki anahtar.
+
+---
+
+## Üç adımda bağlantı
+
+<div class="grid grid-cols-3 gap-6">
+  <Glass>
+    <div class="step">1</div>
+    <h3>Paketi ekle</h3>
+    <p class="mt-3 text-lg"><code>supabase_flutter</code> paketi Auth, Database, Storage ve Realtime'ı tek istemcide toplar.</p>
+  </Glass>
+  <Glass>
+    <div class="step">2</div>
+    <h3>Adresi ve anahtarı al</h3>
+    <p class="mt-3 text-lg">Supabase panelinden proje URL'si ve publishable key.</p>
+  </Glass>
+  <Glass>
+    <div class="step">3</div>
+    <h3>Başlat</h3>
+    <p class="mt-3 text-lg">Uygulama açılırken bir kez. Sonra her yerden aynı istemci.</p>
+  </Glass>
+</div>
+
+<div class="mt-8">
+
+```dart
+await Supabase.initialize(
+  url: 'https://<proje>.supabase.co',
+  anonKey: 'sb_publishable_...',
+);
+```
+
+</div>
+
+<style>
+.step { font-family: var(--font-mono); font-size: 14px; color: var(--accent-ink); margin-bottom: 28px; }
+</style>
+
+<!--
+(1 dk) Flutter tarafı gerçekten bu kadar.
+
+1. supabase_flutter paketini ekliyorsunuz. Auth, veritabanı, dosyalar, realtime hepsi bu paketin içinde.
+2. Supabase panelinden iki şey alıyorsunuz: proje adresi ve publishable key.
+3. Uygulama açılırken bir kez initialize ediyorsunuz. Sonra uygulamanın her yerinden aynı istemciyi kullanıyorsunuz.
+
+Asıl soru şu: bu anahtar ne? Uygulamanın içine koyuyoruz, yani herkes görebilir. Bu güvenli mi?
+-->
+
+---
+
+## Anahtarlar ne işe yarar?
+
+<div class="grid grid-cols-3 gap-6">
+  <Glass>
+    <div class="font-mono text-sm text-dim mb-6">URL</div>
+    <h3>Projenin adresi</h3>
+    <p class="mt-3 text-lg">İsteklerin gideceği yer. Gizli değil.</p>
+  </Glass>
+  <Glass tone="accent">
+    <div class="font-mono text-sm text-accent mb-6">sb_publishable_…</div>
+    <h3>Publishable key</h3>
+    <p class="mt-3 text-lg">Uygulamaya gömülür, herkes görebilir. <strong>Kimseyi yetkilendirmez.</strong> Neyin görüleceğine RLS karar verir.</p>
+  </Glass>
+  <Glass tone="deny">
+    <div class="font-mono text-sm text-deny mb-6">sb_secret_…</div>
+    <h3>Secret key</h3>
+    <p class="mt-3 text-lg"><strong>RLS'yi atlar.</strong> Yalnızca sunucuda ve Edge Functions'ta. Flutter uygulamasına asla.</p>
+  </Glass>
+</div>
+
+<Glass pad="sm" class="mt-8 flex items-center gap-4">
+  <span class="font-mono text-sm text-dim">Eski adları</span>
+  <span class="text-muted text-lg"><code>anon</code> = publishable · <code>service_role</code> = secret</span>
+</Glass>
+
+<!--
+(1 dk) Üç değer var, üçünün de görevi farklı.
+
+- URL sadece adres, gizli bir şey değil.
+- Publishable key uygulamanın içine gömülüyor. APK'yı açan herkes bunu görebilir ve bu sorun değil. Çünkü bu anahtar kimseyi yetkilendirmiyor, sadece "bu proje için gelen bir istek" diyor. Kimin neyi görebileceğine veritabanındaki kurallar, yani RLS karar veriyor.
+- Secret key ise tam yetkili. RLS'yi atlıyor. Bu yüzden sadece sunucuda ya da Edge Functions içinde durur. Flutter uygulamasına konursa uygulamayı indiren herkes veritabanınızın tamamına erişir.
+
+Eski projelerde ve eğitimlerde anon ve service_role adlarını göreceksiniz. Aynı roller, yeni adları bunlar.
+-->
+
+---
+layout: section
+image: /img/sections/database.jpg
+time: 06:00
+---
+
+# Database
+
+Gerçek Postgres, otomatik API, kurallar veritabanında.
+
+---
+
+## Tablo aç, API hazır
+
+<div class="grid grid-cols-[1fr_1.1fr] gap-10 items-center">
+  <div class="flex flex-col gap-5">
+    <Glass pad="sm"><h3 class="text-xl">Gerçek Postgres</h3><p class="mt-2 text-lg">İlişkiler, indeksler, view'lar, fonksiyonlar, eklentiler. Bildiğin SQL.</p></Glass>
+    <Glass pad="sm"><h3 class="text-xl">Otomatik Data API</h3><p class="mt-2 text-lg">Tablo oluşturduğun an Flutter'dan okuma ve yazma yapılabilir.</p></Glass>
+    <Glass pad="sm"><h3 class="text-xl">Studio</h3><p class="mt-2 text-lg">Tabloları tarayıcıdan tablo düzenler gibi yönet.</p></Glass>
+  </div>
   <Glass tone="accent" pad="lg">
-    <div class="font-mono text-sm text-accent mb-6">VERİTABANI</div>
-    <h3>Silme isteğini reddetmek</h3>
-    <p class="mt-4">Kural Postgres'te çalışır. İstek nereden gelirse gelsin geçerlidir.</p>
+    <div class="font-mono text-sm text-accent mb-5">Panoda: questions</div>
+    <div class="cols">
+      <div><span>id</span><span>uuid</span></div>
+      <div><span>user_id</span><span>soruyu kim sordu</span></div>
+      <div><span>author_name</span><span>görünen ad</span></div>
+      <div><span>content</span><span>1–280 karakter</span></div>
+      <div><span>created_at</span><span>zaman</span></div>
+    </div>
   </Glass>
+</div>
+
+<style>
+.cols > div { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 19px; }
+.cols > div:last-child { border-bottom: 0; }
+.cols span:first-child { font-family: var(--font-mono); color: var(--text); }
+.cols span:last-child { color: var(--text-muted); }
+</style>
+
+<!--
+(1 dk) Supabase'in veritabanı gerçek bir Postgres. Bildiğiniz her şey geçerli: ilişkiler, indeksler, fonksiyonlar, pgvector gibi eklentiler.
+
+Fark şurada: tabloyu oluşturduğunuz anda önünde bir API hazır. Flutter'dan "questions tablosuna şunu ekle", "son 50 soruyu getir" diyebiliyorsunuz. Ayrı bir sunucu yazmıyorsunuz.
+
+Panodaki tablo bu kadar basit: kim sordu, ne sordu, ne zaman sordu. Uzunluk kontrolü bile veritabanında: 280 karakterden uzun soru kaydedilmiyor.
+
+Ama burada bir soru doğuyor: API herkese açıksa, birinin başkasının sorusunu silmesini ne engelliyor?
+-->
+
+---
+
+## RLS: kapı veritabanında
+
+<div class="grid grid-cols-[1fr_1.15fr] gap-10 items-start">
+  <div class="flex flex-col gap-4">
+    <Glass pad="sm" class="rule"><span class="rule__n">1</span><span>Giriş yapan herkes soruları <strong>okuyabilir</strong></span></Glass>
+    <Glass pad="sm" class="rule"><span class="rule__n">2</span><span>Yalnızca <strong>kendi adına</strong> soru ekleyebilir</span></Glass>
+    <Glass pad="sm" class="rule" tone="accent"><span class="rule__n">3</span><span>Yalnızca <strong>kendi sorusunu</strong> silebilir</span></Glass>
+  </div>
+  <div>
+
+```sql
+create policy "Kendi sorusunu silebilir"
+on questions for delete
+to authenticated
+using ( auth.uid() = user_id );
+```
+
+  <p class="mt-6 text-lg">Sil butonunu gizlemek <strong>arayüz davranışıdır</strong>.<br>Silme isteğini reddetmek <strong>erişim kontrolüdür</strong>.</p>
+  </div>
 </div>
 
 <Glass tone="deny" pad="sm" class="mt-8 flex items-center gap-4">
-  <span class="text-deny font-mono">⛔ 0 satır silindi</span>
-  <span class="text-muted">Mehmet, Ayşe'nin sorusunu silmeye çalıştı. RLS izin vermedi.</span>
+  <span class="text-deny font-mono">0 satır silindi</span>
+  <span class="text-muted text-lg">Başkasının sorusunu silmeye çalışınca <strong>hata gelmez</strong>, işlem sessizce boşa düşer. Sonucu kontrol et.</span>
 </Glass>
+
+<style>
+.rule { display: flex; align-items: center; gap: 16px; font-size: 20px; color: var(--text-muted); }
+.rule__n { font-family: var(--font-mono); font-size: 14px; color: var(--accent-ink); }
+</style>
+
+<!--
+(1 dk 30 sn) Cevap: Row Level Security, kısaca RLS. Satır bazında erişim kuralları ve bu kurallar veritabanında çalışıyor.
+
+Panonun üç kuralı var: giriş yapan herkes okuyabilir, herkes sadece kendi adına soru ekleyebilir, herkes sadece kendi sorusunu silebilir.
+
+Üçüncü kural SQL'de böyle görünüyor. "Silmek isteyen kullanıcının kimliği, satırdaki user_id ile aynıysa izin ver." auth.uid() o anki kullanıcıyı veriyor. Bunu birazdan Auth'ta tekrar göreceğiz.
+
+Buradaki ana mesaj: Flutter'da Sil butonunu sadece kendi sorunuzda göstermek güzel bir arayüz davranışı ama güvenlik değil. Biri isteği kendisi gönderebilir. Asıl kapı veritabanında.
+
+Bir de tuzak var. Başkasının sorusunu silmeye çalıştığınızda hata almıyorsunuz. Kural o satırı görünmez yapıyor ve işlem 0 satırı etkiliyor. Bunu bu projede gerçek istekle denedim. Yani "hata gelmedi, demek ki silindi" diye düşünmeyin; dönen sonucu kontrol edin.
+-->
+
+---
+layout: limits
+service: Database
+icon: database
+---
+
+<Limit value="RLS kapalı">Kural yazılmamış tablo, publishable key'i bilen herkese açık bir kapıdır. <strong>Security Advisor</strong> uyarır; her tabloda RLS açık olsun.</Limit>
+<Limit value="500 MB">Ücretsiz planda veritabanı boyutu. <strong>Otomatik yedekleme yok.</strong></Limit>
+<Limit value="1 hafta">Hareketsiz kalan ücretsiz proje <strong>duraklatılır</strong>. Aynı anda en fazla 2 aktif ücretsiz proje.</Limit>
+
+<!--
+(30 sn) İlk "sınırlar" slaydımız. Her serviste bu görünümle karşılaşacaksınız.
+
+- En önemlisi: RLS'si kapalı bir tablo, publishable key'i bilen herkese açık. Supabase panelindeki Security Advisor bunu yakalar, düzenli çalıştırın.
+- Ücretsiz planda 500 MB veritabanı var ve otomatik yedek yok.
+- Bir hafta kullanılmayan ücretsiz proje duraklatılıyor. Demo projeniz sunumdan önce uyumuş olabilir, buna dikkat edin.
+-->
+
+---
+layout: section
+image: /img/sections/auth.jpg
+time: 09:00
+---
+
+# Auth
+
+Bu kullanıcı kim?
+
+---
+
+## Giriş yöntemleri ve oturum
+
+<div class="grid grid-cols-[1.1fr_1fr] gap-10 items-start">
+  <div>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="pill auth-pill">E-posta + şifre</div>
+      <div class="pill auth-pill">Magic link</div>
+      <div class="pill auth-pill">Tek kullanımlık kod (OTP)</div>
+      <div class="pill auth-pill">Google, Apple, GitHub…</div>
+      <div class="pill auth-pill">Anonim giriş</div>
+      <div class="pill auth-pill">İki adımlı doğrulama (MFA)</div>
+    </div>
+    <p class="mt-8 text-lg">Panoda: soruyu <strong>kimin</strong> gönderdiği. Demo hesapları Ayşe ve Mehmet.</p>
+  </div>
+  <Glass tone="accent" pad="lg">
+    <div class="flow">
+      <div class="flow__step"><span class="font-mono text-sm text-dim">giriş</span><span>Kullanıcı giriş yapar</span></div>
+      <div class="flow__arrow">↓</div>
+      <div class="flow__step"><span class="font-mono text-sm text-dim">oturum</span><span>İstemci bir <strong>JWT</strong> taşır</span></div>
+      <div class="flow__arrow">↓</div>
+      <div class="flow__step"><span class="font-mono text-sm text-accent">RLS</span><span><code>auth.uid()</code> = bu kullanıcı</span></div>
+    </div>
+  </Glass>
+</div>
+
+<style>
+.auth-pill { font-family: var(--font-sans); font-size: 17px; padding: 12px 18px; border-radius: 14px; justify-content: flex-start; }
+.flow { display: flex; flex-direction: column; gap: 6px; }
+.flow__step { display: flex; flex-direction: column; gap: 4px; font-size: 20px; color: var(--text-muted); }
+.flow__arrow { color: var(--text-dim); padding-left: 4px; }
+</style>
+
+<!--
+(1 dk 30 sn) Authentication sorusu: bu kullanıcı kim? Authorization sorusu ise: bu kullanıcı ne yapabilir? İkincisine RLS cevap veriyordu, birincisine Auth.
+
+Supabase'te hazır gelen giriş yöntemleri: e-posta ve şifre, e-postaya gelen link, tek kullanımlık kod, Google, Apple, GitHub gibi sağlayıcılar, anonim giriş ve iki adımlı doğrulama.
+
+Bağlantı şöyle: kullanıcı giriş yapınca istemci bir oturum alıyor. Bu oturum bir JWT. Sonraki her istekte bu token gidiyor ve veritabanındaki auth.uid() bu kullanıcıyı gösteriyor. Yani az önceki RLS kuralı ile Auth burada birleşiyor.
+
+Flutter tarafında oturumu paket yönetiyor; token yenileme, saklama gibi işleri siz yazmıyorsunuz.
+-->
+
+---
+layout: limits
+service: Auth
+icon: auth
+---
+
+<Limit value="2 e-posta/saat">Hazır e-posta sağlayıcısı yalnızca deneme içindir. Gerçek projede <strong>kendi SMTP'ni bağla</strong> (Resend, SES, Postmark…).</Limit>
+<Limit value="Deep link">Mobilde OAuth ve e-posta doğrulaması uygulamaya geri dönmek için <strong>redirect URL ve deep link</strong> ayarı ister.</Limit>
+<Limit value="50.000" tone="neutral">Ücretsiz planda aylık aktif kullanıcı. Toplam kullanıcı sayısı sınırsız.</Limit>
+
+<!--
+(1 dk) Auth'un en çok can yakan sınırı ilki: Supabase'in hazır e-posta sağlayıcısı saatte sadece 2 e-posta gönderiyor. Kayıt onayı, şifre sıfırlama, magic link, hepsi buna dahil. Lansman günü 50 kişi kayıt olursa 48'i e-posta alamaz. Gerçek projede mutlaka kendi SMTP sağlayıcınızı bağlayın.
+
+İkincisi mobil özel: Google ile giriş ya da e-postadaki link, kullanıcıyı uygulamaya geri getirmeli. Bunun için redirect URL ve deep link ayarı gerekiyor. Unutulursa link tarayıcıda açılıp kalıyor.
+
+Ücretsiz planda aylık 50 bin aktif kullanıcı var; çoğu proje için fazlasıyla yeterli.
+-->
+
+---
+layout: section
+image: /img/sections/storage.jpg
+time: 12:00
+---
+
+# Storage
+
+Dosyalar ve onlara kimin erişeceği.
+
+---
+
+## Bucket'lar ve erişim
+
+<div class="grid grid-cols-2 gap-8">
+  <Glass pad="lg">
+    <div class="font-mono text-sm text-dim mb-6">Public bucket</div>
+    <h3>Herkes URL ile görür</h3>
+    <p class="mt-4 text-lg">Profil fotoğrafı, etkinlik afişi gibi zaten herkese açık dosyalar.</p>
+  </Glass>
+  <Glass tone="accent" pad="lg">
+    <div class="font-mono text-sm text-accent mb-6">Private bucket</div>
+    <h3>Erişimi yine RLS belirler</h3>
+    <p class="mt-4 text-lg">Dosya kayıtları da Postgres'te. Paylaşmak için süreli <strong>imzalı URL</strong> üretilir.</p>
+  </Glass>
+</div>
+
+<Glass pad="sm" class="mt-8 flex items-center gap-4">
+  <img src="/img/icons/storage.png" class="w-12 h-12" alt="">
+  <span class="text-muted text-lg">Panoda: "Soruma ekran görüntüsü eklemek istiyorum." Görsel private bucket'a, yalnızca giriş yapanlar görebilir.</span>
+</Glass>
+
+<!--
+(1 dk 15 sn) Diyelim ki kullanıcılar sorularına ekran görüntüsü eklemek istiyor. Burada Storage devreye giriyor.
+
+Dosyalar bucket denen klasörlerde duruyor. İki tür var:
+- Public bucket: URL'yi bilen herkes görür. Profil fotoğrafı, afiş gibi zaten açık dosyalar için.
+- Private bucket: erişimi yine RLS kuralları belirliyor. Çünkü dosyaların kayıtları da Postgres'te bir tabloda tutuluyor. Yani "kullanıcı sadece kendi klasörüne yükleyebilir" kuralını az önceki SQL mantığıyla yazıyorsunuz.
+
+Private dosyayı birine göstermek için süreli, imzalı bir URL üretiyorsunuz. Süre dolunca link çalışmıyor.
+-->
+
+---
+layout: limits
+service: Storage
+icon: storage
+---
+
+<Limit value="50 MB">Ücretsiz planda dosya başına üst sınır. Büyük dosyalar için parçalı (resumable) yükleme var.</Limit>
+<Limit value="1 GB · 5 GB">Ücretsiz planda <strong>depolama</strong> ve <strong>trafik</strong>. Videolar ve büyük görseller trafiği çabuk tüketir.</Limit>
+<Limit value="Ücretli">Görselleri anında boyutlandırma (image transformations) <strong>ücretsiz planda yok</strong>. Küçük resmi istemcide üretmeyi düşün.</Limit>
+
+<!--
+(1 dk 15 sn) Storage'ın sınırları:
+
+- Ücretsiz planda dosya başına 50 MB. Telefondan çekilen bir video bunu kolayca aşar.
+- Toplam 1 GB depolama ve 5 GB trafik var. Trafik daha çabuk biter: 2 MB'lık bir görseli 2500 kez göstermek 5 GB demek.
+- Görselleri sunucuda küçültme özelliği ücretli planlarda. Ücretsiz planda yüklemeden önce Flutter tarafında sıkıştırmak iyi bir alışkanlık.
+-->
+
+---
+layout: section
+image: /img/sections/realtime.jpg
+time: 14:30
+---
+
+# Realtime
+
+Ekranı yenilemeden güncellemek.
+
+---
+
+## Üç mod, üç ihtiyaç
+
+<div class="grid grid-cols-3 gap-6">
+  <Glass tone="accent">
+    <div class="font-mono text-sm text-accent mb-6">Postgres Changes</div>
+    <h3>Tablodaki değişikliği dinle</h3>
+    <p class="mt-4 text-lg">Panoda: yeni soru herkesin ekranına düşer, silinen kaybolur.</p>
+  </Glass>
+  <Glass>
+    <div class="font-mono text-sm text-dim mb-6">Broadcast</div>
+    <h3>İstemciler arası mesaj</h3>
+    <p class="mt-4 text-lg">Panoda: "Konuşmacı bu soruyu seçti" bildirimi. Veritabanına yazılmaz.</p>
+  </Glass>
+  <Glass>
+    <div class="font-mono text-sm text-dim mb-6">Presence</div>
+    <h3>Kim çevrimiçi?</h3>
+    <p class="mt-4 text-lg">Panoda: "Şu an 42 kişi bakıyor."</p>
+  </Glass>
+</div>
+
+<p class="mt-10 text-lg">Flutter'da tek satır: <code>.stream(primaryKey: ['id'])</code> listeyi canlı tutar.</p>
+
+<!--
+(1 dk 30 sn) Realtime üç farklı şey yapıyor ve hangisini seçtiğiniz önemli.
+
+- Postgres Changes: tablodaki değişikliği dinliyorsunuz. Panoda yeni soru eklenince herkesin ekranına düşmesi bu. Flutter'da stream ile tek satır.
+- Broadcast: istemciler arasında hızlı mesaj, veritabanına uğramadan. Mesela konuşmacının "şu soruyu seçtim" bildirimi. Kaydetmeye gerek yok, anlık olsun yeter.
+- Presence: kimin çevrimiçi olduğu. "Şu an 42 kişi bakıyor" sayacı.
+
+Sık yapılan hata her şeyi Postgres Changes ile yapmak. Kalıcı olması gereken veri için Postgres Changes, anlık sinyal için Broadcast, durum için Presence.
+-->
+
+---
+layout: limits
+service: Realtime
+icon: realtime
+---
+
+<Limit value="Yayına ekle">Tablo <strong>Realtime yayınına eklenmezse</strong> hiçbir değişiklik gelmez, hata da gelmez.</Limit>
+<Limit value="Ölçek">Postgres Changes RLS'ye uyar ama her değişiklik her abone için kontrol edilir. Çok kalabalık odalarda <strong>Broadcast</strong>'i düşün.</Limit>
+<Limit value="200 · 2M">Ücretsiz planda <strong>eşzamanlı bağlantı</strong> ve <strong>aylık mesaj</strong>. Mesaj başına en fazla 256 KB.</Limit>
+
+<!--
+(1 dk) Realtime'ın sınırları:
+
+- En sık yaşanan: tabloyu Realtime yayınına eklemeyi unutmak. Kod doğru, ama hiçbir şey gelmiyor ve hata da yok. Bizim migration dosyamızda bu tek bir satır.
+- Postgres Changes güvenli: RLS'ye uyuyor, kullanıcı göremeyeceği satırın değişikliğini almıyor. Ama bunun bedeli var; her değişiklik her abone için kontrol ediliyor. Bin kişilik bir odada Broadcast daha uygun.
+- Ücretsiz planda aynı anda 200 bağlantı. Bu salondaki herkes panoyu açsa sınıra yaklaşırız.
+-->
+
+---
+layout: section
+image: /img/sections/functions.jpg
+time: 17:00
+---
+
+# Edge Functions
+
+Sunucu gerektiğinde.
+
+---
+
+## Gizli anahtar gereken her iş
+
+<div class="grid grid-cols-[1fr_1.1fr] gap-10 items-center">
+  <div class="flex flex-col gap-4">
+    <Glass pad="sm" class="rule"><span>Yapay zekâ servisi çağırmak</span></Glass>
+    <Glass pad="sm" class="rule"><span>Ödeme almak</span></Glass>
+    <Glass pad="sm" class="rule"><span>E-posta veya bildirim göndermek</span></Glass>
+    <Glass pad="sm" class="rule"><span>Dış servislerden webhook almak</span></Glass>
+  </div>
+  <Glass tone="accent" pad="lg">
+    <img src="/img/icons/functions.png" class="w-20 h-20 mb-4" alt="">
+    <h3>TypeScript ile yazılır, kullanıcıya yakın çalışır</h3>
+    <p class="mt-4 text-lg">Flutter fonksiyonu çağırır. Gizli anahtar fonksiyonun içinde kalır, uygulamaya hiç inmez.</p>
+    <p class="mt-6 text-lg"><strong>Panoda:</strong> "Bu akşamın sorularını yapay zekâyla özetle."</p>
+  </Glass>
+</div>
+
+<style>
+.rule { display: flex; align-items: center; gap: 16px; font-size: 20px; color: var(--text); }
+</style>
+
+<!--
+(1 dk) Şimdiye kadar her şeyi Flutter'dan doğrudan yaptık. Peki ne zaman bir sunucu gerekir? Cevap basit: gizli bir anahtar gerektiğinde.
+
+Yapay zekâ servisi, ödeme, e-posta, bildirim, dış servislerden gelen webhook'lar. Bunların hepsinin bir gizli anahtarı var ve o anahtar Flutter uygulamasına giremez.
+
+Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Flutter fonksiyonu çağırıyor, anahtar fonksiyonun içinde kalıyor.
+
+Panoda: akşamın sonunda soruları bir yapay zekâ servisine gönderip özet çıkarmak. Anahtar Edge Function'da, Flutter sadece "özetle" diyor.
+-->
+
+---
+layout: limits
+service: Edge Functions
+icon: functions
+---
+
+<Limit value="2 sn CPU">İstek başına işlemci süresi. Bekleme (ağ, veritabanı) buna dahil değil. Ağır hesaplama için uygun değil.</Limit>
+<Limit value="150 sn">Ücretsiz planda bir fonksiyonun en uzun çalışma süresi (ücretli planda 400 sn). <strong>Uzun işler için kuyruk</strong> düşün.</Limit>
+<Limit value="500.000" tone="neutral">Ücretsiz planda aylık çağrı. 256 MB bellek.</Limit>
+
+<!--
+(1 dk) Edge Functions kısa ve hızlı işler için.
+
+- İstek başına 2 saniye işlemci süresi var. Dikkat: bir yapay zekâ servisinden cevap beklemek buna sayılmıyor, çünkü o sırada işlemci boşta. Ama video işlemek gibi ağır hesaplama uygun değil.
+- Ücretsiz planda bir fonksiyon en fazla 150 saniye çalışabiliyor. Daha uzun işler için bir kuyruk sistemi düşünmek gerekiyor.
+- Ayda 500 bin çağrı ücretsiz.
+-->
+
+---
+layout: section
+image: /img/sections/mcp.jpg
+time: 19:00
+---
+
+# Supabase MCP
+
+Projeyi yapay zekâ asistanıyla yönetmek.
+
+---
+
+## Asistan neler yapabilir?
+
+<div class="grid grid-cols-[1fr_1.2fr] gap-10 items-center">
+  <Glass tone="accent" pad="lg" class="text-center">
+    <img src="/img/icons/mcp.png" class="w-24 h-24 mx-auto mb-4" alt="">
+    <h3>Model Context Protocol</h3>
+    <p class="mt-3 text-lg">Claude, Cursor gibi asistanları Supabase projene bağlayan standart.</p>
+  </Glass>
+  <div class="grid grid-cols-2 gap-3">
+    <Glass pad="sm" class="cap">Tabloları listele</Glass>
+    <Glass pad="sm" class="cap">Migration uygula</Glass>
+    <Glass pad="sm" class="cap">SQL çalıştır</Glass>
+    <Glass pad="sm" class="cap">Güvenlik denetimi</Glass>
+    <Glass pad="sm" class="cap">Log sorgula</Glass>
+    <Glass pad="sm" class="cap">Edge Function yayınla</Glass>
+    <Glass pad="sm" class="cap">Tip üret</Glass>
+    <Glass pad="sm" class="cap">Dokümanda ara</Glass>
+  </div>
+</div>
+
+<style>
+.cap { font-size: 19px; color: var(--text); }
+</style>
+
+<!--
+(1 dk 30 sn) Son servis aslında bir servis değil, bir çalışma şekli.
+
+MCP, yapay zekâ asistanlarını dış sistemlere bağlayan bir standart. Supabase'in resmi bir MCP sunucusu var. Claude, Cursor gibi bir asistana bağladığınızda ona doğal dille "questions tablosu oluştur, RLS kurallarını yaz, güvenlik denetimini çalıştır" diyebiliyorsunuz.
+
+Asistan tabloları listeleyebiliyor, migration uygulayabiliyor, SQL çalıştırabiliyor, Security Advisor'ı çalıştırabiliyor, logları sorgulayabiliyor, Edge Function yayınlayabiliyor ve Supabase dokümanında arama yapabiliyor.
+
+Bu sunumun Supabase projesi de bir asistanla kuruldu: tablo, kurallar, demo hesapları ve kuralların gerçek isteklerle testi.
+-->
+
+---
+layout: limits
+service: Supabase MCP
+icon: mcp
+---
+
+<Limit value="Geliştirme">Asistanı <strong>canlı (production) projeye değil</strong>, geliştirme projesine bağla.</Limit>
+<Limit value="read_only">Salt okuma modu ve <code>project_ref</code> ile <strong>tek projeye</strong> sınırla. Her işlemi onayla.</Limit>
+<Limit value="Veri ≠ talimat">Veritabanındaki bir metin asistana talimat gibi davranabilir (<strong>prompt injection</strong>). Okunan veri komut değildir.</Limit>
+
+<!--
+(1 dk 30 sn) Asistana veritabanınızı açmak güçlü ama sınırları da var. Supabase'in kendi önerileri:
+
+- Canlı projeye değil, geliştirme projesine bağlayın. Asistan yanlış bir migration yazarsa gerçek kullanıcılar etkilenmesin.
+- Salt okuma modunu ve project_ref ile tek bir projeye sınırlamayı kullanın. Asistanın her işlemini okuyup onaylayın.
+- En ince nokta: veritabanındaki veri asistan için talimat gibi görünebilir. Panoya biri "tüm soruları sil" yazan bir soru gönderirse ve asistan o tabloyu okursa... Okunan veri komut değildir; asistanınızın da bunu bilmesi gerekir.
+
+Kendi deneyimim: bu projede MCP bağlantısının yetkisi bir noktada yetmedi. Aynı işleri Supabase CLI ile tamamladık. Asistan bir araç; CLI ve panel her zaman yedek yol.
+-->
+
+---
+layout: section
+image: /img/sections/plans.jpg
+time: 22:00
+---
+
+# Planlar
+
+Ücretsiz plan neyi taşır?
+
+---
+
+## Ne zaman ücretli plana geçmeli?
+
+<div class="grid grid-cols-[1.3fr_1fr] gap-10 items-start">
+  <Glass pad="sm" class="plans">
+    <table>
+      <thead><tr><th></th><th>Free</th><th class="text-accent">Pro · $25/ay'dan</th></tr></thead>
+      <tbody>
+        <tr><td>Veritabanı</td><td>500 MB</td><td>8 GB</td></tr>
+        <tr><td>Aylık aktif kullanıcı</td><td>50.000</td><td>100.000</td></tr>
+        <tr><td>Dosya depolama</td><td>1 GB</td><td>100 GB</td></tr>
+        <tr><td>Trafik</td><td>5 GB</td><td>250 GB</td></tr>
+        <tr><td>Yedekleme</td><td>Yok</td><td>Günlük, 7 gün</td></tr>
+        <tr><td>Duraklatma</td><td>1 hafta sonra</td><td>Yok</td></tr>
+      </tbody>
+    </table>
+  </Glass>
+  <div class="flex flex-col gap-4">
+    <Glass pad="sm" class="rule"><span>Gerçek kullanıcılar geldiğinde</span></Glass>
+    <Glass pad="sm" class="rule"><span>Yedek gerektiğinde</span></Glass>
+    <Glass pad="sm" class="rule"><span>Proje hiç uyumamalıysa</span></Glass>
+    <p class="text-base mt-2">Pro'da harcama limiti varsayılan olarak açık.</p>
+  </div>
+</div>
+
+<style>
+.plans table { width: 100%; border-collapse: collapse; font-size: 19px; }
+.plans th { text-align: left; font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--text-dim); padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.plans td { padding: 12px 14px; border-bottom: 1px solid var(--line); color: var(--text); font-family: var(--font-mono); font-size: 17px; }
+.plans td:first-child { font-family: var(--font-sans); color: var(--text-muted); font-size: 18px; }
+.plans tr:last-child td { border-bottom: 0; }
+.rule { font-size: 19px; color: var(--text); }
+</style>
+
+<!--
+(1 dk 30 sn) Kısaca fiyatlar. Ücretsiz plan öğrenmek ve küçük projeler için gerçekten cömert: 500 MB veritabanı, 50 bin aylık kullanıcı, 1 GB dosya.
+
+Pro ayda 25 dolardan başlıyor. Ne zaman geçmeli?
+- Gerçek kullanıcılar geldiğinde, çünkü ücretsiz planda yedek yok.
+- Projenin uyumaması gerektiğinde; ücretsiz proje bir hafta hareketsizlikte duraklatılıyor.
+
+İçiniz rahat olsun: Pro'da harcama limiti varsayılan olarak açık, sürpriz fatura gelmiyor.
+
+Bu rakamları Supabase'in fiyat sayfasından Ekim 2026'da kontrol ettim; değişebilir, kendi projeniz için tekrar bakın.
+-->
+
+---
+
+## Kendi projene başlarken
+
+<div class="checklist">
+  <Glass pad="sm"><span class="n">01</span>Veri modelini tasarla</Glass>
+  <Glass pad="sm"><span class="n">02</span>Giriş yöntemini seç, SMTP'yi bağla</Glass>
+  <Glass pad="sm" tone="accent"><span class="n">03</span>Her tabloda RLS ve kurallar</Glass>
+  <Glass pad="sm"><span class="n">04</span>Publishable key uygulamaya, secret key sunucuya</Glass>
+  <Glass pad="sm"><span class="n">05</span>Gerekiyorsa Realtime ve Storage</Glass>
+  <Glass pad="sm"><span class="n">06</span>Gizli işler Edge Function'a</Glass>
+  <Glass pad="sm"><span class="n">07</span>İki farklı kullanıcıyla dene</Glass>
+  <Glass pad="sm" tone="accent"><span class="n">08</span>Security Advisor'ı çalıştır</Glass>
+</div>
+
+<style>
+.checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.checklist .glass { display: flex; align-items: center; gap: 18px; font-size: 21px; color: var(--text); }
+.checklist .n { font-family: var(--font-mono); font-size: 14px; color: var(--accent-ink); }
+</style>
+
+<!--
+(1 dk) Kendi projenizde izleyebileceğiniz sıra bu. Özellikle üç ve sekiz: her tabloda RLS ve en sonda Security Advisor. Yedinci madde de önemli: izin verilen işlemleri değil, reddedilmesi gerekenleri de iki farklı kullanıcıyla deneyin. Bizim "0 satır silindi" bulgumuz böyle çıktı.
+-->
+
+---
+
+## Örnek proje
+
+<div class="grid grid-cols-[auto_1fr] gap-14 items-center">
+  <Glass pad="lg" class="qr">
+    <img src="/img/qr-repo.svg" alt="Repo QR kodu">
+  </Glass>
+  <div class="flex flex-col gap-5">
+    <p class="font-mono text-lg text-accent">github.com/poyrazavsever/flutter-ankara</p>
+    <Glass pad="sm" class="rule"><span class="n">app/</span>Flutter Soru Panosu</Glass>
+    <Glass pad="sm" class="rule"><span class="n">supabase/</span>Tablo, RLS ve Realtime tek migration'da</Glass>
+    <Glass pad="sm" class="rule"><span class="n">slides/</span>Bu sunum</Glass>
+    <p class="text-lg">README'deki adımlarla kendi projende 5 dakikada çalıştır.</p>
+  </div>
+</div>
+
+<style>
+.qr img { width: 300px; height: 300px; display: block; }
+.rule { display: flex; align-items: center; gap: 18px; font-size: 20px; color: var(--text); }
+.rule .n { font-family: var(--font-mono); font-size: 15px; color: var(--accent-ink); width: 96px; }
+</style>
+
+<!--
+(2 dk 30 sn) Bütün anlattıklarımın çalışan hali bu repoda.
+
+QR'ı okutun. Flutter uygulaması, Supabase migration'ı ve bu sunum aynı yerde. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalışıyor.
+
+Şimdi iki dakikalık hızlı bir tur:
+1. İki pencere yan yana: Ayşe soru gönderiyor, Mehmet'in ekranına yenilemeden düşüyor. (Realtime)
+2. Geliştirici modunu açıyorum, Mehmet Ayşe'nin sorusunu silmeye çalışıyor: "0 satır silindi". (RLS)
+3. Kodda nerede? Bağlantı main.dart'ta, sorgular tek dosyada, kurallar migration'da.
+
+İnternet sorun çıkarırsa yedek ekran kaydını açıyorum.
+-->
+
+---
+layout: cover
+image: /img/cover-a.jpg
+---
+
+# Teşekkürler
+
+Sorular?
+
+<template #meta>
+  <div class="flex items-center justify-between">
+    <span class="font-mono text-sm text-muted">github.com/poyrazavsever/flutter-ankara</span>
+    <span class="text-dim font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
+  </div>
+</template>
+
+<!--
+(3 dk) Teşekkür ederim. Sorularınızı alayım.
+
+Olası sorular için notlar:
+- "Firebase'den farkı ne?" → İlişkisel Postgres, SQL ve RLS; açık kaynak, kendi sunucuna kurulabilir.
+- "Offline çalışır mı?" → supabase_flutter offline-first değil; yerel önbellek (Drift, Hive vb.) ile birlikte kurulur. PowerSync gibi çözümler var.
+- "State management?" → Supabase herhangi biriyle çalışır; stream'ler Riverpod, Bloc vb. ile doğal bağlanır.
+- "Kendi sunucuma kurabilir miyim?" → Evet, Docker ile self-host mümkün; bakım sizde.
+-->
