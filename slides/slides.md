@@ -188,6 +188,24 @@ Asıl soru şu: bu anahtar ne? Uygulamanın içine koyuyoruz, yani herkes göreb
 
 ---
 
+## Adres ve anahtar nerede?
+
+<div class="grid grid-cols-[0.62fr_1.38fr] gap-8 items-start">
+  <Shot src="/img/panel/home-url.jpg" :path="['Proje', 'Ana sayfa']" :hand="[41.9, 77]" :h="400" />
+  <Shot src="/img/panel/api-keys.jpg" :path="['Project Settings', 'API Keys']" :hand="[35.2, 33.9]" :h="400" />
+</div>
+
+<!--
+(40 sn) İkinci adımdaki iki değeri panelde nereden alıyorsunuz?
+
+- Proje adresi, projenin ana sayfasında en üstte. Yanında kopyala butonu var.
+- Anahtarlar Project Settings altında, API Keys sayfasında. Publishable key'i buradan kopyalıyorsunuz.
+
+Aynı sayfada aşağıda secret key'ler duruyor ve varsayılan olarak gizli. Bir sonraki slaytta bu iki anahtarın farkını konuşacağız.
+-->
+
+---
+
 ## Anahtarlar ne işe yarar?
 
 <div class="grid grid-cols-3 gap-6">
@@ -237,30 +255,15 @@ Gerçek Postgres, otomatik API, kurallar veritabanında.
 
 ## Tablo aç, API hazır
 
-<div class="grid grid-cols-[1fr_1.1fr] gap-10 items-center">
-  <div class="flex flex-col gap-5">
-    <Glass pad="sm"><h3 class="text-xl">Gerçek Postgres</h3><p class="mt-2 text-lg">İlişkiler, indeksler, view'lar, fonksiyonlar, eklentiler. Bildiğin SQL.</p></Glass>
-    <Glass pad="sm"><h3 class="text-xl">Otomatik Data API</h3><p class="mt-2 text-lg">Tablo oluşturduğun an Flutter'dan okuma ve yazma yapılabilir.</p></Glass>
-    <Glass pad="sm"><h3 class="text-xl">Studio</h3><p class="mt-2 text-lg">Tabloları tarayıcıdan tablo düzenler gibi yönet.</p></Glass>
-  </div>
-  <Glass tone="accent" pad="lg">
-    <div class="font-mono text-sm text-accent mb-5">Panoda: questions</div>
-    <div class="cols">
-      <div><span>id</span><span>uuid</span></div>
-      <div><span>user_id</span><span>soruyu kim sordu</span></div>
-      <div><span>author_name</span><span>görünen ad</span></div>
-      <div><span>content</span><span>1–280 karakter</span></div>
-      <div><span>created_at</span><span>zaman</span></div>
-    </div>
-  </Glass>
+<div class="grid grid-cols-3 gap-5">
+  <Glass pad="sm"><h3 class="text-xl">Gerçek Postgres</h3><p class="mt-2 text-lg">İlişkiler, indeksler, fonksiyonlar, eklentiler. Bildiğin SQL.</p></Glass>
+  <Glass pad="sm"><h3 class="text-xl">Otomatik Data API</h3><p class="mt-2 text-lg">Tablo oluşturduğun an Flutter'dan okunup yazılabilir.</p></Glass>
+  <Glass pad="sm"><h3 class="text-xl">Table Editor</h3><p class="mt-2 text-lg">Tabloları tarayıcıdan, tablo düzenler gibi yönet.</p></Glass>
 </div>
 
-<style>
-.cols > div { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 19px; }
-.cols > div:last-child { border-bottom: 0; }
-.cols span:first-child { font-family: var(--font-mono); color: var(--text); }
-.cols span:last-child { color: var(--text-muted); }
-</style>
+<div class="mt-6">
+  <Shot src="/img/panel/editor.jpg" :path="['Table Editor', 'questions']" :hand="[74.5, 20.5]" :h="270" />
+</div>
 
 <!--
 (1 dk) Supabase'in veritabanı gerçek bir Postgres. Bildiğiniz her şey geçerli: ilişkiler, indeksler, fonksiyonlar, pgvector gibi eklentiler.
@@ -315,6 +318,18 @@ using ( auth.uid() = user_id );
 Buradaki ana mesaj: Flutter'da Sil butonunu sadece kendi sorunuzda göstermek güzel bir arayüz davranışı ama güvenlik değil. Biri isteği kendisi gönderebilir. Asıl kapı veritabanında.
 
 Bir de tuzak var. Başkasının sorusunu silmeye çalıştığınızda hata almıyorsunuz. Kural o satırı görünmez yapıyor ve işlem 0 satırı etkiliyor. Bunu bu projede gerçek istekle denedim. Yani "hata gelmedi, demek ki silindi" diye düşünmeyin; dönen sonucu kontrol edin.
+-->
+
+---
+
+## Kurallar panelde
+
+<Shot src="/img/panel/policies.jpg" :path="['Database', 'Policies', 'questions']" :hand="[13.3, 74.4]" :h="440" />
+
+<!--
+(40 sn) Yazdığımız üç kural panelde Database altında, Policies sayfasında tablo tablo listeleniyor. Kuralı buradan arayüzle de oluşturabilirsiniz; Supabase hazır şablonlar da sunuyor.
+
+Tablonun yanındaki "Disable RLS" butonuna dikkat: RLS bir tık uzakta. Kapatırsanız tablo publishable key'i bilen herkese açılır.
 -->
 
 ---
@@ -390,6 +405,28 @@ Flutter tarafında oturumu paket yönetiyor; token yenileme, saklama gibi işler
 -->
 
 ---
+
+## Giriş yöntemleri panelde
+
+<Shot src="/img/panel/providers.jpg" :path="['Authentication', 'Sign In / Providers']" :hand="[90.7, 24.5]" :h="440" />
+
+<!--
+(40 sn) Giriş yöntemleri Authentication altında, Sign In / Providers sayfasında. E-posta varsayılan olarak açık; Apple, Google, GitHub gibi sağlayıcıları buradan açıp anahtarlarını giriyorsunuz.
+
+Her sağlayıcının yanında "Enabled / Disabled" durumu var; tıklayınca o sağlayıcının anahtarlarını girdiğiniz ayar penceresi açılıyor.
+-->
+
+---
+
+## E-posta limiti panelde
+
+<Shot src="/img/panel/rate-limits.jpg" :path="['Authentication', 'Rate Limits']" :hand="[60.9, 47.1]" :h="330" />
+
+<!--
+(30 sn) Aynı bölümde Rate Limits sayfası. İlk satıra dikkat: saatte 2 e-posta. Bu değeri hazır e-posta sağlayıcısıyla değiştiremiyorsunuz; kendi SMTP sağlayıcınızı bağlayınca yükseltebiliyorsunuz. Birazdan sınırlar slaytında neden önemli olduğunu konuşacağız.
+-->
+
+---
 layout: limits
 service: Auth
 icon: auth
@@ -447,6 +484,16 @@ Dosyalar bucket denen klasörlerde duruyor. İki tür var:
 - Private bucket: erişimi yine RLS kuralları belirliyor. Çünkü dosyaların kayıtları da Postgres'te bir tabloda tutuluyor. Yani "kullanıcı sadece kendi klasörüne yükleyebilir" kuralını az önceki SQL mantığıyla yazıyorsunuz.
 
 Private dosyayı birine göstermek için süreli, imzalı bir URL üretiyorsunuz. Süre dolunca link çalışmıyor.
+-->
+
+---
+
+## Bucket'lar panelde
+
+<Shot src="/img/panel/storage.jpg" :path="['Storage', 'Files', 'Buckets']" :hand="[18.5, 80.5]" :h="430" />
+
+<!--
+(30 sn) Storage sayfasında bucket'lar listeleniyor. Örnek projede iki tane var: private attachments ve PUBLIC etiketli public-assets. Yeni bucket oluştururken public olup olmayacağını, dosya boyutu sınırını ve izin verilen dosya türlerini seçiyorsunuz. Erişim kuralları da yine Policies sekmesinde.
 -->
 
 ---
@@ -519,6 +566,20 @@ Sık yapılan hata her şeyi Postgres Changes ile yapmak. "Yazıyor…" bilgisin
 -->
 
 ---
+
+## Realtime'ı tabloya açmak
+
+<Shot src="/img/panel/publications.jpg" :path="['Database', 'Publications', 'supabase_realtime']" :hand="[42.8, 63.7]" :h="300" />
+
+<p class="mt-6 text-lg">Flutter tarafında tek satır: <code>.stream(primaryKey: ['id'])</code> listeyi canlı tutar.</p>
+
+<!--
+(40 sn) Postgres Changes'in çalışması için tablonun supabase_realtime yayınına eklenmesi gerekiyor. Panelde Database altında Publications sayfası. Hangi olayların (ekleme, güncelleme, silme) yayınlanacağını ve hangi tabloların dahil olduğunu buradan görüyorsunuz.
+
+Flutter tarafı ise tek satır: stream ile listeyi dinliyorsunuz, değişiklik gelince widget kendiliğinden yeniden çiziliyor.
+-->
+
+---
 layout: limits
 service: Realtime
 icon: realtime
@@ -577,6 +638,16 @@ Yapay zekâ servisi, ödeme, e-posta, bildirim, dış servislerden gelen webhook
 Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Flutter fonksiyonu çağırıyor, anahtar fonksiyonun içinde kalıyor.
 
 Örnek: kullanıcının yazdığı metni bir yapay zekâ servisine gönderip özet çıkarmak. Anahtar Edge Function'da, Flutter sadece "özetle" diyor.
+-->
+
+---
+
+## Fonksiyonlar panelde
+
+<Shot src="/img/panel/functions.jpg" :path="['Edge Functions', 'Functions']" :hand="[87.8, 14.6]" :h="430" />
+
+<!--
+(30 sn) Edge Functions sayfasından üç yolla fonksiyon oluşturabiliyorsunuz: tarayıcıdaki editörle, yapay zekâ asistanıyla ya da CLI ile. Gizli anahtarlar ise soldaki Secrets sekmesinde; fonksiyon kodunda ortam değişkeni olarak okunuyor, uygulamaya hiç inmiyor.
 -->
 
 ---
@@ -641,6 +712,24 @@ MCP, yapay zekâ asistanlarını dış sistemlere bağlayan bir standart. Supaba
 Asistan tabloları listeleyebiliyor, migration uygulayabiliyor, SQL çalıştırabiliyor, Security Advisor'ı çalıştırabiliyor, logları sorgulayabiliyor, Edge Function yayınlayabiliyor ve Supabase dokümanında arama yapabiliyor.
 
 Bu sunumun Supabase projesi de bir asistanla kuruldu: tablo, kurallar, demo hesapları ve kuralların gerçek isteklerle testi.
+-->
+
+---
+
+## Asistanı panelden bağla
+
+<Shot src="/img/panel/home-mcp.jpg" :path="['Proje', 'Ana sayfa', 'Get connected', 'MCP']" :hand="[74.6, 66.7]" :h="200" />
+
+<div class="grid grid-cols-3 gap-5 mt-8">
+  <Glass pad="sm"><div class="font-mono text-sm text-accent mb-2">adres</div><p class="text-lg">mcp.supabase.com/mcp</p></Glass>
+  <Glass pad="sm"><div class="font-mono text-sm text-accent mb-2">giriş</div><p class="text-lg">Tarayıcıda Supabase hesabınla onaylarsın</p></Glass>
+  <Glass pad="sm"><div class="font-mono text-sm text-accent mb-2">ayarlar</div><p class="text-lg">Salt okuma, tek proje, araç grupları</p></Glass>
+</div>
+
+<!--
+(40 sn) Bağlamak için projenin ana sayfasındaki "Get connected" bölümünde MCP kartı var. Hangi asistanı kullandığınızı seçiyorsunuz, size hazır bir yapılandırma veriyor.
+
+Adres mcp.supabase.com/mcp. Kişisel anahtar oluşturmanıza gerek yok; tarayıcıda Supabase hesabınızla onaylıyorsunuz. Aynı ekranda salt okuma modu, tek projeye sınırlama ve hangi araç gruplarının açık olacağı seçilebiliyor.
 -->
 
 ---
