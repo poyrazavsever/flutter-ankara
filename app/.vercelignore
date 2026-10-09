@@ -1,0 +1,6 @@
+# Sadece derlenmiş web çıktısı yüklenir: flutter build web --release
+/*
+!/build
+/build/*
+!/build/web
+!/vercel.json
