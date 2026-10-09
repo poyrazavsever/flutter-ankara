@@ -13,6 +13,7 @@ fonts:
 transition: fade
 highlighter: shiki
 lineNumbers: false
+presenter: dev
 drawings:
   persist: false
 htmlAttrs:
