@@ -52,7 +52,7 @@ Supabase'te iki aile anahtar var:
 - **Publishable key gizli değildir.** APK'yı açan herkes görebilir, web'de tarayıcıdan okunur. Bu tasarım gereğidir: bu anahtar kimseyi yetkilendirmez, sadece hangi projeye konuşulduğunu söyler. Kullanıcının kim olduğunu **JWT** söyler, neye erişebileceğini **RLS** belirler.
 - **Secret key tam yetkilidir.** RLS'yi atlar. Bu anahtar istemciye girerse veritabanının tamamı açılır. Sızarsa panelden hemen yenisi oluşturulup eskisi silinmeli.
 - **Neden yeni anahtarlar?** Eski `anon` / `service_role` anahtarları uzun ömürlü JWT'lerdi ve proje JWT sırrına bağlıydı; tek tek döndürmek (rotate) zordu. Yeni anahtarlar bağımsız oluşturulup silinebiliyor. Eski projelerde ve eğitimlerde hâlâ eski adları göreceksin; roller aynı.
-- Flutter'da publishable key, `Supabase.initialize()` içindeki `anonKey` parametresine verilir. (Paketin güncel sürümünde parametre adını örnek projeyi yazarken kontrol et.)
+- Flutter'da publishable key, `Supabase.initialize()` içindeki `publishableKey` parametresine verilir. (Eski sürümlerde ve eğitimlerde bu parametrenin adı `anonKey`.)
 
 ## 1.3 Database ve otomatik Data API
 
@@ -187,7 +187,7 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 
 ## 1.11 Flutter'a özel notlar
 
-- **Kurulum:** `flutter pub add supabase_flutter`, ardından `main()` içinde `await Supabase.initialize(url: ..., anonKey: ...)`. Sonra her yerden `Supabase.instance.client`.
+- **Kurulum:** `flutter pub add supabase_flutter`, ardından `main()` içinde `await Supabase.initialize(url: ..., publishableKey: ...)`. Sonra her yerden `Supabase.instance.client`.
 - **State management:** Supabase herhangi biriyle çalışır. `stream()` ve `onAuthStateChange` akışları Riverpod, Bloc gibi çözümlere doğal olarak bağlanır. Örnek projede bilinçli olarak sade `StreamBuilder` kullanıldı.
 - **Tipler:** Supabase resmi olarak TypeScript tipleri üretir; Dart için resmi kod üretimi yok, model sınıflarını kendin yazarsın (veya topluluk araçları).
 - **Offline:** `supabase_flutter` offline-first değildir. Çevrimdışı çalışma için yerel veritabanı (Drift, Isar vb.) ile senkronizasyon kurulur; PowerSync gibi hazır çözümler de var.

@@ -15,6 +15,9 @@ highlighter: shiki
 lineNumbers: false
 drawings:
   persist: false
+htmlAttrs:
+  lang: tr
+  translate: 'no'
 ---
 
 # Flutter ile Uçtan Uca Uygulama
@@ -166,7 +169,7 @@ time: 04:00
 ```dart
 await Supabase.initialize(
   url: 'https://<proje>.supabase.co',
-  anonKey: 'sb_publishable_...',
+  publishableKey: 'sb_publishable_...',
 );
 ```
 

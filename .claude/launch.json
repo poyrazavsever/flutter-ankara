@@ -6,6 +6,18 @@
       "runtimeExecutable": "node",
       "runtimeArgs": ["slides/node_modules/@slidev/cli/bin/slidev.mjs", "slides/slides.md", "--port", "3030"],
       "port": 3030
+    },
+    {
+      "name": "konusma",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3040", "-d", "docs/konusma"],
+      "port": 3040
+    },
+    {
+      "name": "app",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3050", "-d", "app/build/web"],
+      "port": 3050
     }
   ]
 }
