@@ -1,0 +1,10 @@
+// Sunumu Cloudflare'e yayınlar: npx slidev build && npx wrangler deploy
+{
+  "name": "flutter-ankara-sunum",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [{ "pattern": "flutter-sunum.poyrazavsever.com", "custom_domain": true }]
+}

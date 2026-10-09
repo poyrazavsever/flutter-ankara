@@ -2,7 +2,7 @@
 
 **Flutter ile Uçtan Uca Uygulama: Auth, Database ve Realtime** sunumunun örnek projesi.
 
-**Canlı:** https://flutter-ankara-soru-panosu.vercel.app
+**Uygulama:** https://flutter-demo.poyrazavsever.com · **Sunum:** https://flutter-sunum.poyrazavsever.com
 
 Kullanıcı adını yazıp katılır, konuşmacıya soru gönderir; sorular herkesin ekranına yenilemeden düşer. Herkes yalnızca kendi sorusunu silebilir ve bu kuralı arayüz değil, veritabanı uygular.
 
@@ -44,12 +44,17 @@ flutter run -d chrome --dart-define=SUPABASE_URL=https://<proje>.supabase.co --d
 
 ## Yayına alma
 
-Uygulama yerelde derlenir, Vercel'e yalnızca `build/web` çıktısı yüklenir ([`app/vercel.json`](app/vercel.json), [`app/.vercelignore`](app/.vercelignore)).
+İkisi de Cloudflare Workers'ta statik site olarak durur (`wrangler.jsonc`); önce `npx wrangler login`.
 
 ```bash
+# Uygulama → flutter-demo.poyrazavsever.com
 cd app
 flutter build web --release
-npx vercel deploy --prod
+npx wrangler deploy
+
+# Sunum → flutter-sunum.poyrazavsever.com
+cd slides
+npm run deploy
 ```
 
 > Windows'ta proje yolunda Türkçe karakter varsa (`Yazılım` gibi) Dart analiz aracı çökebilir. Projeyi ASCII bir yola taşı ya da `subst W: "<proje yolu>"` ile geçici bir sürücüden çalış.

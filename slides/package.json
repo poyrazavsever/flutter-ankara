@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "slidev --open",
     "build": "slidev build",
-    "export": "slidev export"
+    "export": "slidev export",
+    "deploy": "slidev build && node -e \"require('fs').rmSync('dist/_redirects',{force:true})\" && npx --yes wrangler@4 deploy"
   },
   "devDependencies": {
     "@slidev/cli": "^53.0.0",
