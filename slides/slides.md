@@ -36,9 +36,44 @@ Auth, Database ve Realtime
 </template>
 
 <!--
-(20 sn) Merhaba, ben Poyraz. Kısaca kendimi tanıtıyorum.
+(20 sn) Herkese iyi akşamlar, hoş geldiniz.
 
 Bugün Flutter ile yaptığımız bir uygulamaya kullanıcı, veri ve gerçek zamanlı güncelleme kazandırmayı konuşacağız. Bunu Supabase üzerinden yapacağız.
+-->
+
+---
+layout: cover
+image: /img/sections/linkedin.jpg
+---
+
+<div class="intro">
+  <div class="intro__eyebrow">Merhaba, ben</div>
+  <h1>Poyraz Avsever</h1>
+  <p class="intro__lead">Sunumdan sonra da konuşalım: LinkedIn'den bağlantı kuralım.</p>
+  <div class="intro__card glass">
+    <img src="/img/qr-linkedin.svg" alt="LinkedIn QR kodu">
+    <div>
+      <div class="intro__label">LinkedIn</div>
+      <div class="intro__url">linkedin.com/in/poyrazavsever</div>
+    </div>
+  </div>
+</div>
+
+<style>
+.intro { --li: #0A66C2; }
+.intro__eyebrow { font-family: var(--font-mono); font-size: 16px; letter-spacing: .12em; text-transform: uppercase; color: var(--li); margin-bottom: 14px; }
+.intro h1 { font-size: 76px !important; }
+.intro__lead { font-size: 26px !important; margin-top: 20px !important; max-width: 620px; }
+.intro__card { display: flex; align-items: center; gap: 28px; margin-top: 44px; padding: 22px 30px 22px 22px; width: fit-content; border-color: color-mix(in srgb, var(--li) 22%, transparent) !important; }
+.intro__card img { width: 168px; height: 168px; display: block; background: #fff; padding: 12px; border-radius: 14px; }
+.intro__label { font-family: var(--font-mono); font-size: 14px; color: var(--li); margin-bottom: 8px; }
+.intro__url { font-size: 24px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+</style>
+
+<!--
+(40 sn) Kısaca kendimi tanıtayım. (Ne yaptığın, Flutter ile ilişkin; 2–3 cümle.)
+
+Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz LinkedIn'den bağlantı kurabiliriz. QR ekranda; sunum boyunca da sonunda da paylaşacağım.
 -->
 
 ---
@@ -842,32 +877,44 @@ Bu rakamları Supabase'in fiyat sayfasından Ekim 2026'da kontrol ettim; değiş
 
 ## Örnek proje
 
-<div class="grid grid-cols-[auto_1fr] gap-14 items-center">
-  <Glass pad="lg" class="qr">
-    <img src="/img/qr-repo.svg" alt="Repo QR kodu">
+<div class="grid grid-cols-2 gap-8">
+  <Glass tone="accent" pad="lg" class="link">
+    <img src="/img/qr-demo.svg" alt="Canlı demo QR kodu">
+    <div>
+      <div class="link__label text-accent">Canlı demo · soru sor</div>
+      <h3>Soru Panosu</h3>
+      <p class="link__url">flutter-demo.poyrazavsever.com</p>
+      <p class="mt-3 text-base">Adını yaz, katıl, sorunu gönder. Herkesin ekranına anında düşer.</p>
+    </div>
   </Glass>
-  <div class="flex flex-col gap-5">
-    <p class="font-mono text-lg text-accent">github.com/poyrazavsever/flutter-ankara</p>
-    <Glass pad="sm" class="rule"><span class="n">app/</span>Flutter Soru Panosu</Glass>
-    <Glass pad="sm" class="rule"><span class="n">supabase/</span>Tablo, RLS ve Realtime tek migration'da</Glass>
-    <Glass pad="sm" class="rule"><span class="n">slides/</span>Bu sunum</Glass>
-    <p class="text-lg">README'deki adımlarla kendi projende 5 dakikada çalıştır.</p>
-  </div>
+  <Glass pad="lg" class="link">
+    <img src="/img/qr-repo.svg" alt="GitHub QR kodu">
+    <div>
+      <div class="link__label text-dim">Kaynak kod</div>
+      <h3>GitHub</h3>
+      <p class="link__url">github.com/poyrazavsever/flutter-ankara</p>
+      <p class="mt-3 text-base">Flutter uygulaması, Supabase migration'ı ve bu sunum. README ile 5 dakikada çalıştır.</p>
+    </div>
+  </Glass>
 </div>
 
 <style>
-.qr img { width: 300px; height: 300px; display: block; }
-.rule { display: flex; align-items: center; gap: 18px; font-size: 20px; color: var(--text); }
-.rule .n { font-family: var(--font-mono); font-size: 15px; color: var(--accent-ink); width: 96px; }
+.link { display: flex; flex-direction: column; gap: 24px; }
+.link img { width: 220px; height: 220px; display: block; background: #fff; padding: 14px; border-radius: 16px; }
+.link__label { font-family: var(--font-mono); font-size: 14px; margin-bottom: 8px; }
+.link h3 { font-size: 28px; }
+.link__url { font-family: var(--font-mono); font-size: 17px !important; color: var(--text) !important; margin-top: 6px; word-break: break-all; }
 </style>
 
 <!--
-(2 dk 30 sn) Bütün anlattıklarımın çalışan hali bu repoda.
+(2 dk 30 sn) Bütün anlattıklarımın çalışan hali burada.
 
-QR'ı okutun. Flutter uygulaması, Supabase migration'ı ve bu sunum aynı yerde. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalışıyor.
+Soldaki QR canlı demo: telefonunuzdan okutun, adınızı yazın ve bana sorunuzu gönderin. Soru-cevapta buradan okuyacağım.
+
+Sağdaki QR repo: Flutter uygulaması, Supabase migration'ı ve bu sunum aynı yerde. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalışıyor.
 
 Şimdi iki dakikalık hızlı bir tur:
-1. İki pencere yan yana: Ayşe soru gönderiyor, Mehmet'in ekranına yenilemeden düşüyor. (Realtime)
+1. İki pencere yan yana (biri gizli pencere): Ayşe soru gönderiyor, Mehmet'in ekranına yenilemeden düşüyor. (Realtime)
 2. Geliştirici modunu açıyorum, Mehmet Ayşe'nin sorusunu silmeye çalışıyor: "0 satır silindi". (RLS)
 3. Kodda nerede? Bağlantı main.dart'ta, sorgular tek dosyada, kurallar migration'da.
 
@@ -883,15 +930,28 @@ image: /img/cover-a.jpg
 
 Sorular?
 
+<div class="thanks">
+  <div class="thanks__item glass"><img src="/img/qr-demo.svg" alt=""><span class="text-accent">Soru sor</span></div>
+  <div class="thanks__item glass"><img src="/img/qr-repo.svg" alt=""><span class="text-dim">GitHub</span></div>
+  <div class="thanks__item glass"><img src="/img/qr-linkedin.svg" alt=""><span style="color:#0A66C2">LinkedIn</span></div>
+</div>
+
 <template #meta>
   <div class="flex items-center justify-between">
-    <span class="font-mono text-sm text-muted">github.com/poyrazavsever/flutter-ankara</span>
+    <span class="font-mono text-sm text-muted">flutter-demo.poyrazavsever.com · github.com/poyrazavsever/flutter-ankara</span>
     <span class="text-dim font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
   </div>
 </template>
 
+<style>
+.thanks { display: flex; gap: 18px; margin-top: 40px; }
+.thanks__item { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 14px 12px; }
+.thanks__item img { width: 128px; height: 128px; display: block; background: #fff; padding: 8px; border-radius: 10px; }
+.thanks__item span { font-family: var(--font-mono); font-size: 14px; }
+</style>
+
 <!--
-(3 dk) Teşekkür ederim. Sorularınızı alayım.
+(3 dk) Teşekkür ederim. Sorularınızı alayım. Demo panosuna gelen soruları da buradan okuyorum; LinkedIn QR'ı da ekranda.
 
 Olası sorular için notlar:
 - "Firebase'den farkı ne?" → İlişkisel Postgres, SQL ve RLS; açık kaynak, kendi sunucuna kurulabilir.

@@ -3,7 +3,7 @@
 Bu doküman iki bölümden oluşur:
 
 1. **Konuyu derinlemesine anla:** Slaytlarda kısaca geçen her şeyin arkasındaki mekanizma, "neden böyle?" soruları ve sahnede gelebilecek sorulara hazırlık. Slaytta söylenenden fazlasını bilmek, sahnede rahat olmanı sağlar.
-2. **Slayt slayt konuşma metni:** 39 slaytın her biri için süre, söylenecek metin ve geçiş cümlesi.
+2. **Slayt slayt konuşma metni:** 40 slaytın her biri için süre, söylenecek metin ve geçiş cümlesi.
 
 > Rakamlar 2026-10-06 tarihinde Supabase'in resmi fiyat ve doküman sayfalarından doğrulandı. Sunumdan önce bir kez daha kontrol et.
 
@@ -221,14 +221,22 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 
 ### Slayt 1 — Kapak · 0:30
 
-Herkese iyi akşamlar. Ben Poyraz.
-*(Kendini 1–2 cümleyle tanıt: ne yaptığın, Flutter ile ilişkin.)*
+Herkese iyi akşamlar, hoş geldiniz.
 
 Bu akşam Flutter ile geliştirdiğimiz bir uygulamaya **kullanıcı, veri ve gerçek zamanlı güncelleme** kazandırmayı konuşacağız. Bunu Supabase ile yapacağız. Ama size bir kod anlatımı değil, bir **tanışma** yapacağım: Supabase neler sunuyor, panelde nerede duruyor ve en önemlisi, sınırları neler.
 
 `[→]`
 
-### Slayt 2 — Tez · 0:40
+### Slayt 2 — Ben kimim? · 0:40
+
+Ben Poyraz.
+*(Kendini 2–3 cümleyle tanıt: ne yaptığın, Flutter ile ilişkin.)*
+
+Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz **LinkedIn'den bağlantı kuralım.** QR ekranda; sonunda da tekrar göstereceğim.
+
+`[→]`
+
+### Slayt 3 — Tez · 0:40
 
 Bu akşamın tek cümlesi bu: **Supabase'i ne kadar iyi tanırsanız, sınırlarını ne kadar iyi bilirseniz projenizi o kadar iyi kurarsınız.**
 
@@ -238,13 +246,13 @@ O yüzden her servisi dört soruyla geçeceğiz: **Ne yapar? Nasıl çalışır?
 
 `[→]`
 
-### Slayt 3 — Bölüm: Supabase nedir? · 0:05
+### Slayt 4 — Bölüm: Supabase nedir? · 0:05
 
 Önce büyük resme bakalım.
 
 `[→]`
 
-### Slayt 4 — Merkezde Postgres var · 1:15
+### Slayt 5 — Merkezde Postgres var · 1:15
 
 Supabase'i "Firebase alternatifi" diye duymuş olabilirsiniz. Ama mimarisi çok farklı.
 
@@ -258,13 +266,13 @@ Bir de: hepsi açık kaynak. İsterseniz kendi sunucunuzda çalıştırabilirsin
 
 `[→]`
 
-### Slayt 5 — Bölüm: Flutter'a bağlanmak · 0:05
+### Slayt 6 — Bölüm: Flutter'a bağlanmak · 0:05
 
 Peki Flutter bu yapıya nasıl bağlanıyor?
 
 `[→]`
 
-### Slayt 6 — Üç adımda bağlantı · 0:45
+### Slayt 7 — Üç adımda bağlantı · 0:45
 
 Flutter tarafı gerçekten bu kadar.
 
@@ -278,7 +286,7 @@ Peki bu iki değer panelde nerede?
 
 `[→]`
 
-### Slayt 7 — Adres ve anahtar nerede? · 0:30
+### Slayt 8 — Adres ve anahtar nerede? · 0:30
 
 Proje adresi, projenin ana sayfasında en üstte; yanında kopyala butonu var.
 
@@ -288,7 +296,7 @@ Burada şu soru akla gelmeli: publishable key'i uygulamanın içine koyuyoruz. Y
 
 `[→]`
 
-### Slayt 8 — Anahtarlar ne işe yarar? · 1:00
+### Slayt 9 — Anahtarlar ne işe yarar? · 1:00
 
 Üç değerin üç farklı görevi var.
 
@@ -302,13 +310,13 @@ Eski eğitimlerde `anon` ve `service_role` adlarını göreceksiniz. Aynı rolle
 
 `[→]`
 
-### Slayt 9 — Bölüm: Database · 0:05
+### Slayt 10 — Bölüm: Database · 0:05
 
 İlk servisimiz, her şeyin merkezi: veritabanı.
 
 `[→]`
 
-### Slayt 10 — Tablo aç, API hazır · 0:50
+### Slayt 11 — Tablo aç, API hazır · 0:50
 
 Supabase'in veritabanı gerçek bir Postgres. İlişkiler, indeksler, fonksiyonlar, eklentiler; bildiğiniz her şey geçerli.
 
@@ -320,7 +328,7 @@ Elin gösterdiği yere dikkat: **"3 RLS policies"**. Çünkü şu soru var: API 
 
 `[→]`
 
-### Slayt 11 — RLS: kapı veritabanında · 1:20
+### Slayt 12 — RLS: kapı veritabanında · 1:20
 
 Cevap: **Row Level Security**, kısaca RLS. Satır bazında erişim kuralları ve bu kurallar veritabanında çalışıyor.
 
@@ -334,7 +342,7 @@ Ve bir tuzak: başkasının kaydını silmeye çalıştığınızda **hata almı
 
 `[→]`
 
-### Slayt 12 — Kurallar panelde · 0:25
+### Slayt 13 — Kurallar panelde · 0:25
 
 Yazdığımız kurallar panelde **Database → Policies** altında, tablo tablo listeleniyor. İsterseniz kuralı buradan arayüzle de oluşturabiliyorsunuz.
 
@@ -342,7 +350,7 @@ Tablonun yanındaki **"Disable RLS"** butonuna dikkat: güvenlik bir tık uzakta
 
 `[→]`
 
-### Slayt 13 — Database: sınırlar ve dikkat · 0:40
+### Slayt 14 — Database: sınırlar ve dikkat · 0:40
 
 İlk "sınırlar" slaytımız.
 
@@ -354,13 +362,13 @@ Ve bir hafta kullanılmayan ücretsiz proje **duraklatılıyor.** Demo projeniz 
 
 `[→]`
 
-### Slayt 14 — Bölüm: Auth · 0:05
+### Slayt 15 — Bölüm: Auth · 0:05
 
 RLS'nin "kim" sorusunu sorduğunu gördük. O kimliği Auth veriyor.
 
 `[→]`
 
-### Slayt 15 — Giriş yöntemleri ve oturum · 1:10
+### Slayt 16 — Giriş yöntemleri ve oturum · 1:10
 
 Authentication "bu kullanıcı kim?" sorusunu, RLS ise "ne yapabilir?" sorusunu cevaplıyor.
 
@@ -372,19 +380,19 @@ Flutter'da oturumu paket yönetiyor: saklama, token yenileme, hepsi otomatik.
 
 `[→]`
 
-### Slayt 16 — Giriş yöntemleri panelde · 0:25
+### Slayt 17 — Giriş yöntemleri panelde · 0:25
 
 Panelde **Authentication → Sign In / Providers.** E-posta varsayılan olarak açık. Apple, Google, GitHub gibi sağlayıcıları buradan açıp anahtarlarını giriyorsunuz.
 
 `[→]`
 
-### Slayt 17 — E-posta limiti panelde · 0:20
+### Slayt 18 — E-posta limiti panelde · 0:20
 
 Aynı bölümde **Rate Limits** sayfası. İlk satıra bakın: **saatte 2 e-posta.** Bu rakamı aklınızda tutun.
 
 `[→]`
 
-### Slayt 18 — Auth: sınırlar ve dikkat · 0:50
+### Slayt 19 — Auth: sınırlar ve dikkat · 0:50
 
 Neden önemli? Supabase'in hazır e-posta sağlayıcısı saatte sadece **2 e-posta** gönderiyor. Kayıt onayı, şifre sıfırlama, magic link; hepsi buna dahil. Lansman günü 50 kişi kayıt olursa 48'i e-posta alamaz. Gerçek projede mutlaka **kendi SMTP sağlayıcınızı** bağlayın.
 
@@ -394,13 +402,13 @@ Neden önemli? Supabase'in hazır e-posta sağlayıcısı saatte sadece **2 e-po
 
 `[→]`
 
-### Slayt 19 — Bölüm: Storage · 0:05
+### Slayt 20 — Bölüm: Storage · 0:05
 
 Kullanıcılar ve veri tamam. Peki dosyalar?
 
 `[→]`
 
-### Slayt 20 — Bucket'lar ve erişim · 1:00
+### Slayt 21 — Bucket'lar ve erişim · 1:00
 
 Dosyalar **bucket** denen klasörlerde duruyor. İki tür var.
 
@@ -412,13 +420,13 @@ Private bir dosyayı birine göstermek için **süreli, imzalı bir URL** üreti
 
 `[→]`
 
-### Slayt 21 — Bucket'lar panelde · 0:20
+### Slayt 22 — Bucket'lar panelde · 0:20
 
 Panelde **Storage → Files → Buckets.** Örnek projede iki tane var: private `attachments` ve PUBLIC etiketli `public-assets`. Bucket oluştururken açık olup olmayacağını ve dosya boyutu sınırını buradan seçiyorsunuz.
 
 `[→]`
 
-### Slayt 22 — Storage: sınırlar ve dikkat · 0:50
+### Slayt 23 — Storage: sınırlar ve dikkat · 0:50
 
 Ücretsiz planda **dosya başına 50 MB.** Telefondan çekilen bir video bunu kolayca aşar.
 
@@ -428,13 +436,13 @@ Görselleri sunucuda küçültme özelliği ücretli planlarda. Ücretsiz planda
 
 `[→]`
 
-### Slayt 23 — Bölüm: Realtime · 0:05
+### Slayt 24 — Bölüm: Realtime · 0:05
 
 Şimdi ekranı yenilemeden güncellemeye geçelim.
 
 `[→]`
 
-### Slayt 24 — Üç mod, üç ihtiyaç · 1:15
+### Slayt 25 — Üç mod, üç ihtiyaç · 1:15
 
 Realtime üç farklı şey yapıyor ve doğru olanı seçmek önemli.
 
@@ -448,7 +456,7 @@ Sık yapılan hata her şeyi Postgres Changes ile yapmak. "Yazıyor…" bilgisin
 
 `[→]`
 
-### Slayt 25 — Realtime'ı tabloya açmak · 0:30
+### Slayt 26 — Realtime'ı tabloya açmak · 0:30
 
 Postgres Changes'in çalışması için tablonun **`supabase_realtime` yayınına** eklenmesi gerekiyor. Panelde **Database → Publications.** Hangi olayların yayınlanacağını ve hangi tabloların dahil olduğunu buradan görüyorsunuz.
 
@@ -456,7 +464,7 @@ Flutter tarafı tek satır: `.stream()` ile listeyi dinliyorsunuz; değişiklik 
 
 `[→]`
 
-### Slayt 26 — Realtime: sınırlar ve dikkat · 0:50
+### Slayt 27 — Realtime: sınırlar ve dikkat · 0:50
 
 En sık yaşanan sorun: **tabloyu yayına eklemeyi unutmak.** Kod doğru, ama hiçbir şey gelmiyor ve hata da yok.
 
@@ -466,13 +474,13 @@ Postgres Changes güvenli: RLS'ye uyuyor, kullanıcı göremeyeceği satırın d
 
 `[→]`
 
-### Slayt 27 — Bölüm: Edge Functions · 0:05
+### Slayt 28 — Bölüm: Edge Functions · 0:05
 
 Şimdiye kadar her şeyi Flutter'dan doğrudan yaptık. Peki ne zaman bir sunucu gerekir?
 
 `[→]`
 
-### Slayt 28 — Gizli anahtar gereken her iş · 0:50
+### Slayt 29 — Gizli anahtar gereken her iş · 0:50
 
 Cevap basit: **gizli bir anahtar gerektiğinde.**
 
@@ -482,13 +490,13 @@ Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yaz�
 
 `[→]`
 
-### Slayt 29 — Fonksiyonlar panelde · 0:20
+### Slayt 30 — Fonksiyonlar panelde · 0:20
 
 Panelde **Edge Functions** sayfasından üç yolla fonksiyon oluşturabiliyorsunuz: tarayıcıdaki editörle, yapay zekâ asistanıyla ya da CLI ile. Gizli anahtarlar soldaki **Secrets** sekmesinde.
 
 `[→]`
 
-### Slayt 30 — Edge Functions: sınırlar ve dikkat · 0:40
+### Slayt 31 — Edge Functions: sınırlar ve dikkat · 0:40
 
 Edge Functions kısa ve hızlı işler için.
 
@@ -500,13 +508,13 @@ Ayda **500 bin çağrı** ücretsiz.
 
 `[→]`
 
-### Slayt 31 — Bölüm: Supabase MCP · 0:05
+### Slayt 32 — Bölüm: Supabase MCP · 0:05
 
 Son başlık bir servis değil, bir çalışma şekli.
 
 `[→]`
 
-### Slayt 32 — Asistan neler yapabilir? · 1:00
+### Slayt 33 — Asistan neler yapabilir? · 1:00
 
 **MCP**, yapay zekâ asistanlarını dış sistemlere bağlayan açık bir standart. Supabase'in resmi bir MCP sunucusu var. Claude ya da Cursor gibi bir asistana bağladığınızda doğal dille "bir tablo oluştur, RLS kurallarını yaz, güvenlik denetimini çalıştır" diyebiliyorsunuz.
 
@@ -516,7 +524,7 @@ Bu sunumun Supabase projesi de bir asistanla kuruldu: tablo, kurallar, demo hesa
 
 `[→]`
 
-### Slayt 33 — Asistanı panelden bağla · 0:30
+### Slayt 34 — Asistanı panelden bağla · 0:30
 
 Bağlamak için projenin ana sayfasında **Get connected → MCP** kartı var. Asistanınızı seçiyorsunuz, size hazır bir yapılandırma veriyor.
 
@@ -524,7 +532,7 @@ Adres `mcp.supabase.com/mcp`. Kişisel anahtar oluşturmanız gerekmiyor; taray�
 
 `[→]`
 
-### Slayt 34 — Supabase MCP: sınırlar ve dikkat · 1:10
+### Slayt 35 — Supabase MCP: sınırlar ve dikkat · 1:10
 
 Asistana veritabanınızı açmak güçlü ama dikkat ister. Bunlar Supabase'in kendi önerileri:
 
@@ -538,13 +546,13 @@ Kendi deneyimim: bu projede MCP bağlantısının yetkisi bir noktada yetmedi. A
 
 `[→]`
 
-### Slayt 35 — Bölüm: Planlar · 0:05
+### Slayt 36 — Bölüm: Planlar · 0:05
 
 Son olarak, kısaca fiyatlar.
 
 `[→]`
 
-### Slayt 36 — Ne zaman ücretli plana geçmeli? · 1:00
+### Slayt 37 — Ne zaman ücretli plana geçmeli? · 1:00
 
 Ücretsiz plan öğrenmek ve küçük projeler için gerçekten cömert: 500 MB veritabanı, 50 bin aylık kullanıcı, 1 GB dosya.
 
@@ -559,7 +567,7 @@ Bu rakamları birkaç gün önce Supabase'in sitesinden kontrol ettim; değişeb
 
 `[→]`
 
-### Slayt 37 — Kendi projene başlarken · 0:45
+### Slayt 38 — Kendi projene başlarken · 0:45
 
 Kendi projenizde izleyebileceğiniz sıra bu. Özellikle üç ve sekizi vurgulamak istiyorum: **her tabloda RLS** ve en sonda **Security Advisor.**
 
@@ -567,27 +575,31 @@ Yedinci madde de önemli: izin verilen işlemleri değil, **reddedilmesi gereken
 
 `[→]`
 
-### Slayt 38 — Örnek proje · 2:30
+### Slayt 39 — Örnek proje · 2:30
 
-Bütün anlattıklarımın çalışan hali bu repoda. QR'ı okutabilirsiniz.
+Bütün anlattıklarımın çalışan hali burada. İki QR var.
 
-Flutter uygulaması, Supabase migration'ı ve bu sunumun kendisi aynı yerde. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalıştırabilirsiniz.
+**Soldaki canlı demo:** Telefonunuzdan okutun, adınızı yazın ve bana sorunuzu gönderin. Soru-cevapta sorulara buradan bakacağım.
 
-*(Uygulamaya geç. İki tarayıcı penceresi yan yana: solda Ayşe, sağda Mehmet.)*
+**Sağdaki GitHub:** Flutter uygulaması, Supabase migration'ı ve bu sunumun kendisi aynı repoda. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalıştırabilirsiniz.
+
+*(Uygulamaya geç. İki tarayıcı penceresi yan yana: solda Ayşe, sağda Mehmet. İkincisi **gizli pencere** olmalı; aynı tarayıcının iki sekmesi aynı kullanıcı olur.)*
 
 Şimdi iki dakikalık hızlı bir tur:
 
 1. **Realtime:** Ayşe bir soru gönderiyor… ve Mehmet'in ekranına yenilemeden düşüyor. Az önce anlattığımız `stream`.
 2. **RLS:** Geliştirici modunu açıyorum; artık Mehmet, Ayşe'nin sorusunda da Sil butonunu görüyor. Siliyor… **"0 satır silindi."** Buton göründü ama veritabanı izin vermedi.
-3. **Kodda nerede?** Bağlantı `main.dart`'ta, sorgular tek dosyada, kurallar migration dosyasında.
+3. **Kodda nerede?** Bağlantı `main.dart`'ta, sorgular `questions_repo.dart` dosyasında, kurallar migration dosyasında.
 
 *(İnternet sorun çıkarırsa: "Yedek kaydı açıyorum" de ve ekran kaydını oynat.)*
 
 `[→]`
 
-### Slayt 39 — Teşekkürler · Soru-cevap (3:00)
+### Slayt 40 — Teşekkürler · Soru-cevap (3:00)
 
-Teşekkür ederim. Sorularınızı alayım.
+Teşekkür ederim. Sorularınızı alayım. Panoya gelen soruları da okuyorum.
+
+Ekranda üç QR var: soru sormak için demo, kaynak kod için GitHub ve benimle bağlantı kurmak için LinkedIn.
 
 *(Sorular için Bölüm 1.12'deki tabloya bak. Bilmediğin bir şey sorulursa: "Kontrol edip repoya not olarak ekleyeyim" demek tamamen yeterli.)*
 
@@ -596,9 +608,9 @@ Teşekkür ederim. Sorularınızı alayım.
 ## Prova kontrol listesi
 
 - [ ] Supabase projesi aktif mi? (Ücretsiz proje 1 hafta hareketsizlikte duraklatılır; etkinlikten bir gün önce panele gir.)
-- [ ] Demo hesaplarının şifreleri `.secrets/demo-users.env` içinde, iki tarayıcı penceresinde önceden giriş yapılmış.
+- [ ] flutter-demo.poyrazavsever.com iki pencerede (biri gizli) açık, Ayşe ve Mehmet olarak katılınmış.
 - [ ] Yedek ekran kaydı masaüstünde.
 - [ ] QR kodu telefonla okutulup test edildi.
-- [ ] Sunum `npm run dev` ile açık, konuşmacı notları için `/presenter` görünümü ikinci ekranda.
+- [ ] Sunum `npm run dev` ile yerelde açık, konuşmacı notları için `/presenter` görünümü ikinci ekranda (yayındaki sitede presenter kapalı).
 - [ ] Rakamlar (fiyat, limit) son bir kez supabase.com/pricing'den kontrol edildi.
 - [ ] Prova süresi 25–26 dakika.

@@ -2,7 +2,7 @@
 
 **Başlık:** Flutter ile Uçtan Uca Uygulama: Auth, Database ve Realtime
 **Süre:** 30 dk (27 dk anlatım + kısa örnek proje turu, 3 dk soru-cevap)
-**Format:** 16:9, Slidev, 39 slayt (9 bölüm geçişi, 9 "Panelde nerede?" slaytı, 7 "Sınırlar ve dikkat" slaytı)
+**Format:** 16:9, Slidev, 40 slayt (9 bölüm geçişi, 9 "Panelde nerede?" slaytı, 7 "Sınırlar ve dikkat" slaytı)
 **Kitle:** Flutter temellerini bilen, Supabase'e yeni başlayanlar
 
 ## Tez
