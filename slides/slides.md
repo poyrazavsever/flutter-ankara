@@ -54,7 +54,7 @@ image: /img/sections/linkedin.jpg
     <div class="intro__card glass">
       <img src="/img/qr-linkedin.svg" alt="LinkedIn QR kodu">
       <div>
-        <div class="intro__label">LinkedIn</div>
+        <img class="intro__logo intro__logo--li" src="/img/icons/linkedin.png" alt="LinkedIn">
         <div class="intro__url">linkedin.com/in/<br>poyrazavsever</div>
       </div>
     </div>
@@ -77,8 +77,8 @@ image: /img/sections/linkedin.jpg
 .intro__card { display: flex; align-items: center; gap: 22px; padding: 18px 26px 18px 18px; width: fit-content; border-color: color-mix(in srgb, var(--li) 22%, transparent) !important; }
 .intro__card--tmug { --li: var(--tmug); background: color-mix(in srgb, var(--tmug) 7%, var(--glass)) !important; }
 .intro__logo { width: 104px !important; height: 104px !important; padding: 0 !important; background: none !important; margin: -12px 0 2px -14px; }
+.intro__logo--li { width: 72px !important; height: 72px !important; margin: 0 0 10px -4px; }
 .intro__card > img { width: 148px; height: 148px; display: block; background: #fff; padding: 12px; border-radius: 14px; }
-.intro__label { font-family: var(--font-mono); font-size: 14px; color: var(--li); margin-bottom: 8px; }
 .intro__url { font-size: 21px; line-height: 1.25; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
 </style>
 

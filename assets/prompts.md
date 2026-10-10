@@ -21,3 +21,7 @@ Seçilen kapak: **A** (üst üste üç cam panel). B ve C `assets/higgsfield/cov
 ## TMUG logosu (cam, mor)
 
 `assets/higgsfield/intro/tmug-glass.png` (referans: `tmug-logo-source.png`) → kırpılıp `slides/public/img/icons/tmug.png`. İkon stili, şeffaf zemin; yeşil yerine lavanta / mor (#7B3FE4), referanstaki "tm / ug" harfleri ve artı çizgileri birebir. QR: `slides/public/img/qr-tmug.svg` → https://tmug.com.tr/ (#6D3FD9).
+
+## LinkedIn logosu (cam, mavi)
+
+`assets/higgsfield/intro/linkedin-glass.png` (referans: `linkedin-logo-source.png`) → kırpılıp `slides/public/img/icons/linkedin.png`. İkon stili, şeffaf zemin; LinkedIn mavisi (#0A66C2) ve gök mavisi cam kare, "in" harfleri daha açık cam.
