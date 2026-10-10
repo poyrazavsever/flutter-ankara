@@ -49,31 +49,43 @@ image: /img/sections/linkedin.jpg
 <div class="intro">
   <div class="intro__eyebrow">Merhaba, ben</div>
   <h1>Poyraz Avsever</h1>
-  <p class="intro__lead">Sunumdan sonra da konuşalım: LinkedIn'den bağlantı kuralım.</p>
-  <div class="intro__card glass">
-    <img src="/img/qr-linkedin.svg" alt="LinkedIn QR kodu">
-    <div>
-      <div class="intro__label">LinkedIn</div>
-      <div class="intro__url">linkedin.com/in/poyrazavsever</div>
+  <p class="intro__lead">Sunumdan sonra da konuşalım: LinkedIn'den bağlantı kuralım, TMUG topluluğunda buluşalım.</p>
+  <div class="intro__cards">
+    <div class="intro__card glass">
+      <img src="/img/qr-linkedin.svg" alt="LinkedIn QR kodu">
+      <div>
+        <div class="intro__label">LinkedIn</div>
+        <div class="intro__url">linkedin.com/in/<br>poyrazavsever</div>
+      </div>
+    </div>
+    <div class="intro__card intro__card--tmug glass">
+      <img src="/img/qr-tmug.svg" alt="TMUG QR kodu">
+      <div>
+        <img class="intro__logo" src="/img/icons/tmug.png" alt="TMUG">
+        <div class="intro__url">tmug.com.tr</div>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-.intro { --li: #0A66C2; }
+.intro { --li: #0A66C2; --tmug: #6D3FD9; width: 860px; }
 .intro__eyebrow { font-family: var(--font-mono); font-size: 16px; letter-spacing: .12em; text-transform: uppercase; color: var(--li); margin-bottom: 14px; }
 .intro h1 { font-size: 76px !important; }
 .intro__lead { font-size: 26px !important; margin-top: 20px !important; max-width: 620px; }
-.intro__card { display: flex; align-items: center; gap: 28px; margin-top: 44px; padding: 22px 30px 22px 22px; width: fit-content; border-color: color-mix(in srgb, var(--li) 22%, transparent) !important; }
-.intro__card img { width: 168px; height: 168px; display: block; background: #fff; padding: 12px; border-radius: 14px; }
+.intro__cards { display: flex; gap: 20px; margin-top: 44px; }
+.intro__card { display: flex; align-items: center; gap: 22px; padding: 18px 26px 18px 18px; width: fit-content; border-color: color-mix(in srgb, var(--li) 22%, transparent) !important; }
+.intro__card--tmug { --li: var(--tmug); background: color-mix(in srgb, var(--tmug) 7%, var(--glass)) !important; }
+.intro__logo { width: 104px !important; height: 104px !important; padding: 0 !important; background: none !important; margin: -12px 0 2px -14px; }
+.intro__card > img { width: 148px; height: 148px; display: block; background: #fff; padding: 12px; border-radius: 14px; }
 .intro__label { font-family: var(--font-mono); font-size: 14px; color: var(--li); margin-bottom: 8px; }
-.intro__url { font-size: 24px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.intro__url { font-size: 21px; line-height: 1.25; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
 </style>
 
 <!--
 (40 sn) Kısaca kendimi tanıtayım. (Ne yaptığın, Flutter ile ilişkin; 2–3 cümle.)
 
-Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz LinkedIn'den bağlantı kurabiliriz. QR ekranda; sunum boyunca da sonunda da paylaşacağım.
+Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz LinkedIn'den bağlantı kurabiliriz. Yanındaki mor QR da TMUG'un sitesi: topluluğa oradan katılabilirsiniz. QR'lar ekranda; sunum boyunca da sonunda da paylaşacağım.
 -->
 
 ---
