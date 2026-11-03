@@ -40,7 +40,7 @@ class _JoinPageState extends State<JoinPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('FLUTTER ANKARA',
+                Text('GDG ON OSTIMTECH',
                     style: theme.textTheme.labelMedium
                         ?.copyWith(color: theme.colorScheme.primary, letterSpacing: 2)),
                 const SizedBox(height: 8),

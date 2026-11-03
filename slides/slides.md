@@ -1,6 +1,6 @@
 ---
-title: Flutter ile Uçtan Uca Uygulama
-info: Flutter Ankara — Auth, Database ve Realtime
+title: Supabase ile Uçtan Uca Uygulama
+info: GDG On OstimTech — Auth, Database ve Realtime
 layout: cover
 image: /img/cover-a.jpg
 aspectRatio: 16/9
@@ -21,15 +21,15 @@ htmlAttrs:
   translate: 'no'
 ---
 
-# Flutter ile Uçtan Uca Uygulama
+# Supabase ile Uçtan Uca Uygulama
 
 Auth, Database ve Realtime
 
 <template #meta>
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <span class="pill"><span class="dot dot--flutter"></span> Flutter</span>
       <span class="pill"><span class="dot dot--accent"></span> Supabase</span>
+      <span class="pill"><span class="dot dot--flutter"></span> Örnek: Flutter</span>
     </div>
     <span class="text-dim font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
   </div>
@@ -38,18 +38,19 @@ Auth, Database ve Realtime
 <!--
 (20 sn) Herkese iyi akşamlar, hoş geldiniz.
 
-Bugün Flutter ile yaptığımız bir uygulamaya kullanıcı, veri ve gerçek zamanlı güncelleme kazandırmayı konuşacağız. Bunu Supabase üzerinden yapacağız.
+Bugün bir uygulamaya kullanıcı, veri ve gerçek zamanlı güncelleme kazandırmayı konuşacağız. Bunu Supabase üzerinden yapacağız. Örnek uygulamamız Flutter ile yazıldı ama anlatacaklarımın neredeyse tamamı web, Android ya da iOS için de aynı.
 -->
 
 ---
 layout: cover
-image: /img/sections/linkedin.jpg
 ---
+
+<img class="intro__mascot" src="/img/gdg/dragon-wave.png" alt="GDG On OstimTech maskotu">
 
 <div class="intro">
   <div class="intro__eyebrow">Merhaba, ben</div>
   <h1>Poyraz Avsever</h1>
-  <p class="intro__lead">Sunumdan sonra da konuşalım: LinkedIn'den bağlantı kuralım, TMUG topluluğunda buluşalım.</p>
+  <p class="intro__lead">Sunumdan sonra da konuşalım: LinkedIn'den bağlantı kuralım, GDG On OstimTech etkinliklerinde buluşalım.</p>
   <div class="intro__cards">
     <div class="intro__card glass">
       <img src="/img/qr-linkedin.svg" alt="LinkedIn QR kodu">
@@ -58,34 +59,36 @@ image: /img/sections/linkedin.jpg
         <div class="intro__url">linkedin.com/in/<br>poyrazavsever</div>
       </div>
     </div>
-    <div class="intro__card intro__card--tmug glass">
-      <img src="/img/qr-tmug.svg" alt="TMUG QR kodu">
+    <div class="intro__card intro__card--gdg glass">
+      <img src="/img/qr-gdg.svg" alt="GDG On OstimTech QR kodu">
       <div>
-        <img class="intro__logo" src="/img/icons/tmug.png" alt="TMUG">
-        <div class="intro__url">tmug.com.tr</div>
+        <img class="intro__logo intro__logo--gdg" src="/img/icons/gdg.png" alt="GDG On OstimTech">
+        <div class="intro__url">gdgostimtech.com</div>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-.intro { --li: #0A66C2; --tmug: #6D3FD9; width: 860px; }
+.intro { --li: #0A66C2; --gdg: #4285F4; width: 860px; }
 .intro__eyebrow { font-family: var(--font-mono); font-size: 16px; letter-spacing: .12em; text-transform: uppercase; color: var(--li); margin-bottom: 14px; }
 .intro h1 { font-size: 76px !important; }
 .intro__lead { font-size: 26px !important; margin-top: 20px !important; max-width: 620px; }
 .intro__cards { display: flex; gap: 20px; margin-top: 44px; }
 .intro__card { display: flex; align-items: center; gap: 22px; padding: 18px 26px 18px 18px; width: fit-content; border-color: color-mix(in srgb, var(--li) 22%, transparent) !important; }
-.intro__card--tmug { --li: var(--tmug); background: color-mix(in srgb, var(--tmug) 7%, var(--glass)) !important; }
+.intro__card--gdg { --li: var(--gdg); background: color-mix(in srgb, var(--gdg) 6%, var(--glass)) !important; }
 .intro__logo { width: 104px !important; height: 104px !important; padding: 0 !important; background: none !important; margin: -12px 0 2px -14px; }
 .intro__logo--li { width: 72px !important; height: 72px !important; margin: 0 0 10px -4px; }
+.intro__logo--gdg { width: 96px !important; height: 52px !important; object-fit: contain; margin: 0 0 18px -6px; }
+.intro__mascot { position: absolute; left: 884px; top: 95px; width: 250px; height: auto; }
 .intro__card > img { width: 148px; height: 148px; display: block; background: #fff; padding: 12px; border-radius: 14px; }
 .intro__url { font-size: 21px; line-height: 1.25; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
 </style>
 
 <!--
-(40 sn) Kısaca kendimi tanıtayım. (Ne yaptığın, Flutter ile ilişkin; 2–3 cümle.)
+(40 sn) Kısaca kendimi tanıtayım. (Ne yaptığın, GDG On OstimTech'teki rolün; 2–3 cümle.)
 
-Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz LinkedIn'den bağlantı kurabiliriz. Yanındaki mor QR da TMUG'un sitesi: topluluğa oradan katılabilirsiniz. QR'lar ekranda; sunum boyunca da sonunda da paylaşacağım.
+Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz LinkedIn'den bağlantı kurabiliriz. Yanındaki QR da GDG On OstimTech'in sitesi: sıradaki etkinlikleri ve topluluğa katılmayı oradan takip edebilirsiniz. QR'lar ekranda; sonunda da paylaşacağım.
 -->
 
 ---
@@ -136,7 +139,7 @@ Bir veritabanı ve etrafındaki servisler.
 <div class="map">
   <Glass class="map__api" pad="sm">
     <span class="font-mono text-sm text-accent">Data API</span>
-    <span class="text-muted text-base">Tablo açtığın an Flutter'dan erişilebilir</span>
+    <span class="text-muted text-base">Tablo açtığın an uygulamandan erişilebilir</span>
   </Glass>
   <div class="map__col">
     <Glass pad="sm" class="map__svc"><img src="/img/icons/auth.png" alt=""><div><h3>Auth</h3><p>Kullanıcılar ve oturum</p></div></Glass>
@@ -172,7 +175,7 @@ Bir veritabanı ve etrafındaki servisler.
 (1 dk 30 sn) Supabase'i "Firebase alternatifi" diye duymuş olabilirsiniz ama mimarisi farklı.
 
 - Merkezde gerçek bir Postgres veritabanı var. Her projenin kendine ait.
-- Tablo oluşturduğunuz an önünde otomatik bir API hazır oluyor. Flutter bu API ile konuşuyor, ayrı bir backend yazmıyorsunuz.
+- Tablo oluşturduğunuz an önünde otomatik bir API hazır oluyor. Uygulamanız (bizim örnekte Flutter) bu API ile konuşuyor, ayrı bir backend yazmıyorsunuz.
 - Etrafında dört servis var: kullanıcılar için Auth, dosyalar için Storage, anlık güncellemeler için Realtime, sunucu tarafı kod için Edge Functions.
 
 Önemli nokta: bu servislerin çoğu yine Postgres'e dayanıyor. Kullanıcılar da, dosya kayıtları da, erişim kuralları da veritabanında. O yüzden Postgres'i ve RLS'yi anlamak her şeyi anlamanın anahtarı.
@@ -186,7 +189,7 @@ image: /img/sections/connect.jpg
 time: 04:00
 ---
 
-# Flutter'a bağlanmak
+# Uygulamaya bağlanmak
 
 Üç adım ve iki anahtar.
 
@@ -198,7 +201,7 @@ time: 04:00
   <Glass>
     <div class="step">1</div>
     <h3>Paketi ekle</h3>
-    <p class="mt-3 text-lg"><code>supabase_flutter</code> paketi Auth, Database, Storage ve Realtime'ı tek istemcide toplar.</p>
+    <p class="mt-3 text-lg">Örnekte <code>supabase_flutter</code>. JS, Swift, Kotlin istemcileri de Auth, Database, Storage ve Realtime'ı tek yerde toplar.</p>
   </Glass>
   <Glass>
     <div class="step">2</div>
@@ -228,9 +231,9 @@ await Supabase.initialize(
 </style>
 
 <!--
-(1 dk) Flutter tarafı gerçekten bu kadar.
+(1 dk) Uygulama tarafı gerçekten bu kadar. Örneği Flutter ile gösteriyorum; web, Android ya da iOS'ta da adımlar aynı, sadece paketin adı değişiyor.
 
-1. supabase_flutter paketini ekliyorsunuz. Auth, veritabanı, dosyalar, realtime hepsi bu paketin içinde.
+1. İstemci paketini ekliyorsunuz; Flutter'da supabase_flutter, web'de supabase-js. Auth, veritabanı, dosyalar, realtime hepsi bu paketin içinde.
 2. Supabase panelinden iki şey alıyorsunuz: proje adresi ve publishable key.
 3. Uygulama açılırken bir kez initialize ediyorsunuz. Sonra uygulamanın her yerinden aynı istemciyi kullanıyorsunuz.
 
@@ -273,7 +276,7 @@ Aynı sayfada aşağıda secret key'ler duruyor ve varsayılan olarak gizli. Bir
   <Glass tone="deny">
     <div class="font-mono text-sm text-deny mb-6">sb_secret_…</div>
     <h3>Secret key</h3>
-    <p class="mt-3 text-lg"><strong>RLS'yi atlar.</strong> Yalnızca sunucuda ve Edge Functions'ta. Flutter uygulamasına asla.</p>
+    <p class="mt-3 text-lg"><strong>RLS'yi atlar.</strong> Yalnızca sunucuda ve Edge Functions'ta. İstemci uygulamasına asla.</p>
   </Glass>
 </div>
 
@@ -286,8 +289,8 @@ Aynı sayfada aşağıda secret key'ler duruyor ve varsayılan olarak gizli. Bir
 (1 dk) Üç değer var, üçünün de görevi farklı.
 
 - URL sadece adres, gizli bir şey değil.
-- Publishable key uygulamanın içine gömülüyor. APK'yı açan herkes bunu görebilir ve bu sorun değil. Çünkü bu anahtar kimseyi yetkilendirmiyor, sadece "bu proje için gelen bir istek" diyor. Kimin neyi görebileceğine veritabanındaki kurallar, yani RLS karar veriyor.
-- Secret key ise tam yetkili. RLS'yi atlıyor. Bu yüzden sadece sunucuda ya da Edge Functions içinde durur. Flutter uygulamasına konursa uygulamayı indiren herkes veritabanınızın tamamına erişir.
+- Publishable key uygulamanın içine gömülüyor. APK'yı açan ya da web sitesinin kaynağına bakan herkes bunu görebilir ve bu sorun değil. Çünkü bu anahtar kimseyi yetkilendirmiyor, sadece "bu proje için gelen bir istek" diyor. Kimin neyi görebileceğine veritabanındaki kurallar, yani RLS karar veriyor.
+- Secret key ise tam yetkili. RLS'yi atlıyor. Bu yüzden sadece sunucuda ya da Edge Functions içinde durur. Mobil ya da web uygulamasına konursa uygulamayı açan herkes veritabanınızın tamamına erişir.
 
 Eski projelerde ve eğitimlerde anon ve service_role adlarını göreceksiniz. Aynı roller, yeni adları bunlar.
 -->
@@ -308,7 +311,7 @@ Gerçek Postgres, otomatik API, kurallar veritabanında.
 
 <div class="grid grid-cols-3 gap-5">
   <Glass pad="sm"><h3 class="text-xl">Gerçek Postgres</h3><p class="mt-2 text-lg">İlişkiler, indeksler, fonksiyonlar, eklentiler. Bildiğin SQL.</p></Glass>
-  <Glass pad="sm"><h3 class="text-xl">Otomatik Data API</h3><p class="mt-2 text-lg">Tablo oluşturduğun an Flutter'dan okunup yazılabilir.</p></Glass>
+  <Glass pad="sm"><h3 class="text-xl">Otomatik Data API</h3><p class="mt-2 text-lg">Tablo oluşturduğun an uygulamandan okunup yazılabilir.</p></Glass>
   <Glass pad="sm"><h3 class="text-xl">Table Editor</h3><p class="mt-2 text-lg">Tabloları tarayıcıdan, tablo düzenler gibi yönet.</p></Glass>
 </div>
 
@@ -319,7 +322,7 @@ Gerçek Postgres, otomatik API, kurallar veritabanında.
 <!--
 (1 dk) Supabase'in veritabanı gerçek bir Postgres. Bildiğiniz her şey geçerli: ilişkiler, indeksler, fonksiyonlar, pgvector gibi eklentiler.
 
-Fark şurada: tabloyu oluşturduğunuz anda önünde bir API hazır. Flutter'dan "questions tablosuna şunu ekle", "son 50 soruyu getir" diyebiliyorsunuz. Ayrı bir sunucu yazmıyorsunuz.
+Fark şurada: tabloyu oluşturduğunuz anda önünde bir API hazır. Uygulamanızdan "questions tablosuna şunu ekle", "son 50 soruyu getir" diyebiliyorsunuz. Ayrı bir sunucu yazmıyorsunuz.
 
 Örnek tablomuz basit: kim sordu, ne sordu, ne zaman sordu. Uzunluk kontrolü bile veritabanında: 280 karakterden uzun soru kaydedilmiyor.
 
@@ -366,7 +369,7 @@ using ( auth.uid() = user_id );
 
 Üçüncü kural SQL'de böyle görünüyor. "Silmek isteyen kullanıcının kimliği, satırdaki user_id ile aynıysa izin ver." auth.uid() o anki kullanıcıyı veriyor. Bunu birazdan Auth'ta tekrar göreceğiz.
 
-Buradaki ana mesaj: Flutter'da Sil butonunu sadece kendi sorunuzda göstermek güzel bir arayüz davranışı ama güvenlik değil. Biri isteği kendisi gönderebilir. Asıl kapı veritabanında.
+Buradaki ana mesaj: uygulamada Sil butonunu sadece kendi sorunuzda göstermek güzel bir arayüz davranışı ama güvenlik değil. Biri isteği kendisi gönderebilir. Asıl kapı veritabanında.
 
 Bir de tuzak var. Başkasının sorusunu silmeye çalıştığınızda hata almıyorsunuz. Kural o satırı görünmez yapıyor ve işlem 0 satırı etkiliyor. Bunu bu projede gerçek istekle denedim. Yani "hata gelmedi, demek ki silindi" diye düşünmeyin; dönen sonucu kontrol edin.
 -->
@@ -452,7 +455,7 @@ Supabase'te hazır gelen giriş yöntemleri: e-posta ve şifre, e-postaya gelen 
 
 Bağlantı şöyle: kullanıcı giriş yapınca istemci bir oturum alıyor. Bu oturum bir JWT. Sonraki her istekte bu token gidiyor ve veritabanındaki auth.uid() bu kullanıcıyı gösteriyor. Yani az önceki RLS kuralı ile Auth burada birleşiyor.
 
-Flutter tarafında oturumu paket yönetiyor; token yenileme, saklama gibi işleri siz yazmıyorsunuz.
+Oturumu istemci paketi yönetiyor (Flutter'da supabase_flutter, web'de supabase-js); token yenileme, saklama gibi işleri siz yazmıyorsunuz.
 -->
 
 ---
@@ -562,7 +565,7 @@ icon: storage
 
 - Ücretsiz planda dosya başına 50 MB. Telefondan çekilen bir video bunu kolayca aşar.
 - Toplam 1 GB depolama ve 5 GB trafik var. Trafik daha çabuk biter: 2 MB'lık bir görseli 2500 kez göstermek 5 GB demek.
-- Görselleri sunucuda küçültme özelliği ücretli planlarda. Ücretsiz planda yüklemeden önce Flutter tarafında sıkıştırmak iyi bir alışkanlık.
+- Görselleri sunucuda küçültme özelliği ücretli planlarda. Ücretsiz planda yüklemeden önce uygulama tarafında sıkıştırmak iyi bir alışkanlık.
 -->
 
 ---
@@ -609,7 +612,7 @@ Ekranı yenilemeden güncellemek.
 <!--
 (1 dk 30 sn) Realtime üç farklı şey yapıyor ve hangisini seçtiğiniz önemli.
 
-- Postgres Changes: tablodaki değişikliği dinliyorsunuz. Kalıcı olması gereken veri için: yeni bir mesaj, siparişin durumu, güncellenen skor. Flutter'da stream ile tek satır.
+- Postgres Changes: tablodaki değişikliği dinliyorsunuz. Kalıcı olması gereken veri için: yeni bir mesaj, siparişin durumu, güncellenen skor. Flutter örneğimizde stream ile tek satır.
 - Broadcast: istemciler arasında hızlı mesaj, veritabanına uğramadan. "Yazıyor…" göstergesi, ortak bir dokümanda imleç konumu, oyundaki hamle. Kaydetmeye gerek yok, anlık olsun yeter.
 - Presence: paylaşılan durum. Kim çevrimiçi, odada kaç kişi var.
 
@@ -622,12 +625,12 @@ Sık yapılan hata her şeyi Postgres Changes ile yapmak. "Yazıyor…" bilgisin
 
 <Shot src="/img/panel/publications.jpg" :path="['Database', 'Publications', 'supabase_realtime']" :hand="[42.8, 63.7]" :h="300" />
 
-<p class="mt-6 text-lg">Flutter tarafında tek satır: <code>.stream(primaryKey: ['id'])</code> listeyi canlı tutar.</p>
+<p class="mt-6 text-lg">Flutter örneğinde tek satır: <code>.stream(primaryKey: ['id'])</code> listeyi canlı tutar.</p>
 
 <!--
 (40 sn) Postgres Changes'in çalışması için tablonun supabase_realtime yayınına eklenmesi gerekiyor. Panelde Database altında Publications sayfası. Hangi olayların (ekleme, güncelleme, silme) yayınlanacağını ve hangi tabloların dahil olduğunu buradan görüyorsunuz.
 
-Flutter tarafı ise tek satır: stream ile listeyi dinliyorsunuz, değişiklik gelince widget kendiliğinden yeniden çiziliyor.
+Flutter örneğimizde ise tek satır: stream ile listeyi dinliyorsunuz, değişiklik gelince widget kendiliğinden yeniden çiziliyor. Web'de aynı işi supabase-js'teki channel aboneliği yapıyor.
 -->
 
 ---
@@ -672,7 +675,7 @@ Sunucu gerektiğinde.
   <Glass tone="accent" pad="lg">
     <img src="/img/icons/functions.png" class="w-20 h-20 mb-4" alt="">
     <h3>TypeScript ile yazılır, kullanıcıya yakın çalışır</h3>
-    <p class="mt-4 text-lg">Flutter fonksiyonu çağırır. Gizli anahtar fonksiyonun içinde kalır, uygulamaya hiç inmez.</p>
+    <p class="mt-4 text-lg">Uygulama fonksiyonu çağırır. Gizli anahtar fonksiyonun içinde kalır, uygulamaya hiç inmez.</p>
     <p class="mt-6 text-lg"><strong>Örnek:</strong> Kullanıcının yazdığı metni bir yapay zekâ servisiyle özetlemek.</p>
   </Glass>
 </div>
@@ -682,13 +685,13 @@ Sunucu gerektiğinde.
 </style>
 
 <!--
-(1 dk) Şimdiye kadar her şeyi Flutter'dan doğrudan yaptık. Peki ne zaman bir sunucu gerekir? Cevap basit: gizli bir anahtar gerektiğinde.
+(1 dk) Şimdiye kadar her şeyi uygulamadan doğrudan yaptık. Peki ne zaman bir sunucu gerekir? Cevap basit: gizli bir anahtar gerektiğinde.
 
-Yapay zekâ servisi, ödeme, e-posta, bildirim, dış servislerden gelen webhook'lar. Bunların hepsinin bir gizli anahtarı var ve o anahtar Flutter uygulamasına giremez.
+Yapay zekâ servisi, ödeme, e-posta, bildirim, dış servislerden gelen webhook'lar. Bunların hepsinin bir gizli anahtarı var ve o anahtar istemci uygulamasına giremez.
 
-Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Flutter fonksiyonu çağırıyor, anahtar fonksiyonun içinde kalıyor.
+Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Uygulama fonksiyonu çağırıyor, anahtar fonksiyonun içinde kalıyor.
 
-Örnek: kullanıcının yazdığı metni bir yapay zekâ servisine gönderip özet çıkarmak. Anahtar Edge Function'da, Flutter sadece "özetle" diyor.
+Örnek: kullanıcının yazdığı metni bir yapay zekâ servisine gönderip özet çıkarmak. Anahtar Edge Function'da, uygulama sadece "özetle" diyor.
 -->
 
 ---
@@ -895,7 +898,7 @@ Bu rakamları Supabase'in fiyat sayfasından Ekim 2026'da kontrol ettim; değiş
     <div>
       <div class="link__label text-accent">Canlı demo · soru sor</div>
       <h3>Soru Panosu</h3>
-      <p class="link__url">flutter-demo.poyrazavsever.com</p>
+      <p class="link__url">gdgcanli.poyrazavsever.com</p>
       <p class="mt-3 text-base">Adını yaz, katıl, sorunu gönder. Herkesin ekranına anında düşer.</p>
     </div>
   </Glass>
@@ -923,7 +926,7 @@ Bu rakamları Supabase'in fiyat sayfasından Ekim 2026'da kontrol ettim; değiş
 
 Soldaki QR canlı demo: telefonunuzdan okutun, adınızı yazın ve bana sorunuzu gönderin. Soru-cevapta buradan okuyacağım.
 
-Sağdaki QR repo: Flutter uygulaması, Supabase migration'ı ve bu sunum aynı yerde. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalışıyor.
+Sağdaki QR repo: örnek Flutter uygulaması, Supabase migration'ı ve bu sunum aynı yerde. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalışıyor.
 
 Şimdi iki dakikalık hızlı bir tur:
 1. İki pencere yan yana (biri gizli pencere): Ayşe soru gönderiyor, Mehmet'in ekranına yenilemeden düşüyor. (Realtime)
@@ -946,28 +949,30 @@ Sorular?
   <div class="thanks__item glass"><img src="/img/qr-demo.svg" alt=""><span class="text-accent">Soru sor</span></div>
   <div class="thanks__item glass"><img src="/img/qr-repo.svg" alt=""><span class="text-dim">GitHub</span></div>
   <div class="thanks__item glass"><img src="/img/qr-linkedin.svg" alt=""><span style="color:#0A66C2">LinkedIn</span></div>
+  <div class="thanks__item glass"><img src="/img/qr-gdg.svg" alt=""><span style="color:#1A73E8">GDG</span></div>
 </div>
 
 <template #meta>
   <div class="flex items-center justify-between">
-    <span class="font-mono text-sm text-muted">flutter-demo.poyrazavsever.com · github.com/poyrazavsever/flutter-ankara</span>
+    <span class="font-mono text-sm text-muted">gdgcanli.poyrazavsever.com · github.com/poyrazavsever/flutter-ankara</span>
     <span class="text-dim font-mono text-sm tracking-widest">POYRAZ AVSEVER</span>
   </div>
 </template>
 
 <style>
-.thanks { display: flex; gap: 18px; margin-top: 40px; }
+.thanks { display: flex; gap: 14px; margin-top: 40px; }
 .thanks__item { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 14px 12px; }
-.thanks__item img { width: 128px; height: 128px; display: block; background: #fff; padding: 8px; border-radius: 10px; }
+.thanks__item img { width: 108px; height: 108px; display: block; background: #fff; padding: 8px; border-radius: 10px; }
 .thanks__item span { font-family: var(--font-mono); font-size: 14px; }
 </style>
 
 <!--
-(3 dk) Teşekkür ederim. Sorularınızı alayım. Demo panosuna gelen soruları da buradan okuyorum; LinkedIn QR'ı da ekranda.
+(3 dk) Teşekkür ederim. Sorularınızı alayım. Demo panosuna gelen soruları da buradan okuyorum; LinkedIn ve GDG On OstimTech QR'ları da ekranda. Sıradaki etkinlikte görüşmek üzere.
 
 Olası sorular için notlar:
-- "Firebase'den farkı ne?" → İlişkisel Postgres, SQL ve RLS; açık kaynak, kendi sunucuna kurulabilir.
-- "Offline çalışır mı?" → supabase_flutter offline-first değil; yerel önbellek (Drift, Hive vb.) ile birlikte kurulur. PowerSync gibi çözümler var.
+- "Firebase'den farkı ne?" → İlişkisel Postgres, SQL ve RLS; açık kaynak, kendi sunucuna kurulabilir. Firebase doküman tabanlı; ikisi de iyi, veri ilişkiselse Supabase daha doğal.
+- "Flutter kullanmıyorum, ne değişir?" → Hiçbir kavram değişmez: supabase-js (web, React, Vue), Swift, Kotlin istemcileri var. Anahtarlar, RLS, Realtime aynı.
+- "Offline çalışır mı?" → Supabase istemcileri offline-first değil; yerel önbellek (Drift, Hive vb.) ile birlikte kurulur. PowerSync gibi çözümler var.
 - "State management?" → Supabase herhangi biriyle çalışır; stream'ler Riverpod, Bloc vb. ile doğal bağlanır.
 - "Kendi sunucuma kurabilir miyim?" → Evet, Docker ile self-host mümkün; bakım sizde.
 -->

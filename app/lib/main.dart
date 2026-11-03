@@ -26,7 +26,7 @@ class SoruPanosuApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Soru Panosu · Flutter Ankara',
+      title: 'Soru Panosu · GDG On OstimTech',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: const Color(0xFF3ECF8E),

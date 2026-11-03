@@ -1,14 +1,16 @@
-# Flutter Ankara — Soru Panosu
+# GDG On OstimTech — Soru Panosu
 
-**Flutter ile Uçtan Uca Uygulama: Auth, Database ve Realtime** sunumunun örnek projesi.
+**Supabase ile Uçtan Uca Uygulama: Auth, Database ve Realtime** sunumunun örnek projesi. Sunum [GDG On OstimTech](https://gdgostimtech.com) için hazırlandı; örnek istemci Flutter ile yazıldı, anlatılan kavramlar (anahtarlar, RLS, Realtime) web ve mobil istemcilerde aynıdır.
 
-**Uygulama:** https://flutter-demo.poyrazavsever.com · **Sunum:** https://flutter-sunum.poyrazavsever.com
+**Uygulama:** https://gdgcanli.poyrazavsever.com · **Sunum:** https://gdgsupabase.poyrazavsever.com
+
+> Bu repo ilk olarak Flutter Ankara için hazırlanan sunumun GDG On OstimTech için güncellenmiş hâlidir.
 
 Kullanıcı adını yazıp katılır, konuşmacıya soru gönderir; sorular herkesin ekranına yenilemeden düşer. Herkes yalnızca kendi sorusunu silebilir ve bu kuralı arayüz değil, veritabanı uygular.
 
 | Klasör | İçerik |
 |---|---|
-| `app/` | Flutter web uygulaması |
+| `app/` | Örnek istemci: Flutter web uygulaması |
 | `supabase/` | Tablo, RLS kuralları ve Realtime tek migration'da |
 | `slides/` | Sunum (Slidev) |
 | `docs/` | Plan ve konuşma metni |
@@ -44,15 +46,15 @@ flutter run -d chrome --dart-define=SUPABASE_URL=https://<proje>.supabase.co --d
 
 ## Yayına alma
 
-İkisi de Cloudflare Workers'ta statik site olarak durur (`wrangler.jsonc`); önce `npx wrangler login`.
+İkisi de Cloudflare Workers'ta statik site olarak durur (`wrangler.jsonc`); önce `npx wrangler login`. Alan adları `custom_domain` ile tanımlı: `poyrazavsever.com` aynı Cloudflare hesabındaysa ilk `deploy` alt alan adının DNS kaydını ve sertifikasını kendisi oluşturur.
 
 ```bash
-# Uygulama → flutter-demo.poyrazavsever.com
+# Uygulama → gdgcanli.poyrazavsever.com
 cd app
 flutter build web --release
 npx wrangler deploy
 
-# Sunum → flutter-sunum.poyrazavsever.com
+# Sunum → gdgsupabase.poyrazavsever.com
 cd slides
 npm run deploy
 ```

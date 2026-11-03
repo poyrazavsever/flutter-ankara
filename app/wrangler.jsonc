@@ -1,10 +1,10 @@
 // Uygulamayı Cloudflare'e yayınlar: flutter build web --release && npx wrangler deploy
 {
-  "name": "flutter-ankara-demo",
+  "name": "gdg-supabase-canli",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./build/web",
     "not_found_handling": "single-page-application"
   },
-  "routes": [{ "pattern": "flutter-demo.poyrazavsever.com", "custom_domain": true }]
+  "routes": [{ "pattern": "gdgcanli.poyrazavsever.com", "custom_domain": true }]
 }

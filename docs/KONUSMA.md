@@ -1,4 +1,6 @@
-# Flutter ile Uçtan Uca Uygulama — Konu Rehberi ve Konuşma Metni
+# Supabase ile Uçtan Uca Uygulama — Konu Rehberi ve Konuşma Metni
+
+**Etkinlik:** GDG On OstimTech · **Örnek istemci:** Flutter (kavramlar web ve mobilde aynı)
 
 Bu doküman iki bölümden oluşur:
 
@@ -28,15 +30,15 @@ Her projeye ayrı bir Postgres örneği verilir. Diğer servislerin neredeyse he
 
 Bu yüzden sunumun ana fikri şu: **Postgres'i ve RLS'yi anlarsan Supabase'in yarısını anlamış olursun.** Kullanıcılar da, dosya kayıtları da, erişim kuralları da veritabanında.
 
-**İsteğin yolculuğu** (Flutter'dan veritabanına):
+**İsteğin yolculuğu** (uygulamadan veritabanına; örnekte Flutter):
 
-1. Flutter, `supabase_flutter` istemcisiyle HTTPS isteği atar. İstekte iki şey vardır: **publishable key** (hangi proje) ve kullanıcı giriş yaptıysa **JWT** (kim).
+1. Uygulama, Supabase istemcisiyle (örnekte `supabase_flutter`, web'de `supabase-js`) HTTPS isteği atar. İstekte iki şey vardır: **publishable key** (hangi proje) ve kullanıcı giriş yaptıysa **JWT** (kim).
 2. İstek Supabase'in API ağ geçidinden geçer ve Data API'ye (PostgREST) ulaşır.
 3. PostgREST, isteği SQL'e çevirir ve Postgres'e **kullanıcının rolüyle** bağlanır: giriş yapmamışsa `anon`, yapmışsa `authenticated`. JWT içindeki bilgiler (`auth.uid()`) bu oturumda okunabilir hale gelir.
 4. Postgres sorguyu çalıştırırken **RLS kurallarını** uygular. Kullanıcının göremeyeceği satırlar sonuçta hiç yoktur.
-5. Sonuç JSON olarak Flutter'a döner.
+5. Sonuç JSON olarak uygulamaya döner.
 
-Yani güvenlik "API'de" değil, **veritabanının içinde**. Flutter'dan gelen istek ne olursa olsun, son söz Postgres'te.
+Yani güvenlik "API'de" değil, **veritabanının içinde**. Uygulamadan gelen istek ne olursa olsun, son söz Postgres'te.
 
 ## 1.2 Anahtarlar ve roller
 
@@ -44,7 +46,7 @@ Supabase'te iki aile anahtar var:
 
 | Yeni ad | Eski ad | Postgres rolü | RLS | Nerede durur? |
 |---|---|---|---|---|
-| **Publishable key** `sb_publishable_…` | `anon` key | `anon` (giriş yoksa) / `authenticated` (JWT varsa) | **Uygulanır** | İstemci: Flutter, web, mobil |
+| **Publishable key** `sb_publishable_…` | `anon` key | `anon` (giriş yoksa) / `authenticated` (JWT varsa) | **Uygulanır** | İstemci: web, mobil, Flutter |
 | **Secret key** `sb_secret_…` | `service_role` key | `service_role` | **Atlanır** | Sunucu, Edge Functions, CI |
 
 Önemli noktalar:
@@ -52,12 +54,12 @@ Supabase'te iki aile anahtar var:
 - **Publishable key gizli değildir.** APK'yı açan herkes görebilir, web'de tarayıcıdan okunur. Bu tasarım gereğidir: bu anahtar kimseyi yetkilendirmez, sadece hangi projeye konuşulduğunu söyler. Kullanıcının kim olduğunu **JWT** söyler, neye erişebileceğini **RLS** belirler.
 - **Secret key tam yetkilidir.** RLS'yi atlar. Bu anahtar istemciye girerse veritabanının tamamı açılır. Sızarsa panelden hemen yenisi oluşturulup eskisi silinmeli.
 - **Neden yeni anahtarlar?** Eski `anon` / `service_role` anahtarları uzun ömürlü JWT'lerdi ve proje JWT sırrına bağlıydı; tek tek döndürmek (rotate) zordu. Yeni anahtarlar bağımsız oluşturulup silinebiliyor. Eski projelerde ve eğitimlerde hâlâ eski adları göreceksin; roller aynı.
-- Flutter'da publishable key, `Supabase.initialize()` içindeki `publishableKey` parametresine verilir. (Eski sürümlerde ve eğitimlerde bu parametrenin adı `anonKey`.)
+- Örnekteki Flutter'da publishable key, `Supabase.initialize()` içindeki `publishableKey` parametresine verilir. (Eski sürümlerde ve eğitimlerde bu parametrenin adı `anonKey`.)
 
 ## 1.3 Database ve otomatik Data API
 
 - **Gerçek Postgres:** İlişkiler (foreign key), indeksler, view'lar, fonksiyonlar, trigger'lar, eklentiler (ör. `pgvector` ile vektör arama, `pg_cron` ile zamanlanmış işler). Firebase'in doküman modelinden farkı burada: veri ilişkisel, sorgular SQL.
-- **Data API (PostgREST):** `public` şemasındaki her tablo ve view için otomatik uç noktalar üretir. Flutter'da:
+- **Data API (PostgREST):** `public` şemasındaki her tablo ve view için otomatik uç noktalar üretir. Örnekte (Flutter; supabase-js'te sözdizimi neredeyse aynı):
   - `supabase.from('questions').select()` → okuma
   - `.insert({...})`, `.update({...}).eq('id', id)`, `.delete().eq('id', id)`
   - İlişkili tablolar tek sorguda: `.select('*, profiles(name)')`
@@ -93,7 +95,7 @@ using ( auth.uid() = user_id );   -- hangi satırlar
 | Mehmet, Ayşe'nin sorusunu siler | **Hata yok, 0 satır** |
 | Ayşe kendi sorusunu siler | 1 satır silindi |
 
-Dikkat et: `insert` reddi **hata verir** (`with check`), `delete` reddi **sessizdir** (`using`). Flutter'da silme sonucunu kontrol etmek için `.delete().eq('id', id).select()` kullanılır; dönen liste boşsa silme gerçekleşmemiştir.
+Dikkat et: `insert` reddi **hata verir** (`with check`), `delete` reddi **sessizdir** (`using`). Silme sonucunu kontrol etmek için `.delete().eq('id', id).select()` kullanılır; dönen liste boşsa silme gerçekleşmemiştir.
 
 **Ek bilgiler:**
 
@@ -110,9 +112,9 @@ Dikkat et: `insert` reddi **hata verir** (`with check`), `delete` reddi **sessiz
 - **Oturum:** Giriş yapınca iki token gelir:
   - **Access token (JWT):** Kısa ömürlüdür (varsayılan 1 saat). Her istekte gönderilir; RLS'deki `auth.uid()` bu token'daki kullanıcı kimliğidir.
   - **Refresh token:** Access token süresi dolunca yenisini almak için.
-  - `supabase_flutter` oturumu cihazda saklar ve token'ı arka planda kendisi yeniler. `onAuthStateChange` akışıyla giriş/çıkış olaylarını dinleyebilirsin.
+  - İstemci kütüphanesi (`supabase_flutter`, `supabase-js`) oturumu cihazda/tarayıcıda saklar ve token'ı arka planda kendisi yeniler. `onAuthStateChange` akışıyla giriş/çıkış olaylarını dinleyebilirsin.
 - **Mobilde deep link:** Magic link, e-posta doğrulama ve tarayıcı tabanlı OAuth, kullanıcıyı uygulamaya geri döndürmek zorunda. Bunun için:
-  1. Panelde **Authentication → URL Configuration** altında Redirect URL ekle (ör. `io.flutterankara.app://login-callback`)
+  1. Panelde **Authentication → URL Configuration** altında Redirect URL ekle (ör. `com.gdgostimtech.soru://login-callback`)
   2. Android (`AndroidManifest.xml`) ve iOS'ta (`Info.plist`) bu şemayı tanımla
   3. Unutulursa link tarayıcıda açılıp kalır.
 - **Yerel (native) giriş:** Google ve Apple için tarayıcıya gitmeden, platformun kendi giriş penceresiyle alınan token'ı `signInWithIdToken` ile Supabase'e verebilirsin. Daha iyi kullanıcı deneyimi.
@@ -127,7 +129,7 @@ Dikkat et: `insert` reddi **hata verir** (`with check`), `delete` reddi **sessiz
 - **Örnek kural:** "Kullanıcı yalnızca kendi kimliğiyle adlandırılmış klasöre yükleyebilir." Dosya yolu `user_id/dosya.png` şeklinde tutulur ve kural yolun ilk parçasının `auth.uid()` ile eşleşmesini ister. Mantık, tablolardaki RLS'nin aynısı.
 - **İmzalı URL (signed URL):** Private dosyayı geçici olarak paylaşmak için süreli link. Süre dolunca çalışmaz.
 - **Büyük dosyalar:** Büyük yüklemeler için parçalı, kaldığı yerden devam edebilen (resumable) yükleme var; birkaç MB'ı aşan dosyalarda önerilir.
-- **Sınırlar (Free):** 1 GB depolama, 5 GB trafik (egress), dosya başına 50 MB. Görselleri sunucuda boyutlandırma (image transformations) ücretli planlarda. Ücretsiz planda görseli yüklemeden önce Flutter'da sıkıştırmak iyi bir alışkanlık.
+- **Sınırlar (Free):** 1 GB depolama, 5 GB trafik (egress), dosya başına 50 MB. Görselleri sunucuda boyutlandırma (image transformations) ücretli planlarda. Ücretsiz planda görseli yüklemeden önce istemcide sıkıştırmak iyi bir alışkanlık.
 - **Trafik hesabı:** 2 MB'lık bir görseli 2.500 kez göstermek 5 GB eder. Depolamadan çok trafik biter.
 
 ## 1.7 Realtime
@@ -137,7 +139,7 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 1. **Postgres Changes:** Postgres her değişikliği bir günlüğe (WAL) yazar. Realtime, `supabase_realtime` adlı **yayına (publication)** eklenmiş tabloların değişikliklerini bu günlükten okur ve abone olan istemcilere iletir.
    - Tablo yayına eklenmemişse **hiçbir şey gelmez, hata da gelmez.** (Bizim migration'da: `alter publication supabase_realtime add table public.questions;`)
    - **RLS'ye uyar:** Kullanıcı göremeyeceği satırın değişikliğini almaz. Ama bunun için her değişiklik her abone için ayrı kontrol edilir; çok kalabalık senaryolarda bu maliyetlidir.
-   - Flutter'daki `.stream(primaryKey: ['id'])` önce mevcut veriyi çeker, sonra Postgres Changes ile listeyi güncel tutar. `StreamBuilder` ile doğrudan kullanılır.
+   - Örnekteki Flutter'da `.stream(primaryKey: ['id'])` önce mevcut veriyi çeker, sonra Postgres Changes ile listeyi güncel tutar. `StreamBuilder` ile doğrudan kullanılır.
 2. **Broadcast:** Kanal üzerinden istemciler arası hızlı mesaj; veritabanına yazılmaz. "Yazıyor…" göstergesi, ortak dokümanda imleç, oyun hamlesi. Ölçeklenmesi Postgres Changes'ten kolaydır. Veritabanı trigger'larından Broadcast mesajı göndermek de mümkün.
 3. **Presence:** Kanaldaki istemcilerin paylaşılan durumu: kim çevrimiçi, kaç kişi var.
 
@@ -149,7 +151,7 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 
 - **Ne zaman?** Gizli bir anahtar gerektiğinde ya da istemciye güvenilemeyecek bir iş olduğunda: yapay zekâ servisi çağırmak, ödeme almak, e-posta/bildirim göndermek, dış servislerden webhook almak.
 - **Nasıl?** TypeScript ile yazılır, Deno çalışma ortamında, kullanıcıya yakın sunucularda çalışır. Gizli anahtarlar **Edge Functions → Secrets** altına konur, kodda ortam değişkeni olarak okunur.
-- **Flutter'dan çağırma:** `supabase.functions.invoke('ozetle', body: {...})`. Kullanıcı giriş yaptıysa JWT otomatik gönderilir; fonksiyon içinde kullanıcıyı doğrulayıp ona göre davranabilirsin.
+- **Uygulamadan çağırma:** `supabase.functions.invoke('ozetle', body: {...})`. Kullanıcı giriş yaptıysa JWT otomatik gönderilir; fonksiyon içinde kullanıcıyı doğrulayıp ona göre davranabilirsin.
 - **Oluşturma yolları:** Panelde tarayıcı editörü, yapay zekâ asistanı veya CLI (`supabase functions deploy`).
 - **Sınırlar:** İstek başına **2 sn CPU süresi** (ağ beklemesi dahil değil, yani bir yapay zekâ cevabını beklemek sorun değil), **256 MB bellek**, en uzun çalışma **150 sn (Free) / 400 sn (ücretli)**. Ücretsiz planda ayda 500.000 çağrı. Ağır hesaplama ve uzun işler için uygun değil; uzun işler için kuyruk düşünülmeli.
 - **Zamanlanmış işler:** `pg_cron` ile veritabanından düzenli olarak bir fonksiyonu tetiklemek mümkün.
@@ -185,7 +187,9 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 - **Ne zaman Pro?** Gerçek kullanıcı geldiğinde (yedek şart), proje uyumamalıysa, ücretsiz kotalar yetmediğinde.
 - **Kendi sunucunda (self-host):** Docker ile ücretsiz çalıştırılabilir; ama yedekleme, güncelleme, güvenlik bakımı sende.
 
-## 1.11 Flutter'a özel notlar
+## 1.11 Örnek istemci: Flutter'a özel notlar
+
+> Sunum Flutter'a özel değil; bu bölüm örnek projeyi ve Flutter'cıların sorabileceği soruları kapsar. Web için karşılığı `npm i @supabase/supabase-js` ve `createClient(url, publishableKey)`.
 
 - **Kurulum:** `flutter pub add supabase_flutter`, ardından `main()` içinde `await Supabase.initialize(url: ..., publishableKey: ...)`. Sonra her yerden `Supabase.instance.client`.
 - **State management:** Supabase herhangi biriyle çalışır. `stream()` ve `onAuthStateChange` akışları Riverpod, Bloc gibi çözümlere doğal olarak bağlanır. Örnek projede bilinçli olarak sade `StreamBuilder` kullanıldı.
@@ -202,6 +206,7 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 | RLS performansı düşürür mü? | Kural basitse ve kolonlar indeksliyse etkisi küçük. `(select auth.uid())` kalıbı ve indeks önemli. |
 | Offline çalışır mı? | Kendiliğinden değil; yerel veritabanı + senkronizasyon (Drift, PowerSync…) gerekir. |
 | Hangi state management? | Hepsiyle çalışır; stream'ler doğal olarak bağlanır. |
+| Flutter kullanmıyorum, ne değişir? | Kavramların hiçbiri. supabase-js (web, React, Vue, Node), Swift, Kotlin istemcileri var; anahtarlar, RLS ve Realtime aynı. |
 | Kendi sunucuma kurabilir miyim? | Evet, Docker ile. Bakım ve yedek sende. |
 | Migration'ları nasıl yönetirim? | Supabase CLI: `supabase migration new`, `supabase db push`. Dosyalar repoda tutulur. |
 | Birden fazla ortam (dev/prod)? | İki ayrı proje veya ücretli planda branching. MCP'yi dev projesine bağla. |
@@ -223,22 +228,22 @@ Realtime ayrı bir sunucudur (Elixir ile yazılmış) ve **kanal** (channel) kav
 
 Herkese iyi akşamlar, hoş geldiniz.
 
-Bu akşam Flutter ile geliştirdiğimiz bir uygulamaya **kullanıcı, veri ve gerçek zamanlı güncelleme** kazandırmayı konuşacağız. Bunu Supabase ile yapacağız. Ama size bir kod anlatımı değil, bir **tanışma** yapacağım: Supabase neler sunuyor, panelde nerede duruyor ve en önemlisi, sınırları neler.
+Bugün bir uygulamaya **kullanıcı, veri ve gerçek zamanlı güncelleme** kazandırmayı konuşacağız. Bunu Supabase ile yapacağız. Örnek uygulamamız Flutter ile yazıldı ama anlatacaklarımın neredeyse tamamı web, Android ya da iOS için de aynı. Ama size bir kod anlatımı değil, bir **tanışma** yapacağım: Supabase neler sunuyor, panelde nerede duruyor ve en önemlisi, sınırları neler.
 
 `[→]`
 
 ### Slayt 2 — Ben kimim? · 0:40
 
 Ben Poyraz.
-*(Kendini 2–3 cümleyle tanıt: ne yaptığın, Flutter ile ilişkin.)*
+*(Kendini 2–3 cümleyle tanıt: ne yaptığın, GDG On OstimTech'teki rolün.)*
 
-Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz **LinkedIn'den bağlantı kuralım.** QR ekranda; sonunda da tekrar göstereceğim.
+Sunumdan sonra soru sormak ya da sadece tanışmak isterseniz **LinkedIn'den bağlantı kuralım.** Yanındaki QR da **GDG On OstimTech**'in sitesi: sıradaki etkinlikleri ve topluluğa katılmayı oradan takip edebilirsiniz. QR'lar ekranda; sonunda da tekrar göstereceğim.
 
 `[→]`
 
 ### Slayt 3 — Tez · 0:40
 
-Bu akşamın tek cümlesi bu: **Supabase'i ne kadar iyi tanırsanız, sınırlarını ne kadar iyi bilirseniz projenizi o kadar iyi kurarsınız.**
+Bugünün tek cümlesi bu: **Supabase'i ne kadar iyi tanırsanız, sınırlarını ne kadar iyi bilirseniz projenizi o kadar iyi kurarsınız.**
 
 Supabase'te bir şeyi çalıştırmak çok kolay. Sizi projede zorlayacak şey kolay kısım değil; saatte kaç e-posta gönderebildiğiniz, kaç kişinin aynı anda bağlanabildiği, hangi anahtarın nereye konduğu.
 
@@ -256,7 +261,7 @@ O yüzden her servisi dört soruyla geçeceğiz: **Ne yapar? Nasıl çalışır?
 
 Supabase'i "Firebase alternatifi" diye duymuş olabilirsiniz. Ama mimarisi çok farklı.
 
-Merkezde **gerçek bir Postgres veritabanı** var. Her projenin kendine ait. Tablo oluşturduğunuz anda önünde **otomatik bir API** hazır oluyor; Flutter bu API ile konuşuyor ve ayrı bir backend yazmıyorsunuz.
+Merkezde **gerçek bir Postgres veritabanı** var. Her projenin kendine ait. Tablo oluşturduğunuz anda önünde **otomatik bir API** hazır oluyor; uygulamanız (bizim örnekte Flutter) bu API ile konuşuyor ve ayrı bir backend yazmıyorsunuz.
 
 Etrafında dört servis var: kullanıcılar için **Auth**, dosyalar için **Storage**, anlık güncellemeler için **Realtime**, sunucu tarafı kod için **Edge Functions**.
 
@@ -266,21 +271,21 @@ Bir de: hepsi açık kaynak. İsterseniz kendi sunucunuzda çalıştırabilirsin
 
 `[→]`
 
-### Slayt 6 — Bölüm: Flutter'a bağlanmak · 0:05
+### Slayt 6 — Bölüm: Uygulamaya bağlanmak · 0:05
 
-Peki Flutter bu yapıya nasıl bağlanıyor?
+Peki bir uygulama bu yapıya nasıl bağlanıyor?
 
 `[→]`
 
 ### Slayt 7 — Üç adımda bağlantı · 0:45
 
-Flutter tarafı gerçekten bu kadar.
+Uygulama tarafı gerçekten bu kadar. Örneği Flutter ile gösteriyorum; web, Android ya da iOS'ta da adımlar aynı, sadece paketin adı değişiyor.
 
-Bir: `supabase_flutter` paketini ekliyorsunuz. Auth, veritabanı, dosyalar, realtime; hepsi tek istemcide.
+Bir: istemci paketini ekliyorsunuz; Flutter'da `supabase_flutter`, web'de `supabase-js`. Auth, veritabanı, dosyalar, realtime; hepsi tek istemcide.
 
 İki: Supabase panelinden iki değer alıyorsunuz: projenin adresi ve publishable key.
 
-Üç: Uygulama açılırken bir kez `Supabase.initialize` diyorsunuz. Sonra uygulamanın her yerinden aynı istemciyi kullanıyorsunuz.
+Üç: Uygulama açılırken bir kez başlatıyorsunuz (Flutter'da `Supabase.initialize`). Sonra uygulamanın her yerinden aynı istemciyi kullanıyorsunuz.
 
 Peki bu iki değer panelde nerede?
 
@@ -292,7 +297,7 @@ Proje adresi, projenin ana sayfasında en üstte; yanında kopyala butonu var.
 
 Anahtar ise **Project Settings → API Keys** sayfasında. Üstte publishable key, onu kopyalıyorsunuz. Aşağıda secret key'ler var ve gördüğünüz gibi varsayılan olarak gizli.
 
-Burada şu soru akla gelmeli: publishable key'i uygulamanın içine koyuyoruz. Yani APK'yı açan herkes görebilir. Bu güvenli mi?
+Burada şu soru akla gelmeli: publishable key'i uygulamanın içine koyuyoruz. Yani APK'yı açan ya da sitenin kaynağına bakan herkes görebilir. Bu güvenli mi?
 
 `[→]`
 
@@ -304,7 +309,7 @@ Burada şu soru akla gelmeli: publishable key'i uygulamanın içine koyuyoruz. Y
 
 **Publishable key** uygulamaya gömülüyor ve herkes görebilir. Bu bir hata değil, tasarım gereği. Çünkü bu anahtar **kimseyi yetkilendirmiyor**; sadece "bu proje için gelen bir istek" diyor. Kullanıcının kim olduğunu giriş yapınca aldığı token söylüyor, neyi görebileceğine ise veritabanındaki kurallar, yani **RLS** karar veriyor.
 
-**Secret key** ise tam yetkili ve **RLS'yi atlıyor.** Sadece sunucuda ya da Edge Functions içinde durur. Flutter uygulamasına konduğu an, uygulamayı indiren herkes veritabanınızın tamamına erişir.
+**Secret key** ise tam yetkili ve **RLS'yi atlıyor.** Sadece sunucuda ya da Edge Functions içinde durur. Mobil ya da web uygulamasına konduğu an, uygulamayı açan herkes veritabanınızın tamamına erişir.
 
 Eski eğitimlerde `anon` ve `service_role` adlarını göreceksiniz. Aynı roller, yeni adları bunlar.
 
@@ -320,7 +325,7 @@ Eski eğitimlerde `anon` ve `service_role` adlarını göreceksiniz. Aynı rolle
 
 Supabase'in veritabanı gerçek bir Postgres. İlişkiler, indeksler, fonksiyonlar, eklentiler; bildiğiniz her şey geçerli.
 
-Fark şurada: tabloyu oluşturduğunuz an, Flutter'dan okunup yazılabilir hale geliyor. "Şu tabloya ekle", "son 50 kaydı getir" diyebiliyorsunuz.
+Fark şurada: tabloyu oluşturduğunuz an, uygulamanızdan okunup yazılabilir hale geliyor. "Şu tabloya ekle", "son 50 kaydı getir" diyebiliyorsunuz.
 
 Altta Table Editor'ü görüyorsunuz. Örnek projemizin `questions` tablosu: kim sordu, ne sordu, ne zaman sordu. Tabloları tarayıcıdan, bir tablo düzenler gibi yönetebiliyorsunuz.
 
@@ -376,7 +381,7 @@ Hazır gelen yöntemler: e-posta ve şifre, e-postaya gelen link, tek kullanıml
 
 Sağdaki akış ikisinin nasıl birleştiğini gösteriyor: kullanıcı giriş yapıyor, istemci bir **JWT** alıyor ve her istekte bu token gidiyor. Veritabanındaki `auth.uid()` işte bu token'daki kullanıcı. Az önceki RLS kuralı ile Auth burada buluşuyor.
 
-Flutter'da oturumu paket yönetiyor: saklama, token yenileme, hepsi otomatik.
+Oturumu istemci paketi yönetiyor (Flutter'da `supabase_flutter`, web'de `supabase-js`): saklama, token yenileme, hepsi otomatik.
 
 `[→]`
 
@@ -432,7 +437,7 @@ Panelde **Storage → Files → Buckets.** Örnek projede iki tane var: private 
 
 Toplam **1 GB depolama ve 5 GB trafik.** Trafik daha çabuk biter: 2 MB'lık bir görseli 2.500 kez göstermek 5 GB demek.
 
-Görselleri sunucuda küçültme özelliği ücretli planlarda. Ücretsiz planda görseli **yüklemeden önce Flutter'da sıkıştırmak** iyi bir alışkanlık.
+Görselleri sunucuda küçültme özelliği ücretli planlarda. Ücretsiz planda görseli **yüklemeden önce uygulama tarafında sıkıştırmak** iyi bir alışkanlık.
 
 `[→]`
 
@@ -460,7 +465,7 @@ Sık yapılan hata her şeyi Postgres Changes ile yapmak. "Yazıyor…" bilgisin
 
 Postgres Changes'in çalışması için tablonun **`supabase_realtime` yayınına** eklenmesi gerekiyor. Panelde **Database → Publications.** Hangi olayların yayınlanacağını ve hangi tabloların dahil olduğunu buradan görüyorsunuz.
 
-Flutter tarafı tek satır: `.stream()` ile listeyi dinliyorsunuz; değişiklik gelince widget kendiliğinden yeniden çiziliyor.
+Flutter örneğimizde tek satır: `.stream()` ile listeyi dinliyorsunuz; değişiklik gelince widget kendiliğinden yeniden çiziliyor. Web'de aynı işi `supabase-js`'teki channel aboneliği yapıyor.
 
 `[→]`
 
@@ -476,7 +481,7 @@ Postgres Changes güvenli: RLS'ye uyuyor, kullanıcı göremeyeceği satırın d
 
 ### Slayt 28 — Bölüm: Edge Functions · 0:05
 
-Şimdiye kadar her şeyi Flutter'dan doğrudan yaptık. Peki ne zaman bir sunucu gerekir?
+Şimdiye kadar her şeyi uygulamadan doğrudan yaptık. Peki ne zaman bir sunucu gerekir?
 
 `[→]`
 
@@ -484,9 +489,9 @@ Postgres Changes güvenli: RLS'ye uyuyor, kullanıcı göremeyeceği satırın d
 
 Cevap basit: **gizli bir anahtar gerektiğinde.**
 
-Yapay zekâ servisi çağırmak, ödeme almak, e-posta ya da bildirim göndermek, dış servislerden webhook almak. Bunların hepsinin bir gizli anahtarı var ve o anahtar Flutter uygulamasına giremez.
+Yapay zekâ servisi çağırmak, ödeme almak, e-posta ya da bildirim göndermek, dış servislerden webhook almak. Bunların hepsinin bir gizli anahtarı var ve o anahtar istemci uygulamasına giremez.
 
-Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Flutter fonksiyonu çağırıyor; **anahtar fonksiyonun içinde kalıyor**, uygulamaya hiç inmiyor.
+Edge Functions burada devreye giriyor. TypeScript ile küçük fonksiyonlar yazıyorsunuz, kullanıcıya yakın sunucularda çalışıyor. Uygulama fonksiyonu çağırıyor; **anahtar fonksiyonun içinde kalıyor**, uygulamaya hiç inmiyor.
 
 `[→]`
 
@@ -581,7 +586,7 @@ Bütün anlattıklarımın çalışan hali burada. İki QR var.
 
 **Soldaki canlı demo:** Telefonunuzdan okutun, adınızı yazın ve bana sorunuzu gönderin. Soru-cevapta sorulara buradan bakacağım.
 
-**Sağdaki GitHub:** Flutter uygulaması, Supabase migration'ı ve bu sunumun kendisi aynı repoda. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalıştırabilirsiniz.
+**Sağdaki GitHub:** örnek Flutter uygulaması, Supabase migration'ı ve bu sunumun kendisi aynı repoda. README'deki adımlarla kendi ücretsiz projenizde birkaç dakikada çalıştırabilirsiniz.
 
 *(Uygulamaya geç. İki tarayıcı penceresi yan yana: solda Ayşe, sağda Mehmet. İkincisi **gizli pencere** olmalı; aynı tarayıcının iki sekmesi aynı kullanıcı olur.)*
 
@@ -599,7 +604,7 @@ Bütün anlattıklarımın çalışan hali burada. İki QR var.
 
 Teşekkür ederim. Sorularınızı alayım. Panoya gelen soruları da okuyorum.
 
-Ekranda üç QR var: soru sormak için demo, kaynak kod için GitHub ve benimle bağlantı kurmak için LinkedIn.
+Ekranda dört QR var: soru sormak için demo, kaynak kod için GitHub, benimle bağlantı kurmak için LinkedIn ve topluluğu takip etmek için GDG On OstimTech. Sıradaki etkinlikte görüşmek üzere.
 
 *(Sorular için Bölüm 1.12'deki tabloya bak. Bilmediğin bir şey sorulursa: "Kontrol edip repoya not olarak ekleyeyim" demek tamamen yeterli.)*
 
@@ -608,9 +613,10 @@ Ekranda üç QR var: soru sormak için demo, kaynak kod için GitHub ve benimle 
 ## Prova kontrol listesi
 
 - [ ] Supabase projesi aktif mi? (Ücretsiz proje 1 hafta hareketsizlikte duraklatılır; etkinlikten bir gün önce panele gir.)
-- [ ] flutter-demo.poyrazavsever.com iki pencerede (biri gizli) açık, Ayşe ve Mehmet olarak katılınmış.
+- [ ] gdgcanli.poyrazavsever.com iki pencerede (biri gizli) açık, Ayşe ve Mehmet olarak katılınmış.
 - [ ] Yedek ekran kaydı masaüstünde.
-- [ ] QR kodu telefonla okutulup test edildi.
+- [ ] QR kodları (demo, GitHub, LinkedIn, GDG) telefonla okutulup test edildi.
+- [ ] Önceki etkinlikten kalan sorular panodan temizlendi (SQL Editor: `delete from questions;`).
 - [ ] Sunum `npm run dev` ile yerelde açık, konuşmacı notları için `/presenter` görünümü ikinci ekranda (yayındaki sitede presenter kapalı).
 - [ ] Rakamlar (fiyat, limit) son bir kez supabase.com/pricing'den kontrol edildi.
 - [ ] Prova süresi 25–26 dakika.

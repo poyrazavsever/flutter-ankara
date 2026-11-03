@@ -135,8 +135,8 @@ footer { color: var(--dim); font-size: 14px; padding: 48px 0 64px; }
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div class="eyebrow">Flutter Ankara · Konuşma metni</div>
-  <h1>Flutter ile Uçtan Uca Uygulama</h1>
+  <div class="eyebrow">GDG On OstimTech · Konuşma metni</div>
+  <h1>Supabase ile Uçtan Uca Uygulama</h1>
   <div class="meta"><p>Toplam hedef süre <strong>${fmt(clock)}</strong>, soru-cevap dahil. Her kartta slaydın başlama dakikası ve süresi var; bölüm geçişlerinde (kesikli kartlar) durma.</p><p>Üstteki numaralarla slayda atla. En altta prova listesi ve konunun arka planı var.</p></div>
 </div></header>
 

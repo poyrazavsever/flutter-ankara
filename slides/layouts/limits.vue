@@ -10,7 +10,7 @@
       <slot />
     </main>
     <div class="slide-footer">
-      <span>Flutter Ankara</span>
+      <span>GDG On OstimTech</span>
       <span>{{ $page }}</span>
     </div>
   </div>

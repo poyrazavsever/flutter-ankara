@@ -16,11 +16,15 @@ Seçilen kapak: **A** (üst üste üç cam panel). B ve C `assets/higgsfield/cov
 
 ## Tanıtım slaytı (LinkedIn)
 
-`assets/higgsfield/intro/linkedin-rings.png` → `slides/public/img/sections/linkedin.jpg`. Ortak stil anahtarı; yeşil yerine LinkedIn mavisi (#0A66C2) ve gök mavisi, sağ üçte birde iç içe geçmiş iki cam halka, sol üçte iki boş.
+`assets/higgsfield/intro/linkedin-rings.png` → `slides/public/img/sections/linkedin.jpg`. (GDG sürümünde tanıtım slaytı bu görsel yerine GDG maskotunu kullanıyor.) Ortak stil anahtarı; yeşil yerine LinkedIn mavisi (#0A66C2) ve gök mavisi, sağ üçte birde iç içe geçmiş iki cam halka, sol üçte iki boş.
 
-## TMUG logosu (cam, mor)
+## GDG On OstimTech logosu ve maskotu
 
-`assets/higgsfield/intro/tmug-glass.png` (referans: `tmug-logo-source.png`) → kırpılıp `slides/public/img/icons/tmug.png`. İkon stili, şeffaf zemin; yeşil yerine lavanta / mor (#7B3FE4), referanstaki "tm / ug" harfleri ve artı çizgileri birebir. QR: `slides/public/img/qr-tmug.svg` → https://tmug.com.tr/ (#6D3FD9).
+Higgsfield üretimi değil; https://gdgostimtech.com sitesinden alındı. Orijinaller `assets/gdg/`.
+- `gdg-mark-exact.png` → kırpılıp `slides/public/img/icons/gdg.png`
+- `hero-dragon.webp` (el sallayan ejderha) → beyaz zemin şeffaflaştırılıp `slides/public/img/gdg/dragon-wave.png` (tanıtım slaytı)
+- `join-cheer.webp` (sevinen ejderha) ve diğer görseller: kullanılmadı, ileride lazım olursa burada
+- QR: `slides/public/img/qr-gdg.svg` → https://gdgostimtech.com (#1A73E8)
 
 ## LinkedIn logosu (cam, mavi)
 

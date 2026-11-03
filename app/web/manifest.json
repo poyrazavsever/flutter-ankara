@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#3ECF8E",
-    "description": "Flutter Ankara Soru Panosu",
+    "description": "GDG On OstimTech Soru Panosu",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

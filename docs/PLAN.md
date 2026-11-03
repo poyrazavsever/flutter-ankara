@@ -1,9 +1,11 @@
-# Flutter Ankara — Sunum ve Örnek Proje Planı
+# GDG On OstimTech — Sunum ve Örnek Proje Planı
 
-**Başlık:** Flutter ile Uçtan Uca Uygulama: Auth, Database ve Realtime
+> İlk sürüm Flutter Ankara için hazırlandı; bu sürüm GDG On OstimTech için uyarlandı. Örnek istemci yine Flutter, anlatım platformdan bağımsız.
+
+**Başlık:** Supabase ile Uçtan Uca Uygulama: Auth, Database ve Realtime
 **Süre:** 30 dk (27 dk anlatım + kısa örnek proje turu, 3 dk soru-cevap)
 **Format:** 16:9, Slidev, 40 slayt (9 bölüm geçişi, 9 "Panelde nerede?" slaytı, 7 "Sınırlar ve dikkat" slaytı)
-**Kitle:** Flutter temellerini bilen, Supabase'e yeni başlayanlar
+**Kitle:** Mobil ya da web uygulaması geliştiren, Supabase'e yeni başlayanlar (örnek kod Flutter ama Flutter bilmek şart değil)
 
 ## Tez
 
@@ -19,13 +21,13 @@ Sunum bir kod anlatımı değil, bir **tanışma ve harita** sunumu. Her servis 
 Kod minimumda: yalnızca bağlantı (3 satır) ve bir RLS kuralı gösterilir. Gerisi kavram, diyagram ve sayı.
 
 Katılımcı sunum sonunda şunları bilir:
-- Flutter'ı Supabase'e bağlamak için ne gerekir, anahtarlar ne işe yarar
+- Bir uygulamayı (örnekte Flutter) Supabase'e bağlamak için ne gerekir, anahtarlar ne işe yarar
 - Her servisin ne zaman kullanılacağı ve nerede sınıra takılacağı
 - Erişimin neden veritabanında (RLS) kontrol edildiği
 - Ücretsiz planda neler var, ne zaman ücretli plana geçmek gerekir
 - Supabase'i bir yapay zekâ asistanından (MCP) güvenle nasıl yönetebileceği
 
-## Ortak örnek: Flutter Ankara Soru Panosu
+## Ortak örnek: Soru Panosu (Flutter)
 
 Kullanıcı giriş yapar, konuşmacıya soru gönderir, sorular ortak panoda anında görünür, kullanıcı yalnızca kendi sorusunu silebilir. Her servis bu uygulama üzerinden anlatılır. Örnek proje en sonda QR ile paylaşılır.
 
@@ -37,7 +39,7 @@ Kullanıcı giriş yapar, konuşmacıya soru gönderir, sorular ortak panoda an�
 |---|---|---|
 | 00:00–02:00 | **Açılış** | Kapak · Soru Panosu (ekran görüntüsü) · Tez |
 | 02:00–04:00 | **Supabase nedir?** | Bölüm · Harita: Postgres ve etrafındaki servisler |
-| 04:00–06:00 | **Flutter'a bağlanmak** | Üç adım · Anahtarlar ne işe yarar |
+| 04:00–06:00 | **Uygulamaya bağlanmak** | Üç adım · Anahtarlar ne işe yarar |
 | 06:00–09:00 | **Database** | Bölüm · Gerçek Postgres + otomatik API · RLS · Sınırlar |
 | 09:00–12:00 | **Auth** | Bölüm · Giriş yöntemleri ve oturum · Sınırlar |
 | 12:00–14:30 | **Storage** | Bölüm · Bucket ve erişim · Sınırlar |
@@ -62,16 +64,16 @@ Prova hedefi: 26 dakika.
 4. **Bölüm**
 5. **Harita:** Merkezde Postgres. Etrafında Auth, Storage, Realtime, Edge Functions. Önünde otomatik Data API. Açık kaynak, kendi sunucunda da çalıştırılabilir.
 
-### Flutter'a bağlanmak
-6. **Üç adım:** `supabase_flutter` paketini ekle → proje URL'si ve publishable key → `Supabase.initialize()`. (Tek kod parçası.)
+### Uygulamaya bağlanmak
+6. **Üç adım:** istemci paketini ekle (örnekte `supabase_flutter`) → proje URL'si ve publishable key → `Supabase.initialize()`. (Tek kod parçası.)
 7. **Anahtarlar:**
    - **URL:** projenin adresi
    - **Publishable key** (`sb_publishable_…`): uygulamaya gömülür, herkes görebilir. Kimseyi yetkilendirmez; yalnızca "bu proje için gelen istek" der. Ne görülebileceğine **RLS** karar verir.
-   - **Secret key** (`sb_secret_…`): RLS'yi atlar. Yalnızca sunucuda ve Edge Functions'ta. Flutter uygulamasına asla konmaz.
+   - **Secret key** (`sb_secret_…`): RLS'yi atlar. Yalnızca sunucuda ve Edge Functions'ta. İstemci uygulamasına asla konmaz.
 
 ### Database
 8. **Bölüm**
-9. **Gerçek Postgres + otomatik API:** Tablo oluşturduğun an Flutter'dan erişilebilir bir API hazır. Panoda: `questions` tablosu (id, kullanıcı, metin, zaman).
+9. **Gerçek Postgres + otomatik API:** Tablo oluşturduğun an uygulamadan erişilebilir bir API hazır. Panoda: `questions` tablosu (id, kullanıcı, metin, zaman).
 10. **RLS: kapı veritabanında:** Üç kural (okuma, kendi adına ekleme, kendi sorusunu silme) tek bir SQL kuralı örneğiyle. Mesaj: "Sil butonunu gizlemek arayüz davranışıdır; isteği reddetmek erişim kontrolüdür." Tuzak: başkasının satırını silmek hata vermez, **0 satır** döner.
 11. **Sınırlar ve dikkat:**
     - RLS kapalı tablo herkese açık bir kapıdır; Supabase uyarır, Security Advisor ile kontrol et
